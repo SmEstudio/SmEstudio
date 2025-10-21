@@ -1,239 +1,547 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SM Estudio | Desings</title>
-  <link rel="icon" href="https://i.imgur.com/eyMr4Ki.png" type="image/png">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SM Estudio | Diseños Profesionales para Creadores</title>
+    <link rel="icon" href="https://i.imgur.com/eyMr4Ki.png" type="image/png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #050505;
+            color: #e5e7eb; /* gray-200 */
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Contenedor para efectos de fondo */
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Fondo de cuadrícula */
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        /* Partículas flotantes */
+        .background-effects::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(249, 115, 22, 0.1), transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(249, 115, 22, 0.1), transparent 30%),
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02), transparent 25%);
+            animation: moveParticles 20s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Colores de acento */
+        .text-accent { color: #f97316; } 
+        .bg-accent { background-color: #f97316; }
+        .border-accent { border-color: #f97316; }
+        .ring-accent { --tw-ring-color: #f97316; }
+
+        /* Navbar con desenfoque */
+        .navbar-blur {
+            background-color: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Animación de imagen flotante */
+        .floating-img {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Efecto de brillo en el botón */
+        .btn-shine {
+          position: relative;
+          overflow: hidden;
+        }
+        .btn-shine::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -150%;
+          width: 120%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+          transform: skewX(-25deg);
+        }
+        .btn-shine:hover::after {
+          left: 150%;
+        }
+
+        /* Nuevo estilo de tarjeta mejorado */
+        .card-style {
+            background-color: rgba(17, 17, 17, 0.8); /* #111111 with opacity for glass effect */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            border-radius: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .card-style::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(249, 115, 22, 0.3), transparent);
+            transition: left 0.8s ease-in-out;
+        }
+        .card-style:hover {
+            transform: scale(1.05) translateY(-5px);
+            border-color: rgba(249, 115, 22, 0.8);
+            box-shadow: 0 0 35px rgba(249, 115, 22, 0.5);
+        }
+        .card-style:hover::before {
+            left: 100%;
+        }
+        
+        /* Animación para revelado al hacer scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Pantalla de carga */
+        #loader {
+          position: fixed; inset: 0; 
+          background: #050505; 
+          display: flex; flex-direction: column;
+          justify-content: center; align-items: center; 
+          z-index: 9999;
+          transition: opacity 0.5s ease-out;
+        }
+        .loader-logo { 
+          width: 100px; 
+          animation: logoBounce 2s ease-in-out infinite; 
+        }
+        @keyframes logoBounce { 
+          0%,100% { transform: translateY(0) scale(1); } 
+          50% { transform: translateY(-15px) scale(1.05); } 
+        }
+
+        /* Carrusel de servicios */
+        #services-carousel .card-style {
+            position: absolute; width: 100%; top: 0; left: 0;
+            opacity: 0; visibility: hidden; transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s;
+        }
+        #services-carousel .card-style.active {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+        
+        /* Discord Widget 3D */
+        .discord-3d { perspective: 1000px; }
+        .discord-3d iframe {
+            border-radius: 12px; width: 100%; height: 500px;
+            transform: rotateY(-10deg) rotateX(5deg);
+            transition: transform 0.4s ease;
+        }
+        .discord-3d iframe:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.05); }
+        
+        /* --- CAMBIO: Divisores de sección unificados y de ancho completo --- */
+        .section-divider {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+        }
+        .divider-style-glow {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #f97316, transparent);
+            box-shadow: 0 0 20px 2px rgba(249, 115, 22, 0.5);
+            border-radius: 2px;
+        }
+        
+        /* Indicador de scroll */
+        .scroll-down-indicator {
+            animation: bounce-arrow 2s infinite;
+        }
+        @keyframes bounce-arrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        /* Efectos de texto */
+        .title-blur-effect {
+            animation: pulse-blur 4s ease-in-out infinite;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        @keyframes pulse-blur {
+            0%, 100% { filter: blur(0px); }
+            50% { filter: blur(3px); }
+        }
+        .title-blur-effect:hover {
+            animation-play-state: paused;
+            filter: blur(0px);
+            transform: scale(1.05);
+        }
+
+        .section-title span {
+            transition: all 0.3s ease-in-out;
+        }
+        .section-title:hover span {
+            text-shadow: 0 0 15px rgba(249, 115, 22, 0.8);
+        }
+
+    </style>
 </head>
-<body>
 
-  <!-- Pantalla de carga -->
-  <div id="loader">
-    <img src="https://i.imgur.com/eyMr4Ki.png" alt="SM Estudio Logo" class="loader-logo">
-    <div class="loader-bar"></div>
-  </div>
+<body class="antialiased">
+    
+    <div class="background-effects"></div>
 
-<header class="navbar">
-  <div class="logo">SM<span>Estudio</span></div>
-
-  <!-- botón hamburguesa (visible en móvil) -->
-  <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav">
-    <span class="hamburger"></span>
-  </button>
-
-  <nav id="main-nav">
-    <a href="#home">Home</a>
-    <a href="https://discord.gg/4q56XZbWaV" target="_blank">Discord</a>
-  </nav>
-</header>
-
-<!-- Landing -->
-<section id="home" class="landing">
-  <div class="landing-text">
-    <h1>SM<br><span>Estudio</span></h1>
-    <p>The favorite place for content creators and streamers</p>
-    <h2>Impulsa tu contenido</h2>
-    <p>En <strong>SM Estudio</strong> creamos identidad visual de alto impacto para streamers y creadores de contenido.
-       Desde overlays hasta logotipos, elevamos tu marca personal al siguiente nivel con estilo profesional y único.</p>
-    <p>¡Transforma tu stream en una experiencia visual inolvidable!</p>
-    <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="btn">Discord Server</a>
-  </div>
-  <div class="landing-img">
-    <img src="https://i.imgur.com/eyMr4Ki.png" alt="Banner SM Estudio" class="floating-img">
-  </div>
-</section>
-
-<!-- Contenido -->
-<section class="contenido">
-  <div class="contenido-left">
-    <img src="https://i.imgur.com/eyMr4Ki.png" alt="SM Estudio Logo">
-  </div>
-  <div class="contenido-right">
-    <h2>Tenemos<br><span>Todo lo que necesitas</span></h2>
-    <ul>
-      <li>Pack Editing</li>
-      <li>Pack GFX</li>
-      <li>Stream Packs</li>
-      <li>Diseño de miniaturas</li>
-      <li>Creación de logos</li>
-      <li>Tiktok Overlay</li>
-    </ul>
-    <a href="#contacto" class="btn">Hazlo realidad</a>
-  </div>
-</section>
-
-<!-- Trabajos / Portafolio -->
-<section class="trabajos">
-  <h2>Conoce nuestros trabajos</h2>
-
-  <!-- Logos -->
-  <div class="galeria">
-    <h3>Logos</h3>
-    <img src="https://i.imgur.com/cVlbuVX.png" alt="Overlay Goattache 1">
-    <img src="https://i.imgur.com/Busi2YF.png" alt="Overlay Goattache 2">
-    <img src="https://i.imgur.com/0u7VBpc.png" alt="Diseño SM Estudio">
-  </div>
-
-  <!-- HC Team / King Hosting / SS / Quisqueya / Legacy RP -->
-  <div class="galeria">
-    <h3>HC Team & King Hosting & Otros</h3>
-    <img src="https://i.imgur.com/9XT76y7.png" alt="HC Team 1">
-    <img src="https://i.imgur.com/7xYNGA6.png" alt="HC Team 2">
-    <img src="https://i.imgur.com/NG9v6Ly.png" alt="King Hosting 1">
-    <img src="https://i.imgur.com/05payDw.png" alt="King Hosting 2">
-    <img src="https://i.imgur.com/FAq7tvX.png" alt="King Hosting 3">
-    <img src="https://i.imgur.com/U76YLC2.png" alt="King Hosting 4">
-    <img src="https://i.imgur.com/zGXT8g1.png" alt="King Hosting 5">
-    <img src="https://i.imgur.com/XnT51hd.png" alt="SS Community">
-    <img src="https://i.imgur.com/FG9YUPr.png" alt="Quisqueya 1">
-    <img src="https://i.imgur.com/MwoUjKm.png" alt="Quisqueya 2">
-    <img src="https://i.imgur.com/w2vs6uw.png" alt="Legacy RP 1">
-    <img src="https://i.imgur.com/CKD8MFi.png" alt="Legacy RP 2">
-    <img src="https://i.imgur.com/Ljj9xjJ.png" alt="Legacy RP 3">
-    <img src="https://i.imgur.com/dFgowWn.png" alt="Legacy RP Sin Fondo">
-  </div>
-
-  <!-- Thumbnails FiveM -->
-  <div class="galeria">
-    <h3>Thumbnails FiveM</h3>
-    <img src="https://i.imgur.com/51h8QxW.png" alt="Thumbnail HG Fivem 1">
-    <img src="https://i.imgur.com/XmiG5GI.png" alt="Thumbnail HG Fivem 2">
-    <img src="https://i.imgur.com/uP3JH5I.png" alt="Thumbnail HG Fivem 3">
-    <img src="https://i.imgur.com/TmnlngB.png" alt="Thumbnail HG Fivem 4">
-  </div>
-
-  <!-- Posters y Flyers -->
-  <div class="galeria">
-    <h3>Posters y Flyers</h3>
-    <img src="https://i.imgur.com/j4tpJ62.png" alt="Diseño WKG Flyer">
-    <img src="https://i.imgur.com/zT7duD6.png" alt="Diseño WKG Poster">
-    <img src="https://i.imgur.com/f1GAFoE.png" alt="Diseño Deportivo Fútbol">
-  </div>
-</section>
-
-<!-- Beneficios -->
-<section class="beneficios">
-  <h2>Beneficios de trabajar con <span>SM Estudio</span></h2>
-  <div class="benefits-grid">
-    <div class="benefit">
-      <h3>💰 Precio</h3>
-      <p>Tenemos precios que se ajustan a tus necesidades.</p>
-    </div>
-    <div class="benefit">
-      <h3>🎨 Calidad</h3>
-      <p>Obtendrás un diseño y animación de calidad sin igual.</p>
-    </div>
-    <div class="benefit">
-      <h3>⚡ Tiempo de entrega</h3>
-      <p>Entregamos en máximo 2 días para proyectos pequeños.</p>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonios / Carrusel Horizontal Mejorado -->
-<section class="testimonios">
-  <h2>Lo que dicen nuestros clientes</h2>
-  <div class="testimonios-wrapper">
-    <div class="testimonios-track">
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Juan P." class="testimonio-avatar">
-        <p>"SM Estudio transformó mi stream por completo. La calidad y el tiempo de entrega son increíbles."</p>
-        <h3>- Juan P.</h3>
-      </div>
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Ana L." class="testimonio-avatar">
-        <p>"Excelente atención y resultados. Mis overlays y logos nunca se vieron tan profesionales."</p>
-        <h3>- Ana L.</h3>
-      </div>
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Carlos M." class="testimonio-avatar">
-        <p>"Recomiendo SM Estudio a todos los creadores. Su creatividad marca la diferencia."</p>
-        <h3>- Carlos M.</h3>
-      </div>
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Laura F." class="testimonio-avatar">
-        <p>"Trabajo impecable, moderno y con gran estilo. Totalmente recomendado."</p>
-        <h3>- Laura F.</h3>
-      </div>
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Laura F." class="testimonio-avatar">
-        <p>"love that 10000000000000000000000000000% good work."</p>
-        <h3>- raklyrxc.q</h3>
-      </div>
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Laura F." class="testimonio-avatar">
-        <p>"las verdaderas kbritas en velda, unos duros"</p>
-        <h3>- mariwana.a</h3>
-      </div>
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Laura F." class="testimonio-avatar">
-        <p>"10 de 10 responde rápido y todo funciona al pelo"</p>
-        <h3>- Malwarex</h3>
-      </div>
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Laura F." class="testimonio-avatar">
-        <p>" la kabra 10/10 eres el mejor bro"</p>
-        <h3>- kobaaa</h3>
-      </div>
-      <div class="testimonio-card">
-        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Avatar Laura F." class="testimonio-avatar">
-        <p>" 10/10 la intro bro, el mejor"</p>
-        <h3>- xAndrew</h3>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Final -->
-<section class="final">
-  <div class="final-content">
-    <div class="final-img">
-      <img src="https://i.imgur.com/eyMr4Ki.png" alt="Logo SM Estudio">
-    </div>
-    <div class="final-text">
-      <h2>SM Estudio</h2>
-      <p>Todo lo que necesitas, como lo necesites y cuando lo necesites.</p>
-    </div>
-  </div>
-</section>
-
-<!-- Contacto -->
-<section id="contacto" class="contacto">
-  <h2>Contacto</h2>
-  <div class="contacto-contenido">
-    <!-- Formulario -->
-    <div class="contacto-form">
-      <h3>Envíanos un mensaje</h3>
-      <form>
-        <input type="text" placeholder="Nombre" required>
-        <input type="email" placeholder="Correo electrónico" required>
-        <textarea placeholder="Mensaje" rows="5" required></textarea>
-        <button type="submit">Enviar</button>
-      </form>
+    <div id="loader">
+      <img src="https://i.imgur.com/eyMr4Ki.png" alt="Logo SM Estudio" class="loader-logo">
     </div>
 
-    <!-- Discord Widget -->
-    <div class="discord-widget">
-      <h3>Únete a nuestro Discord</h3>
-      <div class="discord-3d">
-        <iframe 
-          src="https://canary.discord.com/widget?id=1278801961092644995&theme=dark" 
-          allowtransparency="true" 
-          frameborder="0" 
-          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-        </iframe>
-      </div>
+    <div class="w-full relative z-10">
+
+        <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#home" class="text-2xl font-bold text-white">SM<span class="text-accent">Estudio</span></a>
+                
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#servicios" class="text-gray-300 hover:text-accent transition-colors duration-300">Servicios</a>
+                    <a href="#trabajos" class="text-gray-300 hover:text-accent transition-colors duration-300">Trabajos</a>
+                    <a href="#testimonios" class="text-gray-300 hover:text-accent transition-colors duration-300">Testimonios</a>
+                    <a href="#contacto" class="text-gray-300 hover:text-accent transition-colors duration-300">Contacto</a>
+                </nav>
+                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="hidden md:inline-block bg-accent text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-lg shadow-orange-500/20">
+                    Ir a Discord
+                </a>
+
+                <button id="mobile-menu-button" class="md:hidden text-white z-50">
+                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="hidden md:hidden fixed top-0 left-0 w-full h-screen bg-black/90 backdrop-blur-lg flex flex-col items-center justify-center space-y-6">
+                <a href="#servicios" class="mobile-link text-2xl text-gray-300">Servicios</a>
+                <a href="#trabajos" class="mobile-link text-2xl text-gray-300">Trabajos</a>
+                <a href="#testimonios" class="mobile-link text-2xl text-gray-300">Testimonios</a>
+                <a href="#contacto" class="mobile-link text-2xl text-gray-300">Contacto</a>
+                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="mt-4 inline-block bg-accent text-white font-semibold px-6 py-3 rounded-lg">
+                    Ir a Discord
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <section id="home" class="min-h-screen flex flex-col justify-center items-center relative">
+                <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 text-center">
+                    <div class="lg:w-1/2">
+                        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white leading-tight title-blur-effect">
+                            SM <span class="text-accent">Estudio</span>
+                        </h1>
+                        <p class="text-gray-300 mt-4 text-base md:text-lg">The favorite place for content creators and streamers.</p>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white mt-6">Impulsa tu contenido</h2>
+                        <p class="mt-4 text-gray-400 max-w-lg mx-auto">
+                           En <strong>SM Estudio</strong> creamos identidad visual de alto impacto para streamers y creadores de contenido. Desde overlays hasta logotipos, elevamos tu marca personal al siguiente nivel con estilo profesional y único.
+                           ¡Transforma tu stream en una experiencia visual inolvidable!
+                        </p>
+                        <a href="#contacto" class="mt-8 inline-block bg-accent text-white font-bold px-8 py-3 rounded-lg text-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-orange-500/30 btn-shine">
+                            ¡Hazlo realidad!
+                        </a>
+                    </div>
+                    <div class="lg:w-1/2 flex justify-center mt-8 lg:mt-0">
+                        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Banner SM Estudio" class="w-2/3 sm:w-3/4 md:w-full max-w-md floating-img">
+                    </div>
+                </div>
+                <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-accent opacity-70">
+                    <span class="text-sm font-semibold tracking-widest">SCROLL DOWN</span>
+                    <svg class="w-6 h-6 scroll-down-indicator" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="section-divider divider-style-glow"></div>
+            </section>
+
+            <section id="servicios" class="py-24 flex flex-col justify-center items-center relative">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 section-title">Todo lo que <span class="text-accent">Necesitas</span></h2>
+                    <p class="text-gray-400 mb-16 text-base md:text-lg max-w-2xl mx-auto">Soluciones completas para potenciar tu presencia digital.</p>
+                    <div id="services-carousel" class="relative max-w-xs sm:max-w-sm mx-auto h-80">
+                        <!-- Tarjetas de servicios -->
+                        <div class="card-style p-8 rounded-xl text-center">
+                             <div class="bg-gray-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border-2 border-accent/50">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Stream Packs</h3>
+                            <p class="text-gray-400">Paquetes completos de diseño para tu transmisión.</p>
+                        </div>
+                        <div class="card-style p-8 rounded-xl text-center">
+                            <div class="bg-gray-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border-2 border-accent/50">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Diseño de Miniaturas</h3>
+                            <p class="text-gray-400">Captura la atención de tu audiencia al instante.</p>
+                        </div>
+                        <div class="card-style p-8 rounded-xl text-center">
+                           <div class="bg-gray-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border-2 border-accent/50">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Creación de Logos</h3>
+                            <p class="text-gray-400">Una identidad visual memorable y profesional.</p>
+                        </div>
+                        <div class="card-style p-8 rounded-xl text-center">
+                            <div class="bg-gray-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border-2 border-accent/50">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Tiktok Overlay</h3>
+                            <p class="text-gray-400">Diseños optimizados para tus streams en TikTok y más.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="section-divider divider-style-glow"></div>
+            </section>
+
+            <section id="beneficios" class="py-24 flex flex-col justify-center items-center relative bg-black/30">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white section-title">Beneficios de trabajar con <span class="text-accent">SM Estudio</span></h2>
+                        <p class="text-gray-400 mt-4 mb-12 max-w-2xl mx-auto">Te garantizamos una experiencia de primer nivel con resultados que superarán tus expectativas.</p>
+                    </div>
+                     <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                         <div class="card-style p-8 rounded-xl text-center reveal">
+                             <h3 class="text-2xl font-bold text-accent mb-3">💰 Precio Justo</h3>
+                             <p class="text-gray-300">Tenemos precios competitivos que se ajustan a tus necesidades y presupuesto.</p>
+                         </div>
+                         <div class="card-style p-8 rounded-xl text-center reveal" style="transition-delay: 150ms;">
+                             <h3 class="text-2xl font-bold text-accent mb-3">🎨 Calidad Premium</h3>
+                             <p class="text-gray-300">Obtendrás un diseño y animación de calidad profesional que te destacará del resto.</p>
+                         </div>
+                         <div class="card-style p-8 rounded-xl text-center reveal" style="transition-delay: 300ms;">
+                             <h3 class="text-2xl font-bold text-accent mb-3">⚡ Entrega Rápida</h3>
+                             <p class="text-gray-300">Entregamos en máximo 2 días para proyectos pequeños, sin sacrificar la calidad.</p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="section-divider divider-style-glow"></div>
+            </section>
+
+            <section id="trabajos" class="py-24 flex flex-col justify-center items-center relative">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Conoce nuestros <span class="text-accent">Trabajos</span></h2>
+                    
+                    <div class="space-y-12">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-left mb-6">Logos</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                <div class="reveal"><img src="https://i.imgur.com/cVlbuVX.png" alt="Logo" class="rounded-lg hover:opacity-80 transition-opacity"></div>
+                                <div class="reveal"><img src="https://i.imgur.com/Busi2YF.png" alt="Logo" class="rounded-lg hover:opacity-80 transition-opacity"></div>
+                                <div class="reveal"><img src="https://i.imgur.com/0u7VBpc.png" alt="Diseño SM Estudio" class="rounded-lg hover:opacity-80 transition-opacity"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-2xl font-semibold text-left mb-6">HC Team & King Hosting & Otros</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                <div class="reveal"><img src="https://i.imgur.com/9XT76y7.png" alt="HC Team 1" class="rounded-lg hover:opacity-80 transition-opacity"></div>
+                                <div class="reveal"><img src="https://i.imgur.com/7xYNGA6.png" alt="HC Team 2" class="rounded-lg hover:opacity-80 transition-opacity"></div>
+                                <div class="reveal"><img src="https://i.imgur.com/NG9v6Ly.png" alt="King Hosting 1" class="rounded-lg hover:opacity-80 transition-opacity"></div>
+                                <div class="reveal"><img src="https://i.imgur.com/05payDw.png" alt="King Hosting 2" class="rounded-lg hover:opacity-80 transition-opacity"></div>
+                                <div class="reveal"><img src="https://i.imgur.com/FAq7tvX.png" alt="King Hosting 3" class="rounded-lg hover:opacity-80 transition-opacity"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="section-divider divider-style-glow"></div>
+            </section>
+
+            <section id="testimonios" class="py-24 flex flex-col justify-center items-center relative bg-black/30">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Lo que dicen <span class="text-accent">Nuestros Clientes</span></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="card-style p-8 rounded-xl text-left reveal">
+                            <p class="text-gray-300 italic mb-6">"SM Estudio transformó mi stream por completo. La calidad y el tiempo de entrega son increíbles."</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/40x40/f97316/white?text=JP" alt="Avatar Juan P." class="w-10 h-10 rounded-full mr-4">
+                                <div><p class="font-bold text-white">Juan P.</p><p class="text-sm text-gray-400">Streamer</p></div>
+                            </div>
+                        </div>
+                         <div class="card-style p-8 rounded-xl text-left reveal" style="transition-delay: 150ms;">
+                            <p class="text-gray-300 italic mb-6">"Excelente atención y resultados. Mis overlays y logos nunca se vieron tan profesionales."</p>
+                             <div class="flex items-center">
+                                <img src="https://placehold.co/40x40/f97316/white?text=AL" alt="Avatar Ana L." class="w-10 h-10 rounded-full mr-4">
+                                <div><p class="font-bold text-white">Ana L.</p><p class="text-sm text-gray-400">Creadora de Contenido</p></div>
+                            </div>
+                        </div>
+                        <div class="card-style p-8 rounded-xl text-left reveal" style="transition-delay: 300ms;">
+                            <p class="text-gray-300 italic mb-6">"10 de 10, responde rápido y todo funciona al pelo. ¡El mejor!"</p>
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/40x40/f97316/white?text=M" alt="Avatar Malwarex" class="w-10 h-10 rounded-full mr-4">
+                                <div><p class="font-bold text-white">Malwarex</p><p class="text-sm text-gray-400">Cliente Verificado</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="section-divider divider-style-glow"></div>
+            </section>
+
+            <section id="contacto" class="py-24 flex flex-col justify-center items-center relative">
+                <div class="container mx-auto px-6">
+                    <div class="text-center">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-white section-title">¿Listo para <span class="text-accent">Empezar?</span></h2>
+                        <p class="text-gray-400 mt-4 mb-12 max-w-2xl mx-auto">Envíanos un mensaje o únete a nuestro Discord para cotizar tu proyecto.</p>
+                    </div>
+                    <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 bg-neutral-900/50 p-6 sm:p-8 md:p-12 rounded-2xl border border-white/10">
+                        <div class="w-full md:w-1/2">
+                            <h3 class="text-2xl font-bold text-white mb-6">Envíanos un mensaje</h3>
+                            <form>
+                                <div class="space-y-5">
+                                    <input type="text" placeholder="Nombre" required class="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ring-accent transition">
+                                    <input type="email" placeholder="Correo electrónico" required class="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ring-accent transition">
+                                    <textarea placeholder="Cuéntanos sobre tu proyecto..." rows="4" required class="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ring-accent transition"></textarea>
+                                    <button type="submit" class="w-full bg-accent text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 btn-shine">Enviar Mensaje</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="w-full md:w-1/2 flex flex-col items-center justify-center text-center mt-8 md:mt-0">
+                            <h3 class="text-2xl font-bold text-white mb-4">O únete a la comunidad</h3>
+                            <div class="discord-3d w-full max-w-xs">
+                                 <iframe src="https://canary.discord.com/widget?id=1278801961092644995&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="bg-black/50 border-t border-white/10 pt-16 pb-8">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12 text-center sm:text-left">
+                    <div class="col-span-1 sm:col-span-2 md:col-span-1">
+                        <a href="#home" class="text-2xl font-bold text-white">SM<span class="text-accent">Estudio</span></a>
+                        <p class="text-gray-400 mt-4 text-sm">Diseños de alto impacto para creadores de contenido y streamers.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-4">Navegación</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#servicios" class="text-gray-400 hover:text-accent transition">Servicios</a></li>
+                            <li><a href="#beneficios" class="text-gray-400 hover:text-accent transition">Beneficios</a></li>
+                            <li><a href="#trabajos" class="text-gray-400 hover:text-accent transition">Trabajos</a></li>
+                            <li><a href="#testimonios" class="text-gray-400 hover:text-accent transition">Testimonios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-4">Comunidad</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="https://discord.gg/4q56XZbWaV" target="_blank" class="text-gray-400 hover:text-accent transition">Discord</a></li>
+                            <li><a href="#contacto" class="text-gray-400 hover:text-accent transition">Contacto</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-4">Legal</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="text-gray-400 hover:text-accent transition">Términos de Servicio</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-accent transition">Política de Privacidad</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
+                    <p>&copy; 2025 SM Estudio | Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+
     </div>
-  </div>
-</section>
 
-<!-- Footer -->
-<footer>
-  <p>© 2025 SM Estudio | Todos los derechos reservados.</p>
-</footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById("loader");
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = "none"; }, 500);
+            }, 1000);
 
-<script src="script.js"></script>
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('navbar-blur', window.scrollY > 50);
+                navbar.classList.toggle('border-b', window.scrollY > 50);
+                navbar.classList.toggle('border-white/10', window.scrollY > 50);
+            });
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-open-icon');
+            const closeIcon = document.getElementById('menu-close-icon');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            const toggleMenu = () => {
+                 mobileMenu.classList.toggle('hidden');
+                 openIcon.classList.toggle('hidden');
+                 closeIcon.classList.toggle('hidden');
+                 document.body.classList.toggle('overflow-hidden');
+            };
+            mobileMenuButton.addEventListener('click', toggleMenu);
+            mobileLinks.forEach(link => link.addEventListener('click', () => {
+                if(!mobileMenu.classList.contains('hidden')){ toggleMenu(); }
+            }));
+
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                revealElements.forEach(el => {
+                    if (el.getBoundingClientRect().top < windowHeight - 100) {
+                        el.classList.add('visible');
+                    }
+                });
+            };
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll();
+
+            const carouselContainer = document.getElementById('services-carousel');
+            const cards = carouselContainer.querySelectorAll('.card-style');
+            let currentCardIndex = 0;
+            if (cards.length > 0) {
+                cards[0].classList.add('active');
+                setInterval(() => {
+                    cards[currentCardIndex].classList.remove('active');
+                    currentCardIndex = (currentCardIndex + 1) % cards.length;
+                    cards[currentCardIndex].classList.add('active');
+                }, 4000);
+            }
+        });
+    </script>
 </body>
 </html>
+
