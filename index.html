@@ -57,6 +57,60 @@
             100% { background-position: 0% 0%; }
         }
 
+        /* --- CAMBIO: Partículas de Halloween de arriba hacia abajo --- */
+        .halloween-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1; /* Detrás del contenido (z-10), delante del fondo (z-index: -1) */
+            pointer-events: none;
+        }
+        .halloween-particles span {
+            position: absolute;
+            top: -10%; /* Empezar desde arriba */
+            font-size: 2rem;
+            animation: float-halloween 15s linear infinite;
+            opacity: 0;
+        }
+        @keyframes float-halloween {
+            0% {
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+                opacity: 0.1;
+            }
+            25% {
+                transform: translateY(25vh) translateX(5vw) rotate(45deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(50vh) translateX(-5vw) rotate(90deg);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translateY(75vh) translateX(3vw) rotate(135deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(110vh) translateX(0vw) rotate(180deg);
+                opacity: 0;
+            }
+        }
+        /* Randomización de partículas */
+        .halloween-particles span:nth-child(1) { left: 10%; animation-duration: 14s; animation-delay: -3s; font-size: 1.5rem; }
+        .halloween-particles span:nth-child(2) { left: 30%; animation-duration: 10s; animation-delay: -5s; font-size: 2.2rem; }
+        .halloween-particles span:nth-child(3) { left: 50%; animation-duration: 18s; animation-delay: 0s; font-size: 1.8rem; }
+        .halloween-particles span:nth-child(4) { left: 70%; animation-duration: 12s; animation-delay: -7s; font-size: 2.0rem; }
+        .halloween-particles span:nth-child(5) { left: 90%; animation-duration: 11s; animation-delay: -2s; font-size: 1.7rem; }
+        .halloween-particles span:nth-child(6) { left: 20%; animation-duration: 16s; animation-delay: -1s; font-size: 2.1rem; }
+        .halloween-particles span:nth-child(7) { left: 40%; animation-duration: 9s;  animation-delay: -4s; font-size: 1.9rem; }
+        .halloween-particles span:nth-child(8) { left: 60%; animation-duration: 13s; animation-delay: -6s; font-size: 2.3rem; }
+        .halloween-particles span:nth-child(9) { left: 80%; animation-duration: 17s; animation-delay: -8s; font-size: 1.6rem; }
+        .halloween-particles span:nth-child(10) { left: 5%; animation-duration: 12s; animation-delay: -10s; font-size: 2.0rem; }
+        /* --- FIN CAMBIO --- */
+
+
         /* Colores de acento */
         .text-accent { color: #f97316; } 
         .bg-accent { background-color: #f97316; }
@@ -69,6 +123,29 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
+
+        /* --- CAMBIO: Efecto hover para links de Navbar --- */
+        .nav-link-hover {
+            position: relative;
+            padding-bottom: 4px; /* Espacio para la línea */
+        }
+        .nav-link-hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #f97316; /* color text-accent */
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+        .nav-link-hover:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        /* --- FIN CAMBIO --- */
 
         /* Animación de imagen flotante */
         .floating-img {
@@ -178,7 +255,6 @@
         }
         .discord-3d iframe:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.05); }
         
-        /* --- CAMBIO: Divisores de sección unificados y de ancho completo --- */
         .section-divider {
             position: absolute;
             bottom: -1px;
@@ -230,6 +306,19 @@
     
     <div class="background-effects"></div>
 
+    <div class="halloween-particles" aria-hidden="true">
+        <span>🎃</span>
+        <span>👻</span>
+        <span>🎃</span>
+        <span>🦇</span>
+        <span>👻</span>
+        <span>🎃</span>
+        <span>🦇</span>
+        <span>👻</span>
+        <span>🎃</span>
+        <span>👻</span>
+    </div>
+
     <div id="loader">
       <img src="https://i.imgur.com/eyMr4Ki.png" alt="Logo SM Estudio" class="loader-logo">
     </div>
@@ -241,12 +330,12 @@
                 <a href="#home" class="text-2xl font-bold text-white">SM<span class="text-accent">Estudio</span></a>
                 
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#servicios" class="text-gray-300 hover:text-accent transition-colors duration-300">Servicios</a>
-                    <a href="#trabajos" class="text-gray-300 hover:text-accent transition-colors duration-300">Trabajos</a>
-                    <a href="#testimonios" class="text-gray-300 hover:text-accent transition-colors duration-300">Testimonios</a>
-                    <a href="#contacto" class="text-gray-300 hover:text-accent transition-colors duration-300">Contacto</a>
+                    <a href="#servicios" class="nav-link-hover text-gray-300 hover:text-accent transition-colors duration-300">Servicios</a>
+                    <a href="#trabajos" class="nav-link-hover text-gray-300 hover:text-accent transition-colors duration-300">Trabajos</a>
+                    <a href="#testimonios" class="nav-link-hover text-gray-300 hover:text-accent transition-colors duration-300">Testimonios</a>
+                    <a href="#contacto" class="nav-link-hover text-gray-300 hover:text-accent transition-colors duration-300">Contacto</a>
                 </nav>
-                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="hidden md:inline-block bg-accent text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-lg shadow-orange-500/20">
+                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="hidden md:inline-block bg-accent text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-lg shadow-orange-500/20 transform hover:scale-105">
                     Ir a Discord
                 </a>
 
@@ -257,11 +346,11 @@
             </div>
             
             <div id="mobile-menu" class="hidden md:hidden fixed top-0 left-0 w-full h-screen bg-black/90 backdrop-blur-lg flex flex-col items-center justify-center space-y-6">
-                <a href="#servicios" class="mobile-link text-2xl text-gray-300">Servicios</a>
-                <a href="#trabajos" class="mobile-link text-2xl text-gray-300">Trabajos</a>
-                <a href="#testimonios" class="mobile-link text-2xl text-gray-300">Testimonios</a>
-                <a href="#contacto" class="mobile-link text-2xl text-gray-300">Contacto</a>
-                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="mt-4 inline-block bg-accent text-white font-semibold px-6 py-3 rounded-lg">
+                <a href="#servicios" class="mobile-link text-2xl text-gray-300 hover:text-accent transform hover:scale-105 transition-all duration-300">Servicios</a>
+                <a href="#trabajos" class="mobile-link text-2xl text-gray-300 hover:text-accent transform hover:scale-105 transition-all duration-300">Trabajos</a>
+                <a href="#testimonios" class="mobile-link text-2xl text-gray-300 hover:text-accent transform hover:scale-105 transition-all duration-300">Testimonios</a>
+                <a href="#contacto" class="mobile-link text-2xl text-gray-300 hover:text-accent transform hover:scale-105 transition-all duration-300">Contacto</a>
+                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="mt-4 inline-block bg-accent text-white font-semibold px-6 py-3 rounded-lg transform hover:scale-105 transition-all duration-300">
                     Ir a Discord
                 </a>
             </div>
@@ -295,7 +384,7 @@
                 <div class="section-divider divider-style-glow"></div>
             </section>
 
-            <section id="servicios" class="py-24 flex flex-col justify-center items-center relative">
+            <section id="servicios" class="py-24 relative">
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 section-title">Todo lo que <span class="text-accent">Necesitas</span></h2>
                     <p class="text-gray-400 mb-16 text-base md:text-lg max-w-2xl mx-auto">Soluciones completas para potenciar tu presencia digital.</p>
@@ -334,7 +423,7 @@
                  <div class="section-divider divider-style-glow"></div>
             </section>
 
-            <section id="beneficios" class="py-24 flex flex-col justify-center items-center relative bg-black/30">
+            <section id="beneficios" class="py-24 relative bg-black/30">
                  <div class="container mx-auto px-6">
                     <div class="text-center">
                         <h2 class="text-3xl sm:text-4xl font-bold text-white section-title">Beneficios de trabajar con <span class="text-accent">SM Estudio</span></h2>
@@ -358,7 +447,7 @@
                  <div class="section-divider divider-style-glow"></div>
             </section>
 
-            <section id="trabajos" class="py-24 flex flex-col justify-center items-center relative">
+            <section id="trabajos" class="py-24 relative">
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Conoce nuestros <span class="text-accent">Trabajos</span></h2>
                     
@@ -388,7 +477,7 @@
                 <div class="section-divider divider-style-glow"></div>
             </section>
 
-            <section id="testimonios" class="py-24 flex flex-col justify-center items-center relative bg-black/30">
+            <section id="testimonios" class="py-24 relative bg-black/30">
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Lo que dicen <span class="text-accent">Nuestros Clientes</span></h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -418,7 +507,7 @@
                  <div class="section-divider divider-style-glow"></div>
             </section>
 
-            <section id="contacto" class="py-24 flex flex-col justify-center items-center relative">
+            <section id="contacto" class="py-24 relative">
                 <div class="container mx-auto px-6">
                     <div class="text-center">
                         <h2 class="text-3xl sm:text-4xl font-bold text-white section-title">¿Listo para <span class="text-accent">Empezar?</span></h2>
@@ -455,7 +544,7 @@
                         <p class="text-gray-400 mt-4 text-sm">Diseños de alto impacto para creadores de contenido y streamers.</p>
                     </div>
                     <div>
-                        <h4 class="font-bold text-white mb-4">Navegación</h4>
+                        <h4 class="font-bold text-white mb-4 hover:text-accent transition-colors">Navegación</h4>
                         <ul class="space-y-2 text-sm">
                             <li><a href="#servicios" class="text-gray-400 hover:text-accent transition">Servicios</a></li>
                             <li><a href="#beneficios" class="text-gray-400 hover:text-accent transition">Beneficios</a></li>
@@ -464,14 +553,14 @@
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-bold text-white mb-4">Comunidad</h4>
+                        <h4 class="font-bold text-white mb-4 hover:text-accent transition-colors">Comunidad</h4>
                         <ul class="space-y-2 text-sm">
                             <li><a href="https://discord.gg/4q56XZbWaV" target="_blank" class="text-gray-400 hover:text-accent transition">Discord</a></li>
                             <li><a href="#contacto" class="text-gray-400 hover:text-accent transition">Contacto</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-bold text-white mb-4">Legal</h4>
+                        <h4 class="font-bold text-white mb-4 hover:text-accent transition-colors">Legal</h4>
                         <ul class="space-y-2 text-sm">
                             <li><a href="#" class="text-gray-400 hover:text-accent transition">Términos de Servicio</a></li>
                             <li><a href="#" class="text-gray-400 hover:text-accent transition">Política de Privacidad</a></li>
@@ -479,7 +568,7 @@
                     </div>
                 </div>
                 <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
-                    <p>&copy; 2025 SM Estudio | Todos los derechos reservados.</p>
+                    <p class="hover:text-accent transition-colors">&copy; 2025 SM Estudio | Todos los derechos reservados.</p>
                 </div>
             </div>
         </footer>
@@ -521,7 +610,8 @@
             const revealOnScroll = () => {
                 const windowHeight = window.innerHeight;
                 revealElements.forEach(el => {
-                    if (el.getBoundingClientRect().top < windowHeight - 100) {
+                    const elementTop = el.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - 100) {
                         el.classList.add('visible');
                     }
                 });
@@ -530,15 +620,17 @@
             revealOnScroll();
 
             const carouselContainer = document.getElementById('services-carousel');
-            const cards = carouselContainer.querySelectorAll('.card-style');
-            let currentCardIndex = 0;
-            if (cards.length > 0) {
-                cards[0].classList.add('active');
-                setInterval(() => {
-                    cards[currentCardIndex].classList.remove('active');
-                    currentCardIndex = (currentCardIndex + 1) % cards.length;
-                    cards[currentCardIndex].classList.add('active');
-                }, 4000);
+            if (carouselContainer) {
+                const cards = carouselContainer.querySelectorAll('.card-style');
+                let currentCardIndex = 0;
+                if (cards.length > 0) {
+                    cards[0].classList.add('active');
+                    setInterval(() => {
+                        cards[currentCardIndex].classList.remove('active');
+                        currentCardIndex = (currentCardIndex + 1) % cards.length;
+                        cards[currentCardIndex].classList.add('active');
+                    }, 4000);
+                }
             }
         });
     </script>
