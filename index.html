@@ -70,6 +70,27 @@
             -webkit-backdrop-filter: blur(12px);
         }
 
+        /* --- Efecto hover para links del navbar --- */
+        .navbar-link {
+            position: relative;
+            padding-bottom: 4px; /* Espacio para la línea */
+        }
+        .navbar-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%; /* Empezar desde el centro */
+            transform: translateX(-50%); /* Centrar */
+            width: 0;
+            height: 2px;
+            background-color: #f97316; /* text-accent */
+            transition: width 0.3s ease-in-out;
+        }
+        .navbar-link:hover::after {
+            width: 100%;
+        }
+
+
         /* Animación de imagen flotante */
         .floating-img {
             animation: float 4s ease-in-out infinite;
@@ -178,7 +199,7 @@
         }
         .discord-3d iframe:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.05); }
         
-        /* --- CAMBIO: Divisores de sección unificados y de ancho completo --- */
+        /* --- Divisores de sección unificados y de ancho completo --- */
         .section-divider {
             position: absolute;
             bottom: -1px;
@@ -222,6 +243,102 @@
         .section-title:hover span {
             text-shadow: 0 0 15px rgba(249, 115, 22, 0.8);
         }
+        
+        /* --- Carrusel de Testimonios --- */
+        #testimonials-carousel {
+            position: relative;
+            min-height: 320px; 
+            transition: height 0.5s ease-in-out;
+        }
+        .testimonial-slide {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out, visibility 1s;
+        }
+        .testimonial-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* --- Paginación de Testimonios --- */
+        .testimonial-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .testimonial-dot.active {
+            background-color: #f97316; /* bg-accent */
+            transform: scale(1.25);
+        }
+
+        /* --- Estilos para Previsualización de Video --- */
+        .video-preview-card {
+            position: relative;
+            border-radius: 1rem; /* 16px */
+            overflow: hidden;
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background-color: #111; /* Fondo oscuro */
+            cursor: pointer; /* Añadido cursor pointer */
+        }
+        .video-preview-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .video-preview-card:hover {
+            transform: scale(1.05) translateY(-5px);
+            border-color: rgba(249, 115, 22, 0.8);
+            box-shadow: 0 0 35px rgba(249, 115, 22, 0.5);
+        }
+        .video-preview-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Icono de Play (Efecto Hover Mejorado) */
+        .video-preview-card::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            font-size: 4rem; /* 64px */
+            color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 8px; 
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            /* Transición mejorada */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(4px);
+            /* Sombra sutil inicial */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .video-preview-card:hover::after {
+            opacity: 1;
+            /* Escala más grande y sombra de texto */
+            transform: translate(-50%, -50%) scale(1.1);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            /* Sombra de caja más pronunciada */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.7);
+        }
 
     </style>
 </head>
@@ -241,10 +358,12 @@
                 <a href="#home" class="text-2xl font-bold text-white">SM<span class="text-accent">Estudio</span></a>
                 
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#servicios" class="text-gray-300 hover:text-accent transition-colors duration-300">Servicios</a>
-                    <a href="#trabajos" class="text-gray-300 hover:text-accent transition-colors duration-300">Trabajos</a>
-                    <a href="#testimonios" class="text-gray-300 hover:text-accent transition-colors duration-300">Testimonios</a>
-                    <a href="#contacto" class="text-gray-300 hover:text-accent transition-colors duration-300">Contacto</a>
+                    <a href="#servicios" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Servicios</a>
+                    <a href="#trabajos" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Trabajos</a>
+                    <!-- Enlace a la nueva sección de videos -->
+                    <a href="#videos-hg" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Videos</a>
+                    <a href="#testimonios" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Testimonios</a>
+                    <a href="#contacto" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Contacto</a>
                 </nav>
                 <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="hidden md:inline-block bg-accent text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-lg shadow-orange-500/20">
                     Ir a Discord
@@ -259,6 +378,8 @@
             <div id="mobile-menu" class="hidden md:hidden fixed top-0 left-0 w-full h-screen bg-black/90 backdrop-blur-lg flex flex-col items-center justify-center space-y-6">
                 <a href="#servicios" class="mobile-link text-2xl text-gray-300">Servicios</a>
                 <a href="#trabajos" class="mobile-link text-2xl text-gray-300">Trabajos</a>
+                <!-- Enlace a la nueva sección de videos (móvil) -->
+                <a href="#videos-hg" class="mobile-link text-2xl text-gray-300">Videos</a>
                 <a href="#testimonios" class="mobile-link text-2xl text-gray-300">Testimonios</a>
                 <a href="#contacto" class="mobile-link text-2xl text-gray-300">Contacto</a>
                 <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="mt-4 inline-block bg-accent text-white font-semibold px-6 py-3 rounded-lg">
@@ -416,41 +537,332 @@
                             </div>
                         </div>
                         
-
+                        <div class="section-divider divider-style-glow"></div>
                     </div>
                 </div>
                 <div class="section-divider divider-style-glow"></div>
             </section>
 
-            <section id="testimonios" class="py-24 flex flex-col justify-center items-center relative bg-black/30">
+            <!-- Video Previews (HG) -->
+            <section id="videos-hg" class="py-24 flex flex-col justify-center items-center relative bg-black/30">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Videos <span class="text-accent">Destacados</span></h2>
+                    
+                    <div class="space-y-12">
+                        
+                        <!-- Shotgun -->
+                        <div>
+                            <h3 class="text-2xl font-semibold text-left mb-6">Shotgun</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <!-- Video 1: Se agrega la clase video-open-btn -->
+                                <a href="https://www.youtube.com/watch?v=u6iYHqIKPbc" class="video-preview-card reveal aspect-video video-open-btn">
+                                    <img src="https://img.youtube.com/vi/u6iYHqIKPbc/hqdefault.jpg" alt="Video preview Shotgun 1" class="rounded-lg">
+                                </a>
+                                <!-- Video 2: Se agrega la clase video-open-btn -->
+                                <a href="https://www.youtube.com/watch?v=9PvfCyYfqew" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 150ms;">
+                                    <img src="https://img.youtube.com/vi/9PvfCyYfqew/hqdefault.jpg" alt="Video preview Shotgun 2" class="rounded-lg">
+                                </a>
+                                <!-- Video 3: Se agrega la clase video-open-btn -->
+                                <a href="https://www.youtube.com/watch?v=1N5w8RAjxg4" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 300ms;">
+                                    <img src="https://img.youtube.com/vi/1N5w8RAjxg4/hqdefault.jpg" alt="Video preview Shotgun 3" class="rounded-lg">
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Saiko -->
+                        <div>
+                            <h3 class="text-2xl font-semibold text-left mb-6">Saiko</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                <!-- Video 1: Se agrega la clase video-open-btn -->
+                                <a href="https://www.youtube.com/watch?v=7y7FEq0JK0k" class="video-preview-card reveal aspect-video video-open-btn">
+                                    <img src="https://img.youtube.com/vi/7y7FEq0JK0k/hqdefault.jpg" alt="Video preview Saiko 1" class="rounded-lg">
+                                </a>
+                                <!-- Video 2: Se agrega la clase video-open-btn -->
+                                <a href="https://www.youtube.com/watch?v=il81TwYeqEY" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 100ms;">
+                                    <img src="https://img.youtube.com/vi/il81TwYeqEY/hqdefault.jpg" alt="Video preview Saiko 2" class="rounded-lg">
+                                </a>
+                                <!-- Video 3: Se agrega la clase video-open-btn -->
+                                <a href="https://www.youtube.com/watch?v=n8qoa0caDnE" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 200ms;">
+                                    <img src="https://img.youtube.com/vi/n8qoa0caDnE/hqdefault.jpg" alt="Video preview Saiko 3" class="rounded-lg">
+                                </a>
+                                <!-- Video 4: Se agrega la clase video-open-btn -->
+                                <a href="https://www.youtube.com/watch?v=hghhfmLK_1g" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 300ms;">
+                                    <img src="https://img.youtube.com/vi/hghhfmLK_1g/hqdefault.jpg" alt="Video preview Saiko 4" class="rounded-lg">
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="section-divider divider-style-glow"></div>
+            </section>
+            <!-- FIN DE LA NUEVA SECCIÓN -->
+
+
+            <!-- SECCIÓN DE TESTIMONIOS MODIFICADA -->
+            <section id="testimonios" class="py-24 flex flex-col justify-center items-center relative">
                 <div class="container mx-auto px-6 text-center">
                     <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Lo que dicen <span class="text-accent">Nuestros Clientes</span></h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="card-style p-8 rounded-xl text-left reveal">
-                            <p class="text-gray-300 italic mb-6">"SM Estudio transformó mi stream por completo. La calidad y el tiempo de entrega son increíbles."</p>
-                            <div class="flex items-center">
-                                <img src="https://placehold.co/40x40/f97316/white?text=JP" alt="Avatar Juan P." class="w-10 h-10 rounded-full mr-4">
-                                <div><p class="font-bold text-white">Juan P.</p><p class="text-sm text-gray-400">Streamer</p></div>
+                    
+                    <!-- Contenedor del Carrusel -->
+                    <div id="testimonials-carousel" class="max-w-6xl mx-auto">
+                        
+                        <!-- Slide 1 -->
+                        <div class="testimonial-slide">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <!-- Testimonio: +57_pablo -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"duro duro 🐐 10/10"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=57" alt="Avatar +57_pablo" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">+57_pablo</p></div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: iv.vs -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"el mejor servicio 10/10 la mejor atencion muy recomendado"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=IV" alt="Avatar iv.vs" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">iv.vs</p></div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: Axlerio -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"En verdad son los mejores, gracias por la atención 🐐"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=A" alt="Avatar Axlerio" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">Axlerio</p></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                         <div class="card-style p-8 rounded-xl text-left reveal" style="transition-delay: 150ms;">
-                            <p class="text-gray-300 italic mb-6">"Excelente atención y resultados. Mis overlays y logos nunca se vieron tan profesionales."</p>
-                             <div class="flex items-center">
-                                <img src="https://placehold.co/40x40/f97316/white?text=AL" alt="Avatar Ana L." class="w-10 h-10 rounded-full mr-4">
-                                <div><p class="font-bold text-white">Ana L.</p><p class="text-sm text-gray-400">Creadora de Contenido</p></div>
+
+                        <!-- Slide 2 -->
+                        <div class="testimonial-slide">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <!-- Testimonio: xAndrew -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"10/10 la intro bro, el mejor"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=XA" alt="Avatar xAndrew" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">xAndrew</p></div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: Janick -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"Exelente trabajo"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=J" alt="Avatar Janick" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">Janick</p></div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: LaConect -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"10/10"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=LC" alt="Avatar LaConect" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">LaConect</p></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-style p-8 rounded-xl text-left reveal" style="transition-delay: 300ms;">
-                            <p class="text-gray-300 italic mb-6">"10 de 10, responde rápido y todo funciona al pelo. ¡El mejor!"</p>
-                            <div class="flex items-center">
-                                <img src="https://placehold.co/40x40/f97316/white?text=M" alt="Avatar Malwarex" class="w-10 h-10 rounded-full mr-4">
-                                <div><p class="font-bold text-white">Malwarex</p><p class="text-sm text-gray-400">Cliente Verificado</p></div>
+
+                        <!-- Slide 3 -->
+                        <div class="testimonial-slide">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <!-- Testimonio: Koba -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"la kabra 10/10 eres el mejor bro"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=K" alt="Avatar Koba" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">Koba</p></div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: Malwarex -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"10 de 10 responde rápido y todo funciona al pelo"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=M" alt="Avatar Malwarex" class="w-10 h-10 rounded-full mr-4">
+                                        <div>
+                                            <p class="font-bold text-white">Malwarex</p>
+                                            <span class="inline-block bg-green-500/20 text-green-300 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-green-500/50 mt-1">
+                                                <svg class="inline-block w-3 h-3 -mt-px mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 18.25a11.954 11.954 0 007.834-13.251A1.001 1.001 0 0017 4.249a1.001 1.001 0 00-.75-1.114A11.954 11.954 0 0010 1.75a11.954 11.954 0 00-7.084 1.385A1.001 1.001 0 002.25 4.25c0 .379.208.718.516.899zm13.118-1.396A10.001 10.001 0 0010 3.75a10.001 10.001 0 00-5.284.953l.24 1.443 1.256.314A6.001 6.001 0 0110 5.75c1.88 0 3.604.863 4.716 2.212l.24-1.443 1.256-.314-1.056-6.33zM16.95 6.42A7.96 7.96 0 0010 7.75a7.96 7.96 0 00-6.95 1.33l.5 3.013 1.256.314A3.987 3.987 0 0110 9.75c1.37 0 2.61.69 3.35 1.77l.5-3.013 1.256-.314-1.156-6.936z" clip-rule="evenodd"></path></svg>
+                                                Cliente Verificado
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: mariwana.a -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"hg avanzzado, thumbnail, intro , las verdaderas kbritas en velda, unos duros"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=MA" alt="Avatar mariwana.a" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">mariwana.a</p></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Slide 4 -->
+                        <div class="testimonial-slide">
+                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <!-- Testimonio: 07xz_ -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"hg , el mejor"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=07" alt="Avatar 07xz_" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">07xz_</p></div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: raklyrxc.q -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"10xlogos, love that 10000000...00% good work"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=RA" alt="Avatar raklyrxc.q" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">raklyrxc.q</p></div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: pressurex19x -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"hg , Un duro en vd 🐐"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=PR" alt="Avatar pressurex19x" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">pressurex19x</p></div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+
+                        <!-- Slide 5 (Solo 2 tarjetas) -->
+                        <div class="testimonial-slide">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <!-- Testimonio: montolazzzz -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"hg, rapido la cabra bro"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=MO" alt="Avatar montolazzzz" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">montolazzzz</p></div>
+                                    </div>
+                                </div>
+                                <!-- Testimonio: setteds -->
+                                <div class="card-style p-8 rounded-xl text-left">
+                                    <p class="text-gray-300 italic mb-4">"HG avanzado, la kabra"</p>
+                                    <div class="flex items-center mb-6">
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/AFBD," "xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <img src="https://placehold.co/40x40/f97316/white?text=S" alt="Avatar setteds" class="w-10 h-10 rounded-full mr-4">
+                                        <div><p class="font-bold text-white">setteds</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Paginación del Carrusel -->
+                    <div id="testimonial-pagination" class="flex justify-center space-x-2 mt-12">
+                        <!-- Los puntos se agregarán aquí por JS -->
                     </div>
                 </div>
                  <div class="section-divider divider-style-glow"></div>
             </section>
+            <!-- FIN DE LA SECCIÓN MODIFICADA -->
 
             <section id="contacto" class="py-24 flex flex-col justify-center items-center relative">
                 <div class="container mx-auto px-6">
@@ -481,6 +893,18 @@
             </section>
         </main>
         
+        <!-- NUEVO: Modal de Video -->
+        <div id="video-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+            <div class="relative w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl shadow-accent/30">
+                <!-- Contenedor del Iframe (se llenará con JS) -->
+                <div id="modal-video-container" class="w-full h-full"></div>
+                <!-- Botón de Cerrar -->
+                <button id="modal-close-btn" class="absolute top-0 right-0 -mt-10 -mr-0 md:mt-0 md:-mr-10 text-white hover:text-accent transition-colors duration-300" title="Cerrar">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+
         <footer class="bg-black/50 border-t border-white/10 pt-16 pb-8">
             <div class="container mx-auto px-6">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12 text-center sm:text-left">
@@ -494,6 +918,7 @@
                             <li><a href="#servicios" class="text-gray-400 hover:text-accent transition">Servicios</a></li>
                             <li><a href="#beneficios" class="text-gray-400 hover:text-accent transition">Beneficios</a></li>
                             <li><a href="#trabajos" class="text-gray-400 hover:text-accent transition">Trabajos</a></li>
+                            <li><a href="#videos-hg" class="text-gray-400 hover:text-accent transition">Videos</a></li>
                             <li><a href="#testimonios" class="text-gray-400 hover:text-accent transition">Testimonios</a></li>
                         </ul>
                     </div>
@@ -544,7 +969,7 @@
                  mobileMenu.classList.toggle('hidden');
                  openIcon.classList.toggle('hidden');
                  closeIcon.classList.toggle('hidden');
-                 document.body.classList.toggle('overflow-hidden');
+                 document.body.classList.toggle('overflow-hidden'); // Modificado para afectar el body
             };
             mobileMenuButton.addEventListener('click', toggleMenu);
             mobileLinks.forEach(link => link.addEventListener('click', () => {
@@ -555,13 +980,23 @@
             const revealOnScroll = () => {
                 const windowHeight = window.innerHeight;
                 revealElements.forEach(el => {
+                    // Aplicar a todos los 'reveal', incluidos los del carrusel y videos
                     if (el.getBoundingClientRect().top < windowHeight - 100) {
                         el.classList.add('visible');
                     }
+                    
+                    // Quitar la lógica que excluía a los carruseles si se desea que animen al entrar
+                    /*
+                    if (!el.closest('#services-carousel') && !el.closest('#testimonials-carousel')) {
+                        if (el.getBoundingClientRect().top < windowHeight - 100) {
+                            el.classList.add('visible');
+                        }
+                    }
+                    */
                 });
             };
             window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll();
+            revealOnScroll(); // Ejecutar al cargar
 
             const carouselContainer = document.getElementById('services-carousel');
             const cards = carouselContainer.querySelectorAll('.card-style');
@@ -574,6 +1009,150 @@
                     cards[currentCardIndex].classList.add('active');
                 }, 4000);
             }
+
+            // --- Lógica del Carrusel de Testimonios ---
+            const testimonialCarousel = document.getElementById('testimonials-carousel');
+            const testimonialSlides = testimonialCarousel.querySelectorAll('.testimonial-slide');
+            const paginationContainer = document.getElementById('testimonial-pagination');
+            let currentTestimonialSlide = 0;
+            let testimonialInterval;
+
+            if (testimonialSlides.length > 0) {
+                // Función para cambiar de slide
+                const showSlide = (index) => {
+                    testimonialSlides.forEach((slide, i) => {
+                        slide.classList.remove('active');
+                        const dot = document.getElementById(`dot-${i}`);
+                        if(dot) dot.classList.remove('active');
+                    });
+
+                    const newSlide = testimonialSlides[index];
+                    const newDot = document.getElementById(`dot-${index}`);
+                    
+                    if (newSlide) newSlide.classList.add('active');
+                    if(newDot) newDot.classList.add('active');
+
+                    if (newSlide) {
+                        testimonialCarousel.style.height = `${newSlide.offsetHeight}px`;
+                    }
+                    currentTestimonialSlide = index;
+                };
+
+                // Crear los puntos de paginación
+                testimonialSlides.forEach((_, i) => {
+                    const dot = document.createElement('button');
+                    dot.classList.add('testimonial-dot');
+                    dot.id = `dot-${i}`;
+                    dot.addEventListener('click', () => {
+                        showSlide(i);
+                        clearInterval(testimonialInterval);
+                        startInterval();
+                    });
+                    paginationContainer.appendChild(dot);
+                });
+
+                // Función para iniciar el intervalo
+                const startInterval = () => {
+                    testimonialInterval = setInterval(() => {
+                        let nextSlide = (currentTestimonialSlide + 1) % testimonialSlides.length;
+                        showSlide(nextSlide);
+                    }, 6000); 
+                };
+                
+                setTimeout(() => {
+                    showSlide(0); 
+                }, 200);
+                
+                startInterval(); 
+
+                window.addEventListener('resize', () => {
+                     if (testimonialSlides[currentTestimonialSlide]) {
+                        testimonialCarousel.style.height = `${testimonialSlides[currentTestimonialSlide].offsetHeight}px`;
+                     }
+                });
+            }
+
+            // --- NUEVO: Lógica del Modal de Video ---
+            const videoModal = document.getElementById('video-modal');
+            const videoContainer = document.getElementById('modal-video-container');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+            const videoOpenBtns = document.querySelectorAll('.video-open-btn');
+
+            // Función para extraer el ID de YouTube
+            const getYouTubeId = (url) => {
+                let videoId = '';
+                try {
+                    const urlObj = new URL(url);
+                    if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
+                        videoId = urlObj.searchParams.get('v');
+                    } else if (urlObj.hostname === 'youtu.be') {
+                        videoId = urlObj.pathname.split('/')[1];
+                    }
+                } catch (e) {
+                    console.error("Error parsing URL: ", e, url);
+                }
+                return videoId;
+            };
+
+            // Función para abrir el modal
+            const openModal = (e) => {
+                e.preventDefault(); // Prevenir que el enlace <a> navegue
+                const videoUrl = e.currentTarget.href;
+                const videoId = getYouTubeId(videoUrl);
+
+                if (!videoId) {
+                    console.error("Could not find video ID for:", videoUrl);
+                    // Si no se puede obtener el ID, simplemente abre el enlace en una nueva pestaña
+                    window.open(videoUrl, '_blank');
+                    return;
+                }
+
+                // Crear el iframe con autoplay
+                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+                
+                videoContainer.innerHTML = `
+                    <iframe 
+                        class="w-full h-full" 
+                        src="${embedUrl}" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen
+                    ></iframe>
+                `;
+                
+                videoModal.classList.remove('hidden');
+                setTimeout(() => { // Pequeño delay para permitir la transición de opacidad
+                     videoModal.classList.remove('opacity-0');
+                }, 10); // 10ms es suficiente
+                document.body.classList.add('overflow-hidden'); // Evitar scroll del body
+            };
+
+            // Función para cerrar el modal
+            const closeModal = () => {
+                videoModal.classList.add('opacity-0');
+                setTimeout(() => { // Esperar a que termine la transición
+                    videoModal.classList.add('hidden');
+                    videoContainer.innerHTML = ''; // Detener el video destruyendo el iframe
+                }, 300); // 300ms (coincide con duration-300)
+                document.body.classList.remove('overflow-hidden');
+            };
+
+            // Asignar eventos a los botones de video
+            videoOpenBtns.forEach(btn => {
+                btn.addEventListener('click', openModal);
+            });
+
+            // Asignar evento al botón de cerrar
+            closeModalBtn.addEventListener('click', closeModal);
+
+            // Cerrar al hacer clic en el fondo oscuro
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    closeModal();
+                }
+            });
+
         });
     </script>
 </body>
