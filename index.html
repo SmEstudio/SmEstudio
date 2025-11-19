@@ -312,35 +312,6 @@
             margin-left: 8px;
             box-shadow: 0 2px 5px rgba(249, 115, 22, 0.3);
         }
-
-        /* Chat Styles */
-        .chat-bubble {
-            max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 14px;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            position: relative;
-            word-wrap: break-word;
-        }
-        .chat-mine {
-            background-color: #f97316;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-        .chat-other {
-            background-color: #222;
-            color: #e5e7eb;
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-            border: 1px solid #333;
-        }
-        .chat-admin {
-            background-color: #3a0d0d; /* Red tint for admin */
-            border: 1px solid #7f1d1d;
-            color: #fca5a5;
-        }
     </style>
 </head>
 
@@ -862,55 +833,36 @@
         </div>
     </div>
 
-    <!-- CLIENT DASHBOARD MODAL -->
+    <!-- CLIENT DASHBOARD MODAL (SIMPLE PROFILE) -->
     <div id="dashboard-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-md" id="dash-backdrop"></div>
-        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-3xl w-full max-w-4xl h-[80vh] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="dash-content">
+        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-3xl w-full max-w-md flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="dash-content">
             
             <!-- Dash Header -->
             <div class="p-6 border-b border-white/10 flex justify-between items-center bg-[#121212]">
                 <div>
                     <h3 class="text-2xl font-bold text-white">Panel de <span class="text-brand">Cliente</span></h3>
-                    <p class="text-sm text-gray-500" id="dash-user-email">Cargando...</p>
                 </div>
                 <button id="close-dash" class="text-gray-500 hover:text-white p-2 bg-white/5 rounded-lg transition-colors">
                     <ion-icon name="close" class="text-xl"></ion-icon>
                 </button>
             </div>
 
-            <!-- Dash Tabs -->
-            <div class="flex gap-6 px-6 pt-4 border-b border-white/5">
-                <button class="dash-tab active pb-3 px-2 font-bold text-sm" data-target="tab-tickets">Soporte & Tickets</button>
-            </div>
-
             <!-- Dash Content -->
-            <div class="flex-1 overflow-y-auto p-6 relative">
-                
-                <!-- Tab: Tickets -->
-                <div id="tab-tickets" class="dash-pane h-full flex flex-col">
-                    <div class="bg-black/40 border border-white/5 rounded-xl p-4 mb-6">
-                        <h4 class="text-white font-bold mb-3 flex items-center gap-2">
-                             <ion-icon name="add-circle-outline" class="text-brand"></ion-icon> Crear Nuevo Ticket
-                        </h4>
-                        <form id="create-ticket-form" class="space-y-3">
-                            <input type="text" id="ticket-subject" placeholder="Asunto (Ej. Duda con mi logo)" class="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-4 py-2 text-white text-sm focus:border-brand outline-none">
-                            <textarea id="ticket-msg" placeholder="Describe tu problema..." class="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-4 py-2 text-white text-sm focus:border-brand outline-none h-20 resize-none"></textarea>
-                            <button type="submit" class="bg-brand hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors flex items-center gap-2">
-                                <ion-icon name="send"></ion-icon> Enviar Ticket
-                            </button>
-                        </form>
-                    </div>
-
-                    <h4 class="text-gray-400 text-xs uppercase font-bold mb-3">Historial de Tickets</h4>
-                    <div id="tickets-list" class="space-y-3 overflow-y-auto flex-1 pr-2">
-                        <p class="text-center text-gray-600 text-sm py-4 animate-pulse">Cargando tus tickets...</p>
-                    </div>
-                </div>
+            <div class="flex-1 p-6 relative text-center space-y-4">
+                 <div class="w-20 h-20 bg-gradient-to-br from-brand to-purple-600 rounded-full mx-auto flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+                     <ion-icon name="person"></ion-icon>
+                 </div>
+                 <h4 class="text-white font-bold text-xl">Bienvenido</h4>
+                 <p class="text-sm text-gray-500" id="dash-user-email">Cargando...</p>
+                 <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-xs text-gray-400 mt-4">
+                     <p>Aquí podrás gestionar tus compras próximamente.</p>
+                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ADMIN DASHBOARD MODAL -->
+    <!-- ADMIN DASHBOARD MODAL (STATS ONLY) -->
     <div id="admin-dashboard-modal" class="fixed inset-0 z-[95] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/95 backdrop-blur-md" id="admin-backdrop"></div>
         <div class="relative bg-[#0f0f0f] border border-red-900/30 rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="admin-content">
@@ -934,11 +886,8 @@
             <div class="flex h-full overflow-hidden">
                 <!-- Sidebar -->
                 <div class="w-64 bg-[#050505] border-r border-white/5 p-4 flex flex-col gap-2 hidden md:flex">
-                    <button class="admin-tab-btn active flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-900/20 border border-red-500/30" data-target="admin-overview">
+                    <button class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-900/20 border border-red-500/30">
                         <ion-icon name="stats-chart"></ion-icon> Estadísticas
-                    </button>
-                    <button class="admin-tab-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 border border-transparent" data-target="admin-tickets">
-                        <ion-icon name="chatbubbles"></ion-icon> Tickets Soporte
                     </button>
                 </div>
 
@@ -946,12 +895,8 @@
                 <div class="flex-1 p-6 overflow-y-auto bg-[#0a0a0a]">
                     
                     <!-- View: Overview -->
-                    <div id="admin-overview" class="admin-pane space-y-6">
+                    <div class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
-                                <div class="text-gray-500 text-xs uppercase font-bold mb-2">Tickets Totales</div>
-                                <div class="text-3xl font-bold text-white" id="stat-total-tickets">0</div>
-                            </div>
                             <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
                                 <div class="text-gray-500 text-xs uppercase font-bold mb-2">Usuarios Registrados</div>
                                 <div class="text-3xl font-bold text-white">--</div>
@@ -960,57 +905,14 @@
                                 <div class="text-gray-500 text-xs uppercase font-bold mb-2">Ingresos (Mes)</div>
                                 <div class="text-3xl font-bold text-green-500">$0.00</div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- View: Tickets -->
-                    <div id="admin-tickets" class="admin-pane hidden h-full flex flex-col">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-white">Bandeja de Entrada</h3>
-                            <button id="refresh-admin-tickets" class="text-xs bg-white/5 hover:bg-white/10 text-white px-3 py-1.5 rounded-lg transition-colors">
-                                <ion-icon name="refresh"></ion-icon> Actualizar
-                            </button>
-                        </div>
-                        <div id="admin-tickets-list" class="space-y-3 flex-1 overflow-y-auto pr-2">
-                            <p class="text-center text-gray-600 py-10">Cargando tickets del sistema...</p>
+                             <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
+                                <div class="text-gray-500 text-xs uppercase font-bold mb-2">Estado Servidor</div>
+                                <div class="text-3xl font-bold text-brand">Online</div>
+                            </div>
                         </div>
                     </div>
 
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CHAT MODAL -->
-    <div id="chat-modal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="chat-backdrop"></div>
-        <div class="relative bg-[#121212] border border-white/10 rounded-2xl w-full max-w-md h-[600px] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="chat-content">
-            
-            <!-- Chat Header -->
-            <div class="p-4 border-b border-white/10 bg-[#1a1a1a] flex justify-between items-center rounded-t-2xl">
-                <div>
-                    <h4 class="text-white font-bold text-sm" id="chat-ticket-subject">Ticket #...</h4>
-                    <p class="text-xs text-gray-400 flex items-center gap-1"><ion-icon name="ellipse" class="text-green-500 text-[8px]"></ion-icon> Chat en vivo</p>
-                </div>
-                <button id="close-chat" class="text-gray-400 hover:text-white p-1">
-                    <ion-icon name="close" class="text-xl"></ion-icon>
-                </button>
-            </div>
-
-            <!-- Chat Messages -->
-            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 flex flex-col bg-[#0a0a0a]">
-                <!-- Mensajes inyectados -->
-                <p class="text-center text-gray-600 text-xs py-4">Iniciando chat seguro...</p>
-            </div>
-
-            <!-- Chat Input -->
-            <div class="p-3 border-t border-white/10 bg-[#1a1a1a] rounded-b-2xl">
-                <form id="chat-form" class="flex gap-2">
-                    <input type="text" id="chat-input" placeholder="Escribe un mensaje..." class="flex-1 bg-[#0a0a0a] border border-white/10 rounded-full px-4 py-2 text-sm text-white focus:border-brand outline-none">
-                    <button type="submit" class="bg-brand hover:bg-orange-600 text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors">
-                        <ion-icon name="send" class="text-sm translate-x-0.5"></ion-icon>
-                    </button>
-                </form>
             </div>
         </div>
     </div>
@@ -1029,7 +931,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp, orderBy, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
         // --- CONFIGURACIÓN EXACTA ---
         const firebaseConfig = {
@@ -1046,9 +948,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-        // ID para rutas protegidas (Unificado para Client y Admin)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'smestudio-app';
-
         // --- REFERENCIAS DOM ---
         const loginTriggerBtn = document.getElementById('login-trigger-btn');
         const mobileLoginBtn = document.getElementById('mobile-login-btn');
@@ -1069,26 +968,11 @@
         const dashBackdrop = document.getElementById('dash-backdrop');
         const closeDashBtn = document.getElementById('close-dash');
         const dashUserEmail = document.getElementById('dash-user-email');
-        const createTicketForm = document.getElementById('create-ticket-form');
-        const ticketsList = document.getElementById('tickets-list');
 
         const adminModal = document.getElementById('admin-dashboard-modal');
         const adminContent = document.getElementById('admin-content');
         const adminBackdrop = document.getElementById('admin-backdrop');
         const closeAdminBtn = document.getElementById('close-admin');
-        const adminTicketsList = document.getElementById('admin-tickets-list');
-        const refreshAdminTicketsBtn = document.getElementById('refresh-admin-tickets');
-        const statTotalTickets = document.getElementById('stat-total-tickets');
-
-        // Chat Refs
-        const chatModal = document.getElementById('chat-modal');
-        const chatContent = document.getElementById('chat-content');
-        const closeChatBtn = document.getElementById('close-chat');
-        const chatBackdrop = document.getElementById('chat-backdrop');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatForm = document.getElementById('chat-form');
-        const chatInput = document.getElementById('chat-input');
-        const chatTicketSubject = document.getElementById('chat-ticket-subject');
 
         const btnGoogle = document.getElementById('btn-google');
         const btnDiscord = document.getElementById('btn-discord');
@@ -1104,9 +988,6 @@
 
         let currentUser = null;
         let isRegisterMode = false;
-        let currentChatTicketId = null;
-        let chatUnsubscribe = null;
-        let ticketUnsubscribe = null;
         
         const admins = ['admin@smestudio.com', 'soporte@smestudio.com']; 
 
@@ -1159,13 +1040,9 @@
 
         adminPanelBtn.addEventListener('click', () => {
             toggleModal(adminModal, adminContent, true);
-            loadAdminTickets();
         });
         closeAdminBtn.addEventListener('click', () => toggleModal(adminModal, adminContent, false));
         adminBackdrop.addEventListener('click', () => toggleModal(adminModal, adminContent, false));
-
-        closeChatBtn.addEventListener('click', closeChat);
-        chatBackdrop.addEventListener('click', closeChat);
 
         tabLogin.addEventListener('click', () => switchAuthMode(false));
         tabRegister.addEventListener('click', () => switchAuthMode(true));
@@ -1213,9 +1090,6 @@
 
                 if(dashUserEmail) dashUserEmail.textContent = user.email;
 
-                // Cargar tickets SOLO cuando hay usuario
-                loadTickets(user.uid);
-
                 // Check Admin
                 if(admins.includes(user.email)) {
                     adminPanelBtn.classList.remove('hidden');
@@ -1227,214 +1101,13 @@
             } else {
                 userMenu.classList.replace('flex', 'hidden');
                 loginTriggerBtn.classList.replace('hidden', 'flex');
-                if(ticketsList) ticketsList.innerHTML = ''; 
-                if(ticketUnsubscribe) ticketUnsubscribe();
-            }
-        });
-
-        // --- TICKET LOGIC ---
-        createTicketForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const subject = document.getElementById('ticket-subject').value;
-            const message = document.getElementById('ticket-msg').value;
-
-            if(!currentUser || !subject || !message) return;
-
-            try {
-                // Guardar en ruta pública unificada
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tickets'), {
-                    userId: currentUser.uid,
-                    userEmail: currentUser.email,
-                    userName: currentUser.displayName || "Usuario",
-                    subject: subject,
-                    message: message,
-                    status: 'abierto',
-                    createdAt: serverTimestamp()
-                });
-                
-                document.getElementById('ticket-subject').value = '';
-                document.getElementById('ticket-msg').value = '';
-                alert('Ticket creado correctamente');
-            } catch (e) {
-                console.error(e);
-                alert("Error al crear ticket: " + e.message);
-            }
-        });
-
-        function loadTickets(uid) {
-            if(ticketUnsubscribe) ticketUnsubscribe();
-
-            const q = query(
-                collection(db, 'artifacts', appId, 'public', 'data', 'tickets'), 
-                where("userId", "==", uid),
-                orderBy("createdAt", "desc")
-            );
-
-            ticketUnsubscribe = onSnapshot(q, (snapshot) => {
-                ticketsList.innerHTML = '';
-                if (snapshot.empty) {
-                    ticketsList.innerHTML = '<p class="text-center text-gray-600 text-sm py-4">No tienes tickets activos.</p>';
-                    return;
-                }
-                
-                snapshot.forEach((doc) => {
-                    const t = doc.data();
-                    const statusColor = t.status === 'abierto' ? 'text-green-500 border-green-500/20 bg-green-500/10' : 'text-gray-500 border-gray-500/20 bg-gray-500/10';
-                    
-                    const item = document.createElement('div');
-                    item.className = "bg-[#121212] border border-white/5 rounded-lg p-4 hover:border-brand/30 transition-colors";
-                    item.innerHTML = `
-                        <div class="flex justify-between items-start mb-2">
-                            <h5 class="text-white font-bold text-sm">${t.subject}</h5>
-                            <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${statusColor}">${t.status}</span>
-                        </div>
-                        <p class="text-gray-500 text-xs mb-3 line-clamp-2">${t.message}</p>
-                        <button class="w-full bg-white/5 hover:bg-brand/20 hover:text-brand text-gray-400 text-xs font-bold py-2 rounded border border-white/10 transition-colors flex items-center justify-center gap-2 open-chat-btn">
-                            <ion-icon name="chatbubbles-outline"></ion-icon> Abrir Chat
-                        </button>
-                    `;
-                    item.querySelector('.open-chat-btn').addEventListener('click', () => openChat(doc.id, t.subject));
-                    ticketsList.appendChild(item);
-                });
-            }, (error) => {
-                console.error("Error loading tickets:", error);
-                ticketsList.innerHTML = '<p class="text-center text-red-500 text-xs py-4">Error cargando tickets. Intenta recargar.</p>';
-            });
-        }
-
-        async function loadAdminTickets() {
-            // Usar la misma ruta que el cliente
-            const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'tickets'), orderBy("createdAt", "desc"));
-            
-            onSnapshot(q, (snapshot) => {
-                adminTicketsList.innerHTML = '';
-                statTotalTickets.innerText = snapshot.size;
-
-                if(snapshot.empty) {
-                    adminTicketsList.innerHTML = '<p class="text-center text-gray-600 py-4">No hay tickets.</p>';
-                    return;
-                }
-
-                snapshot.forEach((docSnapshot) => {
-                    const t = docSnapshot.data();
-                    const id = docSnapshot.id;
-                    const isClosed = t.status === 'cerrado';
-
-                    const item = document.createElement('div');
-                    item.className = 'bg-[#121212] border border-white/5 rounded-xl p-4 flex flex-col gap-3 transition-all hover:border-white/10';
-                    item.innerHTML = `
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-xs font-bold bg-white/10 px-2 py-0.5 rounded text-gray-300">${t.userEmail}</span>
-                                </div>
-                                <h4 class="text-white font-bold">${t.subject}</h4>
-                            </div>
-                            <div class="flex flex-col gap-2 items-end">
-                                <span class="text-xs font-bold uppercase ${t.status === 'abierto' ? 'text-green-400' : 'text-gray-500'}">${t.status}</span>
-                            </div>
-                        </div>
-                        <div class="flex justify-end gap-2 mt-2 border-t border-white/5 pt-3">
-                            <button class="text-xs bg-blue-600/20 text-blue-400 hover:bg-blue-600/40 px-3 py-1.5 rounded border border-blue-500/20 transition-colors flex items-center gap-1 open-chat-btn">
-                                <ion-icon name="chatbubble"></ion-icon> Chat
-                            </button>
-                            ${!isClosed ? `<button class="btn-close text-xs bg-green-900/30 text-green-400 hover:bg-green-900/50 px-3 py-1.5 rounded border border-green-500/20 transition-colors">Resolver</button>` : ''}
-                            <button class="btn-delete text-xs bg-red-900/30 text-red-400 hover:bg-red-900/50 px-3 py-1.5 rounded border border-red-500/20 transition-colors">Eliminar</button>
-                        </div>
-                    `;
-                    
-                    item.querySelector('.open-chat-btn').addEventListener('click', () => openChat(id, t.subject));
-                    
-                    if(item.querySelector('.btn-close')) {
-                        item.querySelector('.btn-close').addEventListener('click', async () => {
-                            if(confirm('¿Marcar resuelto?')) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'tickets', id), { status: 'cerrado' });
-                        });
-                    }
-                    item.querySelector('.btn-delete').addEventListener('click', async () => {
-                        if(confirm('¿Eliminar?')) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'tickets', id));
-                    });
-
-                    adminTicketsList.appendChild(item);
-                });
-            });
-        }
-
-        refreshAdminTicketsBtn.addEventListener('click', loadAdminTickets);
-
-        // --- CHAT SYSTEM ---
-        function openChat(ticketId, subject) {
-            currentChatTicketId = ticketId;
-            chatTicketSubject.textContent = subject || "Chat de Soporte";
-            
-            toggleModal(chatModal, chatContent, true);
-            
-            // Cargar mensajes
-            const q = query(
-                collection(db, 'artifacts', appId, 'public', 'data', 'ticket_chats'),
-                where('ticketId', '==', ticketId),
-                orderBy('createdAt', 'asc')
-            );
-
-            chatUnsubscribe = onSnapshot(q, (snapshot) => {
-                chatMessages.innerHTML = '';
-                if(snapshot.empty) {
-                    chatMessages.innerHTML = '<p class="text-center text-gray-600 text-xs mt-4">Inicio del chat. Escribe un mensaje.</p>';
-                }
-                
-                snapshot.forEach(doc => {
-                    const m = doc.data();
-                    const isMe = m.senderId === currentUser.uid;
-                    const isAdminMsg = m.role === 'admin';
-                    
-                    let bubbleClass = isMe ? 'chat-mine' : 'chat-other';
-                    if (isAdminMsg && !isMe) bubbleClass += ' chat-admin';
-                    
-                    const msgDiv = document.createElement('div');
-                    msgDiv.className = `chat-bubble ${bubbleClass}`;
-                    msgDiv.innerHTML = `
-                        <div class="text-[10px] opacity-70 mb-0.5 font-bold">${m.senderName}</div>
-                        ${m.message}
-                    `;
-                    chatMessages.appendChild(msgDiv);
-                });
-                
-                // Scroll al fondo
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            });
-        }
-
-        function closeChat() {
-            toggleModal(chatModal, chatContent, false);
-            if(chatUnsubscribe) chatUnsubscribe();
-            currentChatTicketId = null;
-        }
-
-        chatForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const text = chatInput.value.trim();
-            if(!text || !currentChatTicketId) return;
-
-            const isAdmin = admins.includes(currentUser.email);
-
-            try {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'ticket_chats'), {
-                    ticketId: currentChatTicketId,
-                    senderId: currentUser.uid,
-                    senderName: isAdmin ? 'Soporte (Admin)' : (currentUser.displayName || 'Usuario'),
-                    role: isAdmin ? 'admin' : 'user',
-                    message: text,
-                    createdAt: serverTimestamp()
-                });
-                chatInput.value = '';
-            } catch (e) {
-                console.error(e);
             }
         });
 
     </script>
 
     <script>
-        // UI Animations & Interactions (No cambios aquí, solo lógica visual)
+        // UI Animations & Interactions
         document.addEventListener('mousemove', (e) => {
             const cards = document.querySelectorAll('.service-card');
             cards.forEach(card => {
