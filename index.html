@@ -833,7 +833,7 @@
         </div>
     </div>
 
-    <!-- CLIENT DASHBOARD MODAL -->
+    <!-- CLIENT DASHBOARD MODAL (SIN PEDIDOS) -->
     <div id="dashboard-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-md" id="dash-backdrop"></div>
         <div class="relative bg-[#0f0f0f] border border-white/10 rounded-3xl w-full max-w-4xl h-[80vh] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="dash-content">
@@ -851,27 +851,14 @@
 
             <!-- Dash Tabs -->
             <div class="flex gap-6 px-6 pt-4 border-b border-white/5">
-                <button class="dash-tab active pb-3 px-2 font-bold text-sm" data-target="tab-pedidos">Mis Pedidos</button>
-                <button class="dash-tab pb-3 px-2 font-bold text-sm" data-target="tab-tickets">Soporte & Tickets</button>
+                <button class="dash-tab active pb-3 px-2 font-bold text-sm" data-target="tab-tickets">Soporte & Tickets</button>
             </div>
 
             <!-- Dash Content -->
             <div class="flex-1 overflow-y-auto p-6 relative">
                 
-                <!-- Tab: Pedidos -->
-                <div id="tab-pedidos" class="dash-pane space-y-4">
-                    <div class="bg-black/40 border border-white/5 rounded-xl p-6 text-center py-12">
-                        <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600">
-                            <ion-icon name="cart-outline" class="text-3xl"></ion-icon>
-                        </div>
-                        <h4 class="text-white font-bold mb-2">No tienes pedidos activos</h4>
-                        <p class="text-gray-500 text-sm mb-6">Explora la tienda para adquirir tu primer servicio.</p>
-                        <button onclick="document.getElementById('close-dash').click(); window.location.href='#tienda'" class="text-brand hover:text-white text-sm font-bold underline">Ir a la Tienda</button>
-                    </div>
-                </div>
-
-                <!-- Tab: Tickets -->
-                <div id="tab-tickets" class="dash-pane hidden h-full flex flex-col">
+                <!-- Tab: Tickets (Activo por defecto) -->
+                <div id="tab-tickets" class="dash-pane h-full flex flex-col">
                     <div class="bg-black/40 border border-white/5 rounded-xl p-4 mb-6">
                         <h4 class="text-white font-bold mb-3 flex items-center gap-2">
                              <ion-icon name="add-circle-outline" class="text-brand"></ion-icon> Crear Nuevo Ticket
@@ -1008,6 +995,9 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        
+        // ID de App para rutas protegidas
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'smestudio-app';
 
         // --- REFERENCIAS DOM ---
         const loginTriggerBtn = document.getElementById('login-trigger-btn');
@@ -1268,7 +1258,8 @@
             if(!currentUser || !subject || !message) return;
 
             try {
-                await addDoc(collection(db, "tickets"), {
+                // UPDATE: Usamos ruta protegida artifacts/appId/public/data/tickets
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tickets'), {
                     userId: currentUser.uid,
                     userEmail: currentUser.email,
                     userName: currentUser.displayName || "Usuario",
@@ -1290,8 +1281,9 @@
         });
 
         function loadTickets(uid) {
+            // UPDATE: Query a la nueva ruta
             const q = query(
-                collection(db, "tickets"), 
+                collection(db, 'artifacts', appId, 'public', 'data', 'tickets'), 
                 where("userId", "==", uid),
                 orderBy("createdAt", "desc")
             );
@@ -1328,9 +1320,8 @@
             adminTicketsList.innerHTML = '<p class="text-center text-gray-600 py-4"><ion-icon name="sync" class="animate-spin"></ion-icon> Cargando...</p>';
             
             try {
-                // Nota: En un entorno de producción real, esto requeriría reglas de seguridad específicas
-                // y probablemente una Cloud Function, pero para este demo usamos client-side query.
-                const q = query(collection(db, "tickets"), orderBy("createdAt", "desc"));
+                // UPDATE: Query a la nueva ruta
+                const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'tickets'), orderBy("createdAt", "desc"));
                 const snapshot = await getDocs(q);
                 
                 adminTicketsList.innerHTML = '';
@@ -1376,7 +1367,7 @@
                 document.querySelectorAll('.btn-close-ticket').forEach(btn => {
                     btn.addEventListener('click', async (e) => {
                         if(!confirm('¿Marcar ticket como resuelto?')) return;
-                        await updateDoc(doc(db, "tickets", e.target.dataset.id), { status: 'cerrado' });
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'tickets', e.target.dataset.id), { status: 'cerrado' });
                         loadAdminTickets();
                     });
                 });
@@ -1384,7 +1375,7 @@
                 document.querySelectorAll('.btn-delete-ticket').forEach(btn => {
                     btn.addEventListener('click', async (e) => {
                         if(!confirm('¿Eliminar este ticket permanentemente?')) return;
-                        await deleteDoc(doc(db, "tickets", e.target.dataset.id));
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'tickets', e.target.dataset.id));
                         loadAdminTickets();
                     });
                 });
