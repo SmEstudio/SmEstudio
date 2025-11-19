@@ -4,1157 +4,1221 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SM Estudio | Diseños Profesionales para Creadores</title>
+    <title>Tienda | SM Estudio | Diseño Premium</title>
     <link rel="icon" href="https://i.imgur.com/eyMr4Ki.png" type="image/png">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Poppins -->
+    <!-- Google Fonts: Poppins & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Iconos -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- Configuración Tailwind personalizada -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#f97316', // Naranja original
+                            dark: '#c2410c',
+                            glow: 'rgba(249, 115, 22, 0.5)'
+                        },
+                        dark: {
+                            950: '#050505', // Fondo principal más oscuro
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            card: '#0f0f0f' // Fondo de tarjeta
+                        },
+                        discord: '#5865F2'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.5, 0, 0, 1) forwards',
+                        'pulse-glow': 'pulseGlow 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(249, 115, 22, 0.1)' },
+                            '50%': { boxShadow: '0 0 40px rgba(249, 115, 22, 0.3)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        /* Estilos personalizados */
         body {
-            font-family: 'Poppins', sans-serif;
             background-color: #050505;
-            color: #e5e7eb; /* gray-200 */
-            position: relative;
+            color: #e5e7eb;
             overflow-x: hidden;
         }
+        body.loading { overflow: hidden; }
 
-        /* Contenedor para efectos de fondo */
-        .background-effects {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            /* Fondo de cuadrícula */
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-        /* Partículas flotantes */
-        .background-effects::before {
-            content: '';
-            position: absolute;
-            inset: 0;
+        /* Fondo con gradiente sutil */
+        .bg-grid-pattern {
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(249, 115, 22, 0.1), transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(249, 115, 22, 0.1), transparent 30%),
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02), transparent 25%);
-            animation: moveParticles 20s linear infinite;
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
 
-        @keyframes moveParticles {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
-        }
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f97316; }
 
-        /* Colores de acento */
-        .text-accent { color: #f97316; } 
-        .bg-accent { background-color: #f97316; }
-        .border-accent { border-color: #f97316; }
-        .ring-accent { --tw-ring-color: #f97316; }
-
-        /* Navbar con desenfoque */
-        .navbar-blur {
-            background-color: rgba(5, 5, 5, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        /* --- Efecto hover para links del navbar --- */
-        .navbar-link {
-            position: relative;
-            padding-bottom: 4px; /* Espacio para la línea */
-        }
-        .navbar-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%; /* Empezar desde el centro */
-            transform: translateX(-50%); /* Centrar */
-            width: 0;
-            height: 2px;
-            background-color: #f97316; /* text-accent */
-            transition: width 0.3s ease-in-out;
-        }
-        .navbar-link:hover::after {
-            width: 100%;
-        }
-
-
-        /* Animación de imagen flotante */
-        .floating-img {
-            animation: float 4s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        /* Efecto de brillo en el botón */
-        .btn-shine {
-          position: relative;
-          overflow: hidden;
-        }
-        .btn-shine::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -150%;
-          width: 120%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-          transition: left 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-          transform: skewX(-25deg);
-        }
-        .btn-shine:hover::after {
-          left: 150%;
-        }
-
-        /* Nuevo estilo de tarjeta mejorado */
-        .card-style {
-            background-color: rgba(17, 17, 17, 0.8); /* #111111 with opacity for glass effect */
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            border-radius: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-        .card-style::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(249, 115, 22, 0.3), transparent);
-            transition: left 0.8s ease-in-out;
-        }
-        .card-style:hover {
-            transform: scale(1.05) translateY(-5px);
-            border-color: rgba(249, 115, 22, 0.8);
-            box-shadow: 0 0 35px rgba(249, 115, 22, 0.5);
-        }
-        .card-style:hover::before {
-            left: 100%;
-        }
-        
-        /* Animación para revelado al hacer scroll */
+        /* Animaciones de revelado */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
         }
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Pantalla de carga */
+        /* Loader */
         #loader {
-          position: fixed; inset: 0; 
-          background: #050505; 
-          display: flex; flex-direction: column;
-          justify-content: center; align-items: center; 
-          z-index: 9999;
-          transition: opacity 0.5s ease-out;
+            position: fixed; inset: 0; background: #050505; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            z-index: 9999; transition: opacity 0.6s ease-out, visibility 0.6s;
         }
-        .loader-logo { 
-          width: 100px; 
-          animation: logoBounce 2s ease-in-out infinite; 
+        .loader-content { text-align: center; position: relative; }
+        .loader-logo { width: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(249,115,22,0.4)); }
+        .loader-bar-container {
+            width: 120px; height: 2px; background: rgba(255,255,255,0.1);
+            border-radius: 4px; overflow: hidden; margin: 0 auto;
         }
-        @keyframes logoBounce { 
-          0%,100% { transform: translateY(0) scale(1); } 
-          50% { transform: translateY(-15px) scale(1.05); } 
+        .loader-bar {
+            height: 100%; background: #f97316; width: 0%;
+            animation: loadProgress 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            box-shadow: 0 0 10px #f97316;
         }
+        @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
 
-        /* Carrusel de servicios */
-        #services-carousel .card-style {
-            position: absolute; width: 100%; top: 0; left: 0;
-            opacity: 0; visibility: hidden; transform: translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s;
-        }
-        #services-carousel .card-style.active {
-            opacity: 1; visibility: visible; transform: translateY(0);
-        }
-        
-        /* Discord Widget 3D */
-        .discord-3d { perspective: 1000px; }
-        .discord-3d iframe {
-            border-radius: 12px; width: 100%; height: 500px;
-            transform: rotateY(-10deg) rotateX(5deg);
-            transition: transform 0.4s ease;
-        }
-        .discord-3d iframe:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.05); }
-        
-        /* --- Divisores de sección unificados y de ancho completo --- */
-        .section-divider {
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-        }
-        .divider-style-glow {
-            height: 2px;
-            background: linear-gradient(to right, transparent, #f97316, transparent);
-            box-shadow: 0 0 20px 2px rgba(249, 115, 22, 0.5);
-            border-radius: 2px;
-        }
-        
-        /* Indicador de scroll */
-        .scroll-down-indicator {
-            animation: bounce-arrow 2s infinite;
-        }
-        @keyframes bounce-arrow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(8px); }
-        }
-
-        /* Efectos de texto */
-        .title-blur-effect {
-            animation: pulse-blur 4s ease-in-out infinite;
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
-        @keyframes pulse-blur {
-            0%, 100% { filter: blur(0px); }
-            50% { filter: blur(3px); }
-        }
-        .title-blur-effect:hover {
-            animation-play-state: paused;
-            filter: blur(0px);
-            transform: scale(1.05);
-        }
-
-        .section-title span {
-            transition: all 0.3s ease-in-out;
-        }
-        .section-title:hover span {
-            text-shadow: 0 0 15px rgba(249, 115, 22, 0.8);
-        }
-        
-        /* --- Carrusel de Testimonios --- */
-        #testimonials-carousel {
-            position: relative;
-            min-height: 320px; 
-            transition: height 0.5s ease-in-out;
-        }
-        .testimonial-slide {
-            position: absolute;
-            width: 100%;
+        /* --- NAVBAR FLOTANTE --- */
+        #navbar {
+            position: fixed;
             top: 0;
-            left: 0;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out, visibility 1s;
-        }
-        .testimonial-slide.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        
-        /* --- Paginación de Testimonios --- */
-        .testimonial-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .testimonial-dot.active {
-            background-color: #f97316; /* bg-accent */
-            transform: scale(1.25);
-        }
-
-        /* --- Estilos para Previsualización de Video --- */
-        .video-preview-card {
-            position: relative;
-            border-radius: 1rem; /* 16px */
-            overflow: hidden;
-            border: 1px solid rgba(249, 115, 22, 0.2);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background-color: #111; /* Fondo oscuro */
-            cursor: pointer; /* Añadido cursor pointer */
-        }
-        .video-preview-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-        .video-preview-card:hover {
-            transform: scale(1.05) translateY(-5px);
-            border-color: rgba(249, 115, 22, 0.8);
-            box-shadow: 0 0 35px rgba(249, 115, 22, 0.5);
-        }
-        .video-preview-card:hover img {
-            transform: scale(1.1);
-        }
-        
-        /* Icono de Play (Efecto Hover Mejorado) */
-        .video-preview-card::after {
-            content: '▶';
-            position: absolute;
-            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            font-size: 4rem; /* 64px */
-            color: rgba(255, 255, 255, 0.8);
-            background-color: rgba(0, 0, 0, 0.5);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-left: 8px; 
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            opacity: 0;
-            /* Transición mejorada */
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(4px);
-            /* Sombra sutil inicial */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateX(-50%);
+            width: 100%;
+            padding: 1.5rem 0;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 50;
         }
-        .video-preview-card:hover::after {
-            opacity: 1;
-            /* Escala más grande y sombra de texto */
-            transform: translate(-50%, -50%) scale(1.1);
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-            /* Sombra de caja más pronunciada */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            background-color: rgba(0, 0, 0, 0.7);
+        #navbar.scrolled {
+            top: 1.5rem;
+            width: 95%;
+            max-width: 1280px;
+            padding: 0.75rem 2rem;
+            background-color: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
         }
+        .nav-link {
+            position: relative; color: #a1a1aa; transition: color 0.3s; font-weight: 500; font-size: 0.95rem; white-space: nowrap;
+        }
+        .nav-link:hover { color: white; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 2px; background: linear-gradient(90deg, #f97316, #fb923c);
+            transition: width 0.3s ease; border-radius: 2px;
+        }
+        .nav-link:hover::after { width: 100%; }
 
+        /* Cards & Styles */
+        .service-card {
+            background-color: #0f0f0f; border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1.25rem; padding: 2rem; display: flex; flex-direction: column; height: 100%;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden;
+        }
+        @media (min-width: 768px) { .service-card { padding: 2.5rem 2rem; } }
+        .service-card:hover {
+            border-color: rgba(249, 115, 22, 0.5); transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(249, 115, 22, 0.1);
+            background-color: #121212;
+        }
+        .card-icon-box {
+            width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #a1a1aa; margin-bottom: 1.5rem; transition: all 0.4s ease;
+        }
+        .service-card:hover .card-icon-box { 
+            background-color: rgba(249, 115, 22, 0.1); border-color: rgba(249, 115, 22, 0.2);
+            color: #f97316; transform: scale(1.05) rotate(3deg);
+        }
+        .check-list li {
+            display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.85rem;
+            color: #9ca3af; font-size: 0.9rem; line-height: 1.5;
+        }
+        .check-list ion-icon { color: #f97316; min-width: 18px; margin-top: 3px; }
+        .btn-dark-action {
+            background-color: rgba(255, 255, 255, 0.05); color: white; font-weight: 600;
+            border-radius: 0.75rem; padding: 1rem; text-align: center; transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .btn-dark-action:hover { 
+            background-color: #f97316; border-color: #f97316; color: white; 
+            box-shadow: 0 5px 20px rgba(249, 115, 22, 0.4); 
+        }
+        
+        /* Dashboard Styles */
+        .dashboard-modal {
+            background-color: #0a0a0a; border: 1px solid #222;
+        }
+        .dash-tab.active {
+            color: #f97316; border-bottom: 2px solid #f97316;
+        }
+        .dash-tab {
+            color: #6b7280; border-bottom: 2px solid transparent; transition: all 0.3s;
+        }
+        .dash-tab:hover { color: white; }
+
+        /* LOGIN MODAL STYLES */
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
+        }
+        .login-btn-social {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            width: 100%; padding: 12px; border-radius: 12px; font-weight: 600;
+            transition: all 0.2s; border: 1px solid transparent;
+        }
+        .login-btn-discord {
+            background-color: #5865F2; color: white;
+        }
+        .login-btn-discord:hover { background-color: #4752c4; box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3); }
+        .login-btn-google {
+            background-color: white; color: #1f1f1f;
+        }
+        .login-btn-google:hover { background-color: #f0f0f0; }
+        
+        /* Masonry & Progress Bars */
+        .masonry-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem; grid-auto-rows: 280px;
+        }
+        @media (max-width: 640px) { .masonry-grid { grid-template-columns: 1fr; grid-auto-rows: 300px; } }
+        .masonry-item-large { grid-column: span 2; grid-row: span 2; }
+        @media (min-width: 641px) and (max-width: 768px) { .masonry-item-large { grid-column: span 1; grid-row: span 1; } }
+        .skill-container { margin-bottom: 1.5rem; }
+        .progress-bar-bg { width: 100%; height: 6px; background-color: rgba(255,255,255,0.05); border-radius: 999px; overflow: hidden; }
+        .progress-bar-fill { 
+            height: 100%; background: linear-gradient(90deg, #f97316, #fb923c); width: 0;
+            transition: width 2s cubic-bezier(0.22, 1, 0.36, 1); border-radius: 999px; 
+        }
+        
+        /* Step & Feedback Cards */
+        .step-card {
+            position: relative; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem; background: rgba(255, 255, 255, 0.01); transition: all 0.4s ease; overflow: hidden;
+        }
+        .step-card:hover {
+            background: rgba(255, 255, 255, 0.03); border-color: rgba(249, 115, 22, 0.3);
+            transform: translateY(-10px); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(249, 115, 22, 0.1);
+        }
+        .step-number {
+            position: absolute; top: -10px; right: 10px; font-size: 5rem; font-weight: 800;
+            color: rgba(255, 255, 255, 0.02); line-height: 1; transition: color 0.3s;
+        }
+        .step-card:hover .step-number { color: rgba(249, 115, 22, 0.1); }
+        .feedback-card {
+            background-color: #0f0f0f; border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1rem; padding: 1.5rem; transition: all 0.3s ease; display: flex; flex-direction: column; position: relative;
+        }
+        .feedback-card:hover {
+            border-color: rgba(249, 115, 22, 0.3); transform: translateY(-5px);
+            background-color: #141414; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+        }
+        .feedback-avatar {
+            background: linear-gradient(135deg, #333, #111); color: #f97316; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);
+        }
     </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased font-sans selection:bg-brand selection:text-white loading">
     
-    <div class="background-effects"></div>
-
+    <!-- Loader -->
     <div id="loader">
-      <img src="https://i.imgur.com/eyMr4Ki.png" alt="Logo SM Estudio" class="loader-logo">
+        <div class="loader-content">
+            <img src="https://i.imgur.com/eyMr4Ki.png" alt="SM Estudio" class="loader-logo animate-pulse">
+            <div class="loader-bar-container">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="w-full relative z-10">
+    <!-- Background -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-brand/5 rounded-full blur-[150px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-blue-600/5 rounded-full blur-[150px]"></div>
+    </div>
 
-        <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <a href="#home" class="text-2xl font-bold text-white">SM<span class="text-accent">Estudio</span></a>
-                
-                <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#servicios" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Servicios</a>
-                    <a href="#trabajos" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Trabajos</a>
-                    <!-- Enlace a la nueva sección de videos -->
-                    <a href="#videos-hg" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Videos</a>
-                    <a href="#testimonios" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Testimonios</a>
-                    <a href="#contacto" class="navbar-link text-gray-300 hover:text-accent transition-colors duration-300">Contacto</a>
-                </nav>
-                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="hidden md:inline-block bg-accent text-white font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 transition-all duration-300 shadow-lg shadow-orange-500/20">
-                    Ir a Discord
-                </a>
-
-                <button id="mobile-menu-button" class="md:hidden text-white z-50">
-                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="w-full h-full px-6 lg:px-8 flex justify-between items-center mx-auto max-w-7xl">
+            <!-- Logo -->
+            <a href="#home" class="text-xl lg:text-2xl font-display font-bold text-white tracking-tight z-50 relative hover:scale-105 transition-transform flex-shrink-0">
+                SM<span class="text-brand">Estudio</span>
+            </a>
             
-            <div id="mobile-menu" class="hidden md:hidden fixed top-0 left-0 w-full h-screen bg-black/90 backdrop-blur-lg flex flex-col items-center justify-center space-y-6">
-                <a href="#servicios" class="mobile-link text-2xl text-gray-300">Servicios</a>
-                <a href="#trabajos" class="mobile-link text-2xl text-gray-300">Trabajos</a>
-                <!-- Enlace a la nueva sección de videos (móvil) -->
-                <a href="#videos-hg" class="mobile-link text-2xl text-gray-300">Videos</a>
-                <a href="#testimonios" class="mobile-link text-2xl text-gray-300">Testimonios</a>
-                <a href="#contacto" class="mobile-link text-2xl text-gray-300">Contacto</a>
-                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="mt-4 inline-block bg-accent text-white font-semibold px-6 py-3 rounded-lg">
-                    Ir a Discord
-                </a>
+            <!-- Links Desktop -->
+            <div class="hidden md:flex items-center justify-center flex-grow gap-6 lg:gap-8 text-sm font-medium">
+                <a href="#about" class="nav-link">Nosotros</a>
+                <a href="#proceso" class="nav-link">Proceso</a>
+                <a href="#tienda" class="nav-link">Servicios</a>
+                <a href="#portfolio" class="nav-link">Portafolio</a>
+                <a href="#feedbacks" class="nav-link">Testimonios</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
             </div>
-        </header>
 
-        <main>
-            <section id="home" class="min-h-screen flex flex-col justify-center items-center relative">
-                <div class="container mx-auto px-6 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 text-center">
-                    <div class="lg:w-1/2">
-                        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white leading-tight title-blur-effect">
-                            SM <span class="text-accent">Estudio</span>
-                        </h1>
-                        <p class="text-gray-300 mt-4 text-base md:text-lg">The favorite place for content creators and streamers.</p>
-                        <h2 class="text-2xl md:text-3xl font-bold text-white mt-6">Impulsa tu contenido</h2>
-                        <p class="mt-4 text-gray-400 max-w-lg mx-auto">
-                           En <strong>SM Estudio</strong> creamos identidad visual de alto impacto para streamers y creadores de contenido. Desde overlays hasta logotipos, elevamos tu marca personal al siguiente nivel con estilo profesional y único.
-                           ¡Transforma tu stream en una experiencia visual inolvidable!
-                        </p>
-                        <a href="#contacto" class="mt-8 inline-block bg-accent text-white font-bold px-8 py-3 rounded-lg text-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-orange-500/30 btn-shine">
-                            ¡Hazlo realidad!
-                        </a>
-                    </div>
-                    <div class="lg:w-1/2 flex justify-center mt-8 lg:mt-0">
-                        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Banner SM Estudio" class="w-2/3 sm:w-3/4 md:w-full max-w-md floating-img">
-                    </div>
+            <!-- User / Login Area -->
+            <div class="flex items-center gap-4 z-50 relative flex-shrink-0">
+                
+                <!-- Botón LOGIN (Visible si NO hay usuario) -->
+                <button id="login-trigger-btn" class="hidden items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white px-5 py-2.5 rounded-full text-sm transition-all hover:border-brand/50 group">
+                    <ion-icon name="log-in-outline" class="text-lg group-hover:text-brand"></ion-icon>
+                    <span>Acceso Cliente</span>
+                </button>
+
+                <!-- Menú USUARIO (Visible si SI hay usuario) -->
+                <div id="user-menu" class="hidden items-center gap-4">
+                    <!-- Botón para abrir Dashboard -->
+                    <button id="open-dashboard-btn" class="flex items-center gap-3 bg-white/5 border border-white/10 pr-4 pl-2 py-1.5 rounded-full hover:border-brand transition-all group">
+                        <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-sm border border-white/20 overflow-hidden group-hover:scale-105 transition-transform">
+                            U
+                        </div>
+                        <span id="user-name" class="text-sm font-medium text-white truncate max-w-[100px]">Usuario</span>
+                    </button>
+                    <button id="logout-btn" class="text-gray-400 hover:text-red-500 transition-colors" title="Cerrar Sesión">
+                        <ion-icon name="log-out-outline" class="text-xl"></ion-icon>
+                    </button>
                 </div>
-                <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-accent opacity-70">
-                    <span class="text-sm font-semibold tracking-widest">SCROLL DOWN</span>
-                    <svg class="w-6 h-6 scroll-down-indicator" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-                <div class="section-divider divider-style-glow"></div>
-            </section>
 
-            <section id="servicios" class="py-24 flex flex-col justify-center items-center relative">
-                <div class="container mx-auto px-6 text-center">
-                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 section-title">Todo lo que <span class="text-accent">Necesitas</span></h2>
-                    <p class="text-gray-400 mb-16 text-base md:text-lg max-w-2xl mx-auto">Soluciones completas para potenciar tu presencia digital.</p>
-                    <div id="services-carousel" class="relative max-w-xs sm:max-w-sm mx-auto h-80">
-                        <!-- Tarjetas de servicios -->
-                        <div class="card-style p-8 rounded-xl text-center">
-                             <div class="bg-gray-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border-2 border-accent/50">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-2">Stream Packs</h3>
-                            <p class="text-gray-400">Paquetes completos de diseño para tu transmisión.</p>
-                        </div>
-                        <div class="card-style p-8 rounded-xl text-center">
-                            <div class="bg-gray-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border-2 border-accent/50">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-2">Diseño de Miniaturas</h3>
-                            <p class="text-gray-400">Captura la atención de tu audiencia al instante.</p>
-                        </div>
-                        <div class="card-style p-8 rounded-xl text-center">
-                           <div class="bg-gray-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border-2 border-accent/50">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-2">Creación de Logos</h3>
-                            <p class="text-gray-400">Una identidad visual memorable y profesional.</p>
-                        </div>
-                        <div class="card-style p-8 rounded-xl text-center">
-                            <div class="bg-gray-900/50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 border-2 border-accent/50">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-2">Tiktok Overlay</h3>
-                            <p class="text-gray-400">Diseños optimizados para tus streams en TikTok y más.</p>
-                        </div>
-                    </div>
-                </div>
-                 <div class="section-divider divider-style-glow"></div>
-            </section>
-
-            <section id="beneficios" class="py-24 flex flex-col justify-center items-center relative bg-black/30">
-                 <div class="container mx-auto px-6">
-                    <div class="text-center">
-                        <h2 class="text-3xl sm:text-4xl font-bold text-white section-title">Beneficios de trabajar con <span class="text-accent">SM Estudio</span></h2>
-                        <p class="text-gray-400 mt-4 mb-12 max-w-2xl mx-auto">Te garantizamos una experiencia de primer nivel con resultados que superarán tus expectativas.</p>
-                    </div>
-                     <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                         <div class="card-style p-8 rounded-xl text-center reveal">
-                             <h3 class="text-2xl font-bold text-accent mb-3">💰 Precio Justo</h3>
-                             <p class="text-gray-300">Tenemos precios competitivos que se ajustan a tus necesidades y presupuesto.</p>
-                         </div>
-                         <div class="card-style p-8 rounded-xl text-center reveal" style="transition-delay: 150ms;">
-                             <h3 class="text-2xl font-bold text-accent mb-3">🎨 Calidad Premium</h3>
-                             <p class="text-gray-300">Obtendrás un diseño y animación de calidad profesional que te destacará del resto.</p>
-                         </div>
-                         <div class="card-style p-8 rounded-xl text-center reveal" style="transition-delay: 300ms;">
-                             <h3 class="text-2xl font-bold text-accent mb-3">⚡ Entrega Rápida</h3>
-                             <p class="text-gray-300">Entregamos en máximo 2 días para proyectos pequeños, sin sacrificar la calidad.</p>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="section-divider divider-style-glow"></div>
-            </section>
-
-            <section id="trabajos" class="py-24 flex flex-col justify-center items-center relative">
-                <div class="container mx-auto px-6 text-center">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Conoce nuestros <span class="text-accent">Trabajos</span></h2>
-                    
-                    <div class="space-y-12">
-                        <div>
-                            <h3 class="text-2xl font-semibold text-left mb-6">Logos</h3>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                <div class="reveal"><img src="https://i.imgur.com/nB5dU0k.png" alt="Logo Legacy" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/EEd2qSS.png" alt="Logo Legacy" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/NG9v6Ly.png" alt="King Hosting 1" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/05payDw.png" alt="King Hosting 2" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/FAq7tvX.png" alt="King Hosting 3" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-2xl font-semibold text-left mb-6">Banners</h3>
-                            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                <div class="reveal"><img src="https://i.imgur.com/9XT76y7.png" alt="HC Team 1" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/7xYNGA6.png" alt="HC Team 2" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/TMf0zNS.png" alt="Legacy Rp" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/qcEuXbS.png" alt="Pack Editing" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/AlsD5Qx.png" alt="Pack Gfx" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/OJGiJ5h.png" alt="SM Estudio" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                
-                            </div>
-                        </div>
-                                                <div>
-                            <h3 class="text-2xl font-semibold text-left mb-6">Overlays Stream</h3>
-                            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                <div class="reveal"><img src="https://i.imgur.com/cVlbuVX.png" alt="Overlay Goattache" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/Busi2YF.png" alt="Overlay Goattache" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-
-                            </div>
-                        </div>
-                        
-                                                </div>
-                                                <div>
-                            <h3 class="text-2xl font-semibold text-left mb-6">Flyers Social Media</h3>
-                            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                <div class="reveal"><img src="https://i.imgur.com/hOCgIOi.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/LQPGQFx.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/QZjBZ1O.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/WmiHBNP.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/Ahccd0T.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/c8EKGKv.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/AfPNP5H.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/L1DfRqU.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/9a3fiys.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/gQ7VqxB.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/GVJuXMv.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/g1YIVwO.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/XuqISlO.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                                <div class="reveal"><img src="https://i.imgur.com/7l73Zr6.png" alt="Flyer Wkg" class="rounded-lg hover:opacity-80 transition-opacity"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="section-divider divider-style-glow"></div>
-                    </div>
-                </div>
-                <div class="section-divider divider-style-glow"></div>
-            </section>
-
-            <!-- Video Previews (HG) -->
-            <section id="videos-hg" class="py-24 flex flex-col justify-center items-center relative bg-black/30">
-                <div class="container mx-auto px-6 text-center">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Videos <span class="text-accent">Destacados</span></h2>
-                    
-                    <div class="space-y-12">
-                        
-                        <!-- Shotgun -->
-                        <div>
-                            <h3 class="text-2xl font-semibold text-left mb-6">Shotgun</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <!-- Video 1: Se agrega la clase video-open-btn -->
-                                <a href="https://www.youtube.com/watch?v=u6iYHqIKPbc" class="video-preview-card reveal aspect-video video-open-btn">
-                                    <img src="https://img.youtube.com/vi/u6iYHqIKPbc/hqdefault.jpg" alt="Video preview Shotgun 1" class="rounded-lg">
-                                </a>
-                                <!-- Video 2: Se agrega la clase video-open-btn -->
-                                <a href="https://www.youtube.com/watch?v=9PvfCyYfqew" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 150ms;">
-                                    <img src="https://img.youtube.com/vi/9PvfCyYfqew/hqdefault.jpg" alt="Video preview Shotgun 2" class="rounded-lg">
-                                </a>
-                                <!-- Video 3: Se agrega la clase video-open-btn -->
-                                <a href="https://www.youtube.com/watch?v=1N5w8RAjxg4" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 300ms;">
-                                    <img src="https://img.youtube.com/vi/1N5w8RAjxg4/hqdefault.jpg" alt="Video preview Shotgun 3" class="rounded-lg">
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <!-- Saiko -->
-                        <div>
-                            <h3 class="text-2xl font-semibold text-left mb-6">Saiko</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                <!-- Video 1: Se agrega la clase video-open-btn -->
-                                <a href="https://www.youtube.com/watch?v=7y7FEq0JK0k" class="video-preview-card reveal aspect-video video-open-btn">
-                                    <img src="https://img.youtube.com/vi/7y7FEq0JK0k/hqdefault.jpg" alt="Video preview Saiko 1" class="rounded-lg">
-                                </a>
-                                <!-- Video 2: Se agrega la clase video-open-btn -->
-                                <a href="https://www.youtube.com/watch?v=il81TwYeqEY" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 100ms;">
-                                    <img src="https://img.youtube.com/vi/il81TwYeqEY/hqdefault.jpg" alt="Video preview Saiko 2" class="rounded-lg">
-                                </a>
-                                <!-- Video 3: Se agrega la clase video-open-btn -->
-                                <a href="https://www.youtube.com/watch?v=n8qoa0caDnE" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 200ms;">
-                                    <img src="https://img.youtube.com/vi/n8qoa0caDnE/hqdefault.jpg" alt="Video preview Saiko 3" class="rounded-lg">
-                                </a>
-                                <!-- Video 4: Se agrega la clase video-open-btn -->
-                                <a href="https://www.youtube.com/watch?v=hghhfmLK_1g" class="video-preview-card reveal aspect-video video-open-btn" style="transition-delay: 300ms;">
-                                    <img src="https://img.youtube.com/vi/hghhfmLK_1g/hqdefault.jpg" alt="Video preview Saiko 4" class="rounded-lg">
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="section-divider divider-style-glow"></div>
-            </section>
-            <!-- FIN DE LA NUEVA SECCIÓN -->
-
-
-            <!-- SECCIÓN DE TESTIMONIOS MODIFICADA -->
-            <section id="testimonios" class="py-24 flex flex-col justify-center items-center relative">
-                <div class="container mx-auto px-6 text-center">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 section-title">Lo que dicen <span class="text-accent">Nuestros Clientes</span></h2>
-                    
-                    <!-- Contenedor del Carrusel -->
-                    <div id="testimonials-carousel" class="max-w-6xl mx-auto">
-                        
-                        <!-- Slide 1 -->
-                        <div class="testimonial-slide">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <!-- Testimonio: +57_pablo -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"duro duro 🐐 10/10"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=57" alt="Avatar +57_pablo" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">+57_pablo</p></div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: iv.vs -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"el mejor servicio 10/10 la mejor atencion muy recomendado"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=IV" alt="Avatar iv.vs" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">iv.vs</p></div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: Axlerio -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"En verdad son los mejores, gracias por la atención 🐐"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=A" alt="Avatar Axlerio" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">Axlerio</p></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 2 -->
-                        <div class="testimonial-slide">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <!-- Testimonio: xAndrew -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"10/10 la intro bro, el mejor"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=XA" alt="Avatar xAndrew" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">xAndrew</p></div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: Janick -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"Exelente trabajo"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=J" alt="Avatar Janick" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">Janick</p></div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: LaConect -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"10/10"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=LC" alt="Avatar LaConect" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">LaConect</p></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 3 -->
-                        <div class="testimonial-slide">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <!-- Testimonio: Koba -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"la kabra 10/10 eres el mejor bro"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=K" alt="Avatar Koba" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">Koba</p></div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: Malwarex -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"10 de 10 responde rápido y todo funciona al pelo"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=M" alt="Avatar Malwarex" class="w-10 h-10 rounded-full mr-4">
-                                        <div>
-                                            <p class="font-bold text-white">Malwarex</p>
-                                            <span class="inline-block bg-green-500/20 text-green-300 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-green-500/50 mt-1">
-                                                <svg class="inline-block w-3 h-3 -mt-px mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 18.25a11.954 11.954 0 007.834-13.251A1.001 1.001 0 0017 4.249a1.001 1.001 0 00-.75-1.114A11.954 11.954 0 0010 1.75a11.954 11.954 0 00-7.084 1.385A1.001 1.001 0 002.25 4.25c0 .379.208.718.516.899zm13.118-1.396A10.001 10.001 0 0010 3.75a10.001 10.001 0 00-5.284.953l.24 1.443 1.256.314A6.001 6.001 0 0110 5.75c1.88 0 3.604.863 4.716 2.212l.24-1.443 1.256-.314-1.056-6.33zM16.95 6.42A7.96 7.96 0 0010 7.75a7.96 7.96 0 00-6.95 1.33l.5 3.013 1.256.314A3.987 3.987 0 0110 9.75c1.37 0 2.61.69 3.35 1.77l.5-3.013 1.256-.314-1.156-6.936z" clip-rule="evenodd"></path></svg>
-                                                Cliente Verificado
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: mariwana.a -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"hg avanzzado, thumbnail, intro , las verdaderas kbritas en velda, unos duros"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=MA" alt="Avatar mariwana.a" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">mariwana.a</p></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Slide 4 -->
-                        <div class="testimonial-slide">
-                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <!-- Testimonio: 07xz_ -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"hg , el mejor"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=07" alt="Avatar 07xz_" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">07xz_</p></div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: raklyrxc.q -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"10xlogos, love that 10000000...00% good work"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=RA" alt="Avatar raklyrxc.q" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">raklyrxc.q</p></div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: pressurex19x -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"hg , Un duro en vd 🐐"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=PR" alt="Avatar pressurex19x" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">pressurex19x</p></div>
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-
-                        <!-- Slide 5 (Solo 2 tarjetas) -->
-                        <div class="testimonial-slide">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <!-- Testimonio: montolazzzz -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"hg, rapido la cabra bro"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=MO" alt="Avatar montolazzzz" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">montolazzzz</p></div>
-                                    </div>
-                                </div>
-                                <!-- Testimonio: setteds -->
-                                <div class="card-style p-8 rounded-xl text-left">
-                                    <p class="text-gray-300 italic mb-4">"HG avanzado, la kabra"</p>
-                                    <div class="flex items-center mb-6">
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/AFBD," "xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971h4.175c.969 0 1.371 1.24.588 1.81l-3.377 2.451 1.286 3.971c.3.921-.755 1.688-1.54 1.18l-3.377-2.451-3.377 2.451c-.784.508-1.84-.259-1.54-1.18l1.286-3.971-3.377-2.451c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.971z"></path></svg>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <img src="https://placehold.co/40x40/f97316/white?text=S" alt="Avatar setteds" class="w-10 h-10 rounded-full mr-4">
-                                        <div><p class="font-bold text-white">setteds</p></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                    <!-- Paginación del Carrusel -->
-                    <div id="testimonial-pagination" class="flex justify-center space-x-2 mt-12">
-                        <!-- Los puntos se agregarán aquí por JS -->
-                    </div>
-                </div>
-                 <div class="section-divider divider-style-glow"></div>
-            </section>
-            <!-- FIN DE LA SECCIÓN MODIFICADA -->
-
-            <section id="contacto" class="py-24 flex flex-col justify-center items-center relative">
-                <div class="container mx-auto px-6">
-                    <div class="text-center">
-                        <h2 class="text-3xl sm:text-4xl font-bold text-white section-title">¿Listo para <span class="text-accent">Empezar?</span></h2>
-                        <p class="text-gray-400 mt-4 mb-12 max-w-2xl mx-auto">Envíanos un mensaje o únete a nuestro Discord para cotizar tu proyecto.</p>
-                    </div>
-                    <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 bg-neutral-900/50 p-6 sm:p-8 md:p-12 rounded-2xl border border-white/10">
-                        <div class="w-full md:w-1/2">
-                            <h3 class="text-2xl font-bold text-white mb-6">Envíanos un mensaje</h3>
-                            <form>
-                                <div class="space-y-5">
-                                    <input type="text" placeholder="Nombre" required class="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ring-accent transition">
-                                    <input type="email" placeholder="Correo electrónico" required class="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ring-accent transition">
-                                    <textarea placeholder="Cuéntanos sobre tu proyecto..." rows="4" required class="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ring-accent transition"></textarea>
-                                    <button type="submit" class="w-full bg-accent text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 btn-shine">Enviar Mensaje</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="w-full md:w-1/2 flex flex-col items-center justify-center text-center mt-8 md:mt-0">
-                            <h3 class="text-2xl font-bold text-white mb-4">O únete a la comunidad</h3>
-                            <div class="discord-3d w-full max-w-xs">
-                                 <iframe src="https://canary.discord.com/widget?id=1278801961092644995&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        
-        <!-- NUEVO: Modal de Video -->
-        <div id="video-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-            <div class="relative w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl shadow-accent/30">
-                <!-- Contenedor del Iframe (se llenará con JS) -->
-                <div id="modal-video-container" class="w-full h-full"></div>
-                <!-- Botón de Cerrar -->
-                <button id="modal-close-btn" class="absolute top-0 right-0 -mt-10 -mr-0 md:mt-0 md:-mr-10 text-white hover:text-accent transition-colors duration-300" title="Cerrar">
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <button id="mobile-menu-btn" class="md:hidden text-white text-3xl hover:text-brand transition-colors ml-2">
+                    <ion-icon name="menu-outline"></ion-icon>
                 </button>
             </div>
         </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-dark-950/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8">
+            <a href="#about" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Nosotros</a>
+            <a href="#proceso" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Proceso</a>
+            <a href="#tienda" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Servicios</a>
+            <a href="#portfolio" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Portafolio</a>
+            <button id="mobile-login-btn" class="text-2xl text-brand font-bold border border-brand/50 px-6 py-2 rounded-xl">
+                <ion-icon name="log-in-outline" class="mr-2"></ion-icon> Login / Registro
+            </button>
+            <button id="close-menu-btn" class="absolute top-8 right-8 text-white text-4xl hover:text-brand transition-colors">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        </div>
+    </nav>
 
-        <footer class="bg-black/50 border-t border-white/10 pt-16 pb-8">
-            <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12 text-center sm:text-left">
-                    <div class="col-span-1 sm:col-span-2 md:col-span-1">
-                        <a href="#home" class="text-2xl font-bold text-white">SM<span class="text-accent">Estudio</span></a>
-                        <p class="text-gray-400 mt-4 text-sm">Diseños de alto impacto para creadores de contenido y streamers.</p>
+    <main class="relative z-10">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center relative pt-24 pb-16 lg:pt-32 lg:pb-0">
+            <div class="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="text-left order-2 lg:order-1 flex flex-col justify-center">
+                    <div class="reveal delay-100 inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-brand/5 border border-brand/20 text-brand text-xs font-bold uppercase tracking-wider mb-6 lg:mb-8 hover:bg-brand/10 transition-colors w-fit cursor-default">
+                        <span class="relative flex h-2.5 w-2.5">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand"></span>
+                        </span>
+                        Disponible para proyectos
                     </div>
-                    <div>
-                        <h4 class="font-bold text-white mb-4">Navegación</h4>
-                        <ul class="space-y-2 text-sm">
-                            <li><a href="#servicios" class="text-gray-400 hover:text-accent transition">Servicios</a></li>
-                            <li><a href="#beneficios" class="text-gray-400 hover:text-accent transition">Beneficios</a></li>
-                            <li><a href="#trabajos" class="text-gray-400 hover:text-accent transition">Trabajos</a></li>
-                            <li><a href="#videos-hg" class="text-gray-400 hover:text-accent transition">Videos</a></li>
-                            <li><a href="#testimonios" class="text-gray-400 hover:text-accent transition">Testimonios</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white mb-4">Comunidad</h4>
-                        <ul class="space-y-2 text-sm">
-                            <li><a href="https://discord.gg/4q56XZbWaV" target="_blank" class="text-gray-400 hover:text-accent transition">Discord</a></li>
-                            <li><a href="#contacto" class="text-gray-400 hover:text-accent transition">Contacto</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white mb-4">Legal</h4>
-                        <ul class="space-y-2 text-sm">
-                            <li><a href="#" class="text-gray-400 hover:text-accent transition">Términos de Servicio</a></li>
-                            <li><a href="#" class="text-gray-400 hover:text-accent transition">Política de Privacidad</a></li>
-                        </ul>
+                    <h1 class="reveal delay-200 text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-white leading-[1.1] mb-6 lg:mb-8">
+                        Diseño Visual <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-orange-300">De Impacto.</span>
+                    </h1>
+                    <p class="reveal delay-300 text-gray-400 text-base sm:text-lg lg:text-xl max-w-xl mb-8 lg:mb-10 leading-relaxed">
+                        Potenciamos tu marca con identidades visuales únicas. Desde logotipos hasta motion graphics completos.
+                    </p>
+                    <div class="reveal delay-300 flex flex-wrap gap-4 lg:gap-5">
+                        <a href="#tienda" class="group bg-brand text-white px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold flex items-center gap-3 shadow-lg shadow-brand/20 hover:bg-orange-500 transition-all hover:shadow-brand/40 hover:-translate-y-1 text-sm lg:text-base">
+                            Ver Servicios <ion-icon name="arrow-forward-outline" class="text-lg lg:text-xl group-hover:translate-x-1 transition-transform"></ion-icon>
+                        </a>
+                        <a href="#portfolio" class="px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold text-white border border-white/10 hover:bg-white/5 transition-all hover:border-white/30 text-sm lg:text-base">
+                            Explorar Portafolio
+                        </a>
                     </div>
                 </div>
-                <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
-                    <p>&copy; 2025 SM Estudio | Todos los derechos reservados.</p>
+                <div class="order-1 lg:order-2 flex justify-center reveal delay-300 lg:justify-end items-center">
+                    <div class="relative w-full max-w-sm lg:max-w-lg group">
+                        <div class="absolute -inset-1 bg-gradient-to-tr from-brand to-purple-600 rounded-3xl blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-700"></div>
+                        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Hero Banner" class="relative w-full animate-float rounded-3xl shadow-2xl border border-white/5 bg-black/20 backdrop-blur-sm p-4">
+                    </div>
                 </div>
             </div>
-        </footer>
+        </section>
+        
+        <!-- About & Skills -->
+        <section id="about" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-dark-900/50 border-y border-white/5 scroll-mt-0">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+                    <div class="lg:col-span-7 reveal">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="h-px w-12 bg-brand"></div>
+                            <span class="text-brand font-bold uppercase tracking-widest text-xs lg:text-sm">Sobre Nosotros</span>
+                        </div>
+                        <h3 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6 lg:mb-8 leading-tight">
+                            Más que diseño, creamos <br> <span class="text-white/50">experiencias visuales.</span>
+                        </h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed text-base lg:text-lg">
+                            En <strong>SM Estudio</strong>, fusionamos arte y estrategia. Nuestro equipo se dedica a crear piezas que no solo se ven bien, sino que comunican la esencia y profesionalismo de tu marca.
+                        </p>
+                        <p class="text-gray-400 mb-8 lg:mb-10 leading-relaxed text-base lg:text-lg">
+                            Desde 2020 ayudando a creadores de contenido y empresas a destacar en un mercado saturado con soluciones a medida.
+                        </p>
+                        
+                        <div class="grid grid-cols-3 gap-4 lg:gap-8 border-t border-white/10 pt-8 lg:pt-10">
+                            <div>
+                                <div class="text-2xl lg:text-4xl font-bold text-white mb-1">3+</div>
+                                <div class="text-gray-600 text-[10px] lg:text-xs font-bold uppercase tracking-wider">Años Exp.</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl lg:text-4xl font-bold text-white mb-1">100+</div>
+                                <div class="text-gray-600 text-[10px] lg:text-xs font-bold uppercase tracking-wider">Clientes</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl lg:text-4xl font-bold text-white mb-1">100%</div>
+                                <div class="text-gray-600 text-[10px] lg:text-xs font-bold uppercase tracking-wider">Calidad</div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="lg:col-span-5 bg-[#0a0a0a] p-6 sm:p-10 rounded-3xl border border-white/5 shadow-2xl reveal relative overflow-hidden group hover:border-brand/20 transition-colors duration-500" style="transition-delay: 200ms;">
+                        <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand/5 rounded-full blur-3xl group-hover:bg-brand/10 transition-all"></div>
+                        <h4 class="text-xl lg:text-2xl font-bold text-white mb-8 lg:mb-10 flex items-center gap-3 relative z-10">
+                            <ion-icon name="layers-outline" class="text-brand"></ion-icon> Stack Creativo
+                        </h4>
+                        <div class="space-y-6 lg:space-y-8 relative z-10">
+                            <div class="skill-container">
+                                <div class="flex justify-between mb-2 lg:mb-3 text-sm font-medium">
+                                    <span class="text-gray-300">Photoshop / Manipulación</span>
+                                    <span class="text-brand">95%</span>
+                                </div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="95%" style="width: 0;"></div></div>
+                            </div>
+                            <div class="skill-container">
+                                <div class="flex justify-between mb-2 lg:mb-3 text-sm font-medium">
+                                    <span class="text-gray-300">Illustrator / Branding</span>
+                                    <span class="text-brand">90%</span>
+                                </div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="90%" style="width: 0;"></div></div>
+                            </div>
+                            <div class="skill-container">
+                                <div class="flex justify-between mb-2 lg:mb-3 text-sm font-medium">
+                                    <span class="text-gray-300">After Effects / Motion</span>
+                                    <span class="text-brand">90%</span>
+                                </div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="85%" style="width: 0;"></div></div>
+                            </div>
+                             <div class="skill-container">
+                                <div class="flex justify-between mb-2 lg:mb-3 text-sm font-medium">
+                                    <span class="text-gray-300">Blender / 3D Art</span>
+                                    <span class="text-brand">40%</span>
+                                </div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="75%" style="width: 0;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: PROCESO -->
+        <section id="proceso" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-[#080808] border-b border-white/5 relative overflow-hidden scroll-mt-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+            <div class="container mx-auto px-6 lg:px-12 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-6">Nuestro <span class="text-brand">Proceso</span></h2>
+                    <p class="text-gray-400 text-base lg:text-lg">Flujo de trabajo optimizado para garantizar resultados excepcionales en tiempo récord.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                    <!-- Steps -->
+                    <div class="step-card reveal delay-100 group">
+                        <div class="step-number">01</div>
+                        <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand transition-colors">Consulta</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed relative z-10">Hablamos sobre tus ideas, referencias y objetivos para entender la visión de tu marca.</p>
+                    </div>
+                    <div class="step-card reveal delay-200 group">
+                        <div class="step-number">02</div>
+                        <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                            <ion-icon name="brush-outline"></ion-icon>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand transition-colors">Diseño</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed relative z-10">Comenzamos a crear los primeros bocetos y conceptos visuales basados en el briefing.</p>
+                    </div>
+                    <div class="step-card reveal delay-300 group">
+                        <div class="step-number">03</div>
+                        <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                            <ion-icon name="sync-outline"></ion-icon>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand transition-colors">Revisión</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed relative z-10">Te presentamos los avances y aplicamos el feedback necesario para pulir cada detalle.</p>
+                    </div>
+                    <div class="step-card reveal group" style="transition-delay: 400ms;">
+                        <div class="step-number">04</div>
+                        <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                            <ion-icon name="rocket-outline"></ion-icon>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand transition-colors">Entrega</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed relative z-10">Recibes todos los archivos finales en alta calidad, listos para ser utilizados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Servicios / Tienda -->
+        <section id="tienda" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 relative scroll-mt-0">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <h2 class="text-3xl md:text-6xl font-display font-bold text-white mb-6">Nuestros <span class="text-brand">Servicios</span></h2>
+                    <p class="text-gray-400 text-base lg:text-lg">Soluciones visuales adaptadas a tus necesidades. Elige calidad premium.</p>
+                </div>
+                <div class="flex justify-center mb-16 reveal delay-100">
+                    <div class="bg-[#0a0a0a] border border-white/10 p-1.5 rounded-2xl inline-flex shadow-2xl max-w-full overflow-x-auto">
+                        <button id="tab-visual" class="px-6 lg:px-8 py-3 rounded-xl text-white font-semibold bg-brand shadow-lg transition-all duration-300 text-sm lg:text-base whitespace-nowrap">Diseño Visual</button>
+                        <button id="tab-packs" class="px-6 lg:px-8 py-3 rounded-xl text-gray-400 hover:text-white font-semibold transition-all duration-300 hover:bg-white/5 text-sm lg:text-base whitespace-nowrap">Packs & Recursos</button>
+                    </div>
+                </div>
+                <div id="products-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto"></div>
+                <div class="mt-20 text-center reveal delay-200">
+                    <p class="text-gray-500 mb-4 text-xs lg:text-sm uppercase tracking-wider">¿Buscas algo a medida?</p>
+                    <button id="custom-order-btn" class="text-white text-base lg:text-lg font-semibold hover:text-brand transition-colors border-b-2 border-brand/50 hover:border-brand pb-1">Solicitar Cotización Personalizada</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portafolio -->
+        <section id="portfolio" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-dark-900/30 scroll-mt-0">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 lg:mb-16 gap-6 reveal">
+                    <div>
+                        <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-4">Trabajos Recientes</h2>
+                        <p class="text-gray-400 text-base lg:text-lg">Una selección de nuestros mejores proyectos.</p>
+                    </div>
+                    <a href="#contacto" class="group text-white font-semibold hover:text-brand transition-colors flex items-center gap-2 pb-2 border-b border-white/10 hover:border-brand text-sm lg:text-base">
+                        Ver portafolio completo <ion-icon name="arrow-forward" class="group-hover:translate-x-1 transition-transform"></ion-icon>
+                    </a>
+                </div>
+
+                <div class="masonry-grid max-w-7xl mx-auto">
+                    <div class="masonry-item-large group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-2xl delay-100">
+                        <img src="https://i.imgur.com/9XT76y7.png" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Banner Design">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 lg:p-8">
+                            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                <span class="text-brand font-bold text-xs uppercase tracking-widest mb-2 block">Branding</span>
+                                <span class="text-white font-bold text-xl lg:text-2xl">HC Team Identity</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-200">
+                        <img src="https://i.imgur.com/TMf0zNS.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Legacy RP">
+                         <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                            <span class="text-white font-bold text-lg scale-90 group-hover:scale-100 transition-transform border border-white/20 px-6 py-2 rounded-full">Legacy RP</span>
+                        </div>
+                    </div>
+
+                    <div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-300">
+                        <img src="https://i.imgur.com/EEd2qSS.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Logo 3D">
+                    </div>
+
+                    <div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 video-open-btn shadow-xl delay-200" href="https://www.youtube.com/watch?v=u6iYHqIKPbc">
+                        <img src="https://img.youtube.com/vi/u6iYHqIKPbc/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Video">
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors backdrop-blur-[2px]">
+                            <div class="w-12 h-12 lg:w-14 lg:h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white text-xl lg:text-2xl border border-white/30 group-hover:scale-110 transition-transform shadow-lg">
+                                <ion-icon name="play" class="ml-1"></ion-icon>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-300">
+                        <img src="https://i.imgur.com/hOCgIOi.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Flyer Design">
+                         <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                            <span class="text-white font-bold text-lg">Social Media</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN FEEDBACKS (TESTIMONIOS) -->
+        <section id="feedbacks" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 relative overflow-hidden scroll-mt-0 bg-[#080808]">
+            <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-1/2 h-1/2 bg-discord/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div class="container mx-auto px-6 lg:px-12 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-400 text-xs font-bold mb-4 uppercase tracking-wider">
+                        <ion-icon name="star" class="text-brand"></ion-icon> +100 Clientes Felices
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-6">
+                        La opinión de la <span class="text-brand">Comunidad</span>
+                    </h2>
+                    <p class="text-gray-400 text-base lg:text-lg">
+                        La transparencia es clave. Aquí tienes algunos de los comentarios reales que recibimos en nuestro servidor.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                    <div class="feedback-card reveal delay-100 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full feedback-avatar text-xl">M</div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">Malwarex</h4>
+                                <span class="text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Cliente Verificado</span>
+                            </div>
+                        </div>
+                        <div class="flex text-brand mb-3 text-sm">
+                            <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">"10 de 10 responde rápido y todo funciona al pelo. Muy satisfecho con el resultado final."</p>
+                        <div class="absolute top-6 right-6 text-white/5 text-4xl group-hover:text-brand/10 transition-colors">
+                            <ion-icon name="chatquote"></ion-icon>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-card reveal delay-200 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full feedback-avatar text-xl bg-gradient-to-br from-blue-900 to-black text-blue-400">K</div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">kobaa</h4>
+                                <span class="text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Cliente Verificado</span>
+                            </div>
+                        </div>
+                        <div class="flex text-brand mb-3 text-sm">
+                            <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">"La kabra 10/10 eres el mejor bro. Diseño increíble y entrega súper rápida."</p>
+                        <div class="absolute top-6 right-6 text-white/5 text-4xl group-hover:text-brand/10 transition-colors">
+                            <ion-icon name="chatquote"></ion-icon>
+                        </div>
+                    </div>
+
+                    <div class="feedback-card reveal delay-300 group border-brand/30 bg-brand/5">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full feedback-avatar text-xl bg-gradient-to-br from-purple-900 to-black text-purple-400">A</div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">xAndrew | RSZ</h4>
+                                <span class="text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Compra: Intro</span>
+                            </div>
+                        </div>
+                        <div class="flex text-brand mb-3 text-sm">
+                            <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon>
+                        </div>
+                        <p class="text-gray-200 text-sm leading-relaxed font-medium">"10/10 la intro bro, el mejor. Superó mis expectativas totalmente."</p>
+                        <div class="absolute top-6 right-6 text-brand/20 text-4xl">
+                            <ion-icon name="videocam"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center reveal">
+                    <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm border-b border-transparent hover:border-brand pb-1">
+                        Ver todos los feedbacks en Discord <ion-icon name="open-outline"></ion-icon>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto / Discord -->
+        <section id="contacto" class="min-h-screen flex flex-col justify-between pt-32 pb-10 border-t border-white/5 relative overflow-hidden scroll-mt-0">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-1/2 left-1/4 w-64 h-64 lg:w-96 lg:h-96 bg-brand/5 rounded-full blur-[100px] lg:blur-[120px] -translate-y-1/2"></div>
+                <div class="absolute bottom-0 right-0 w-80 h-80 lg:w-[500px] lg:h-[500px] bg-discord/5 rounded-full blur-[100px] lg:blur-[120px]"></div>
+            </div>
+
+            <div class="container mx-auto px-6 lg:px-12 relative z-10 flex-grow flex items-center">
+                <div class="w-full max-w-7xl mx-auto bg-[#0a0a0a]/80 backdrop-blur-sm border border-white/5 rounded-[2rem] p-6 md:p-16 lg:p-20 shadow-2xl reveal overflow-hidden relative group">
+                    <div class="absolute inset-0 rounded-[2rem] border border-white/5 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                    
+                    <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+                        <div class="flex-1 text-center lg:text-left">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-discord/10 border border-discord/20 text-[#5865F2] text-xs font-bold mb-6 uppercase tracking-wider">
+                                <ion-icon name="people"></ion-icon> Comunidad Exclusiva
+                            </div>
+                            <h3 class="text-3xl sm:text-4xl md:text-6xl font-display font-bold text-white mb-8 leading-tight">
+                                ¿Listo para elevar <br> tu marca?
+                            </h3>
+                            <p class="text-gray-400 text-base lg:text-xl mb-10 lg:mb-12 leading-relaxed max-w-md mx-auto lg:mx-0">
+                                Únete a nuestro servidor de Discord. Abre tickets de pedido, charla con el equipo y accede a descuentos exclusivos.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="inline-flex items-center justify-center gap-3 bg-[#5865F2] hover:bg-[#4752c4] text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-discord/25 hover:shadow-discord/40 hover:-translate-y-1 text-base lg:text-lg">
+                                    <ion-icon name="logo-discord" class="text-2xl"></ion-icon>
+                                    <span>Entrar al Servidor</span>
+                                </a>
+                                <a href="mailto:contacto@smestudio.com" class="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 text-white font-medium py-4 px-8 rounded-xl border border-white/10 hover:border-white/20 transition-all text-base lg:text-lg">
+                                    <ion-icon name="mail-outline" class="text-2xl"></ion-icon>
+                                    <span>Enviar Email</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-[450px] relative">
+                            <div class="absolute -inset-2 bg-gradient-to-r from-brand/20 to-discord/20 rounded-2xl blur-xl opacity-50"></div>
+                            <div class="relative bg-[#0f0f0f] rounded-xl border border-white/10 overflow-hidden shadow-2xl transform transition-transform hover:scale-[1.02] h-[350px] lg:h-[450px]">
+                                <iframe src="https://canary.discord.com/widget?id=1278801961092644995&theme=dark" class="w-full h-full" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="container mx-auto px-6 lg:px-12 mt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-gray-500 text-xs lg:text-sm border-t border-white/5 pt-8">
+                <div class="flex items-center gap-2">
+                    <img src="https://i.imgur.com/eyMr4Ki.png" alt="Logo" class="w-6 h-6 opacity-50 grayscale">
+                    <p>&copy; 2025 SM Estudio.</p>
+                </div>
+                <div class="flex gap-6 lg:gap-8">
+                    <a href="#" class="hover:text-brand transition-colors">Términos</a>
+                    <a href="#" class="hover:text-brand transition-colors">Privacidad</a>
+                    <a href="#" class="hover:text-brand transition-colors">Twitter</a>
+                    <a href="#" class="hover:text-brand transition-colors">Instagram</a>
+                </div>
+            </footer>
+        </section>
+
+    </main>
+
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 modal-backdrop" id="login-backdrop"></div>
+        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-2xl p-8 w-full max-w-md shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="login-content">
+            
+            <button id="close-login" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <ion-icon name="close" class="text-2xl"></ion-icon>
+            </button>
+
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand/20 text-brand text-3xl">
+                    <ion-icon name="person"></ion-icon>
+                </div>
+                <h3 class="text-2xl font-bold text-white">Bienvenido</h3>
+                <p class="text-gray-400 text-sm mt-2">Inicia sesión para gestionar tus pedidos.</p>
+            </div>
+
+            <div class="space-y-3">
+                <button id="btn-google" class="login-btn-social login-btn-google">
+                    <ion-icon name="logo-google" class="text-xl"></ion-icon>
+                    Continuar con Google
+                </button>
+                
+                <button id="btn-discord" class="login-btn-social login-btn-discord">
+                    <ion-icon name="logo-discord" class="text-xl"></ion-icon>
+                    Continuar con Discord
+                </button>
+            </div>
+
+            <div class="mt-6 text-center">
+                <p class="text-xs text-gray-600">
+                    Al continuar, aceptas nuestros Términos y Condiciones. <br>
+                    Si el login de Discord falla, asegúrate de que la configuración de OAuth esté activa en tu panel.
+                </p>
+            </div>
+        </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const loader = document.getElementById("loader");
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => { loader.style.display = "none"; }, 500);
-            }, 1000);
-
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                navbar.classList.toggle('navbar-blur', window.scrollY > 50);
-                navbar.classList.toggle('border-b', window.scrollY > 50);
-                navbar.classList.toggle('border-white/10', window.scrollY > 50);
-            });
+    <!-- CLIENT DASHBOARD MODAL -->
+    <div id="dashboard-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" id="dash-backdrop"></div>
+        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-3xl w-full max-w-4xl h-[80vh] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="dash-content">
             
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const openIcon = document.getElementById('menu-open-icon');
-            const closeIcon = document.getElementById('menu-close-icon');
-            const mobileLinks = document.querySelectorAll('.mobile-link');
-            const toggleMenu = () => {
-                 mobileMenu.classList.toggle('hidden');
-                 openIcon.classList.toggle('hidden');
-                 closeIcon.classList.toggle('hidden');
-                 document.body.classList.toggle('overflow-hidden'); // Modificado para afectar el body
-            };
-            mobileMenuButton.addEventListener('click', toggleMenu);
-            mobileLinks.forEach(link => link.addEventListener('click', () => {
-                if(!mobileMenu.classList.contains('hidden')){ toggleMenu(); }
-            }));
+            <!-- Dash Header -->
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-[#121212]">
+                <div>
+                    <h3 class="text-2xl font-bold text-white">Panel de <span class="text-brand">Cliente</span></h3>
+                    <p class="text-sm text-gray-500" id="dash-user-email">Cargando...</p>
+                </div>
+                <button id="close-dash" class="text-gray-500 hover:text-white p-2 bg-white/5 rounded-lg transition-colors">
+                    <ion-icon name="close" class="text-xl"></ion-icon>
+                </button>
+            </div>
 
-            const revealElements = document.querySelectorAll('.reveal');
-            const revealOnScroll = () => {
-                const windowHeight = window.innerHeight;
-                revealElements.forEach(el => {
-                    // Aplicar a todos los 'reveal', incluidos los del carrusel y videos
-                    if (el.getBoundingClientRect().top < windowHeight - 100) {
-                        el.classList.add('visible');
-                    }
-                    
-                    // Quitar la lógica que excluía a los carruseles si se desea que animen al entrar
-                    /*
-                    if (!el.closest('#services-carousel') && !el.closest('#testimonials-carousel')) {
-                        if (el.getBoundingClientRect().top < windowHeight - 100) {
-                            el.classList.add('visible');
-                        }
-                    }
-                    */
-                });
-            };
-            window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll(); // Ejecutar al cargar
+            <!-- Dash Tabs -->
+            <div class="flex gap-6 px-6 pt-4 border-b border-white/5">
+                <button class="dash-tab active pb-3 px-2 font-bold text-sm" data-target="tab-pedidos">Mis Pedidos</button>
+                <button class="dash-tab pb-3 px-2 font-bold text-sm" data-target="tab-tickets">Soporte & Tickets</button>
+            </div>
 
-            const carouselContainer = document.getElementById('services-carousel');
-            const cards = carouselContainer.querySelectorAll('.card-style');
-            let currentCardIndex = 0;
-            if (cards.length > 0) {
-                cards[0].classList.add('active');
-                setInterval(() => {
-                    cards[currentCardIndex].classList.remove('active');
-                    currentCardIndex = (currentCardIndex + 1) % cards.length;
-                    cards[currentCardIndex].classList.add('active');
-                }, 4000);
-            }
-
-            // --- Lógica del Carrusel de Testimonios ---
-            const testimonialCarousel = document.getElementById('testimonials-carousel');
-            const testimonialSlides = testimonialCarousel.querySelectorAll('.testimonial-slide');
-            const paginationContainer = document.getElementById('testimonial-pagination');
-            let currentTestimonialSlide = 0;
-            let testimonialInterval;
-
-            if (testimonialSlides.length > 0) {
-                // Función para cambiar de slide
-                const showSlide = (index) => {
-                    testimonialSlides.forEach((slide, i) => {
-                        slide.classList.remove('active');
-                        const dot = document.getElementById(`dot-${i}`);
-                        if(dot) dot.classList.remove('active');
-                    });
-
-                    const newSlide = testimonialSlides[index];
-                    const newDot = document.getElementById(`dot-${index}`);
-                    
-                    if (newSlide) newSlide.classList.add('active');
-                    if(newDot) newDot.classList.add('active');
-
-                    if (newSlide) {
-                        testimonialCarousel.style.height = `${newSlide.offsetHeight}px`;
-                    }
-                    currentTestimonialSlide = index;
-                };
-
-                // Crear los puntos de paginación
-                testimonialSlides.forEach((_, i) => {
-                    const dot = document.createElement('button');
-                    dot.classList.add('testimonial-dot');
-                    dot.id = `dot-${i}`;
-                    dot.addEventListener('click', () => {
-                        showSlide(i);
-                        clearInterval(testimonialInterval);
-                        startInterval();
-                    });
-                    paginationContainer.appendChild(dot);
-                });
-
-                // Función para iniciar el intervalo
-                const startInterval = () => {
-                    testimonialInterval = setInterval(() => {
-                        let nextSlide = (currentTestimonialSlide + 1) % testimonialSlides.length;
-                        showSlide(nextSlide);
-                    }, 6000); 
-                };
+            <!-- Dash Content -->
+            <div class="flex-1 overflow-y-auto p-6 relative">
                 
-                setTimeout(() => {
-                    showSlide(0); 
-                }, 200);
-                
-                startInterval(); 
+                <!-- Tab: Pedidos (Simulado por ahora) -->
+                <div id="tab-pedidos" class="dash-pane space-y-4">
+                    <div class="bg-black/40 border border-white/5 rounded-xl p-6 text-center py-12">
+                        <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600">
+                            <ion-icon name="cart-outline" class="text-3xl"></ion-icon>
+                        </div>
+                        <h4 class="text-white font-bold mb-2">No tienes pedidos activos</h4>
+                        <p class="text-gray-500 text-sm mb-6">Explora la tienda para adquirir tu primer servicio.</p>
+                        <button onclick="document.getElementById('close-dash').click(); window.location.href='#tienda'" class="text-brand hover:text-white text-sm font-bold underline">Ir a la Tienda</button>
+                    </div>
+                </div>
 
-                window.addEventListener('resize', () => {
-                     if (testimonialSlides[currentTestimonialSlide]) {
-                        testimonialCarousel.style.height = `${testimonialSlides[currentTestimonialSlide].offsetHeight}px`;
-                     }
-                });
+                <!-- Tab: Tickets (Funcional con Firebase) -->
+                <div id="tab-tickets" class="dash-pane hidden h-full flex flex-col">
+                    <div class="bg-black/40 border border-white/5 rounded-xl p-4 mb-6">
+                        <h4 class="text-white font-bold mb-3 flex items-center gap-2">
+                             <ion-icon name="add-circle-outline" class="text-brand"></ion-icon> Crear Nuevo Ticket
+                        </h4>
+                        <form id="create-ticket-form" class="space-y-3">
+                            <input type="text" id="ticket-subject" placeholder="Asunto (Ej. Duda con mi logo)" class="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-4 py-2 text-white text-sm focus:border-brand outline-none">
+                            <textarea id="ticket-msg" placeholder="Describe tu problema..." class="w-full bg-[#0f0f0f] border border-white/10 rounded-lg px-4 py-2 text-white text-sm focus:border-brand outline-none h-20 resize-none"></textarea>
+                            <button type="submit" class="bg-brand hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors flex items-center gap-2">
+                                <ion-icon name="send"></ion-icon> Enviar Ticket
+                            </button>
+                        </form>
+                    </div>
+
+                    <h4 class="text-gray-400 text-xs uppercase font-bold mb-3">Historial de Tickets</h4>
+                    <div id="tickets-list" class="space-y-3 overflow-y-auto flex-1 pr-2">
+                        <p class="text-center text-gray-600 text-sm py-4">Cargando tickets...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform scale-95 transition-transform duration-300" id="video-modal-content">
+            <div id="modal-video-container" class="w-full h-full"></div>
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full hover:bg-brand transition-colors backdrop-blur-sm">
+                <ion-icon name="close" size="large"></ion-icon>
+            </button>
+        </div>
+    </div>
+
+    <!-- FIREBASE LOGIC & SCRIPTS -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+        // --- CONFIGURACIÓN EXACTA DE TU PROYECTO ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUJvGVwXeckfA-bVi2szQJt7AFTPvx0_g",
+            authDomain: "smestudio-89646.firebaseapp.com",
+            projectId: "smestudio-89646",
+            storageBucket: "smestudio-89646.firebasestorage.app",
+            messagingSenderId: "471317369468",
+            appId: "1:471317369468:web:4cd0e569b762cae586eff9",
+            measurementId: "G-0T8YHH7H7M"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- REFERENCIAS DOM ---
+        const loginTriggerBtn = document.getElementById('login-trigger-btn');
+        const mobileLoginBtn = document.getElementById('mobile-login-btn');
+        const userMenu = document.getElementById('user-menu');
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-name');
+        const logoutBtn = document.getElementById('logout-btn');
+        const openDashboardBtn = document.getElementById('open-dashboard-btn');
+        
+        const loginModal = document.getElementById('login-modal');
+        const loginContent = document.getElementById('login-content');
+        const closeLoginBtn = document.getElementById('close-login');
+        const loginBackdrop = document.getElementById('login-backdrop');
+
+        // Referencias Dashboard
+        const dashModal = document.getElementById('dashboard-modal');
+        const dashContent = document.getElementById('dash-content');
+        const dashBackdrop = document.getElementById('dash-backdrop');
+        const closeDashBtn = document.getElementById('close-dash');
+        const dashUserEmail = document.getElementById('dash-user-email');
+        const createTicketForm = document.getElementById('create-ticket-form');
+        const ticketsList = document.getElementById('tickets-list');
+
+        const btnGoogle = document.getElementById('btn-google');
+        const btnDiscord = document.getElementById('btn-discord');
+
+        let currentUser = null;
+
+        // --- MODAL LOGIC (LOGIN) ---
+        function openLogin() {
+            loginModal.classList.remove('hidden');
+            loginModal.classList.add('flex');
+            setTimeout(() => {
+                loginContent.classList.remove('scale-95', 'opacity-0');
+                loginContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeLogin() {
+            loginContent.classList.remove('scale-100', 'opacity-100');
+            loginContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                loginModal.classList.add('hidden');
+                loginModal.classList.remove('flex');
+            }, 300);
+        }
+
+        // --- MODAL LOGIC (DASHBOARD) ---
+        function openDashboard() {
+            dashModal.classList.remove('hidden');
+            dashModal.classList.add('flex');
+            if(currentUser) dashUserEmail.textContent = currentUser.email;
+            setTimeout(() => {
+                dashContent.classList.remove('scale-95', 'opacity-0');
+                dashContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeDashboard() {
+            dashContent.classList.remove('scale-100', 'opacity-100');
+            dashContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                dashModal.classList.add('hidden');
+                dashModal.classList.remove('flex');
+            }, 300);
+        }
+
+        // Event Listeners UI
+        loginTriggerBtn.addEventListener('click', openLogin);
+        mobileLoginBtn.addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.add('translate-x-full');
+            openLogin();
+        });
+        closeLoginBtn.addEventListener('click', closeLogin);
+        loginBackdrop.addEventListener('click', closeLogin);
+        
+        openDashboardBtn.addEventListener('click', openDashboard);
+        closeDashBtn.addEventListener('click', closeDashboard);
+        dashBackdrop.addEventListener('click', closeDashboard);
+
+        // Tabs Logic
+        document.querySelectorAll('.dash-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.dash-pane').forEach(p => p.classList.add('hidden'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.target).classList.remove('hidden');
+            });
+        });
+
+        // --- AUTH LOGIC ---
+        btnGoogle.addEventListener('click', async () => {
+            try { 
+                await signInWithPopup(auth, new GoogleAuthProvider()); 
+                closeLogin(); 
+            } 
+            catch (error) { 
+                console.error(error);
+                alert("Error Google: " + error.message); 
             }
+        });
 
-            // --- NUEVO: Lógica del Modal de Video ---
-            const videoModal = document.getElementById('video-modal');
-            const videoContainer = document.getElementById('modal-video-container');
-            const closeModalBtn = document.getElementById('modal-close-btn');
-            const videoOpenBtns = document.querySelectorAll('.video-open-btn');
+        btnDiscord.addEventListener('click', async () => {
+            try { 
+                await signInWithPopup(auth, new OAuthProvider('discord.com')); 
+                closeLogin(); 
+            } 
+            catch (error) { 
+                console.error(error);
+                alert("Error Discord (Configura OAuth en Firebase): " + error.message); 
+            }
+        });
 
-            // Función para extraer el ID de YouTube
-            const getYouTubeId = (url) => {
-                let videoId = '';
-                try {
-                    const urlObj = new URL(url);
-                    if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
-                        videoId = urlObj.searchParams.get('v');
-                    } else if (urlObj.hostname === 'youtu.be') {
-                        videoId = urlObj.pathname.split('/')[1];
-                    }
-                } catch (e) {
-                    console.error("Error parsing URL: ", e, url);
+        logoutBtn.addEventListener('click', () => signOut(auth));
+
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                loginTriggerBtn.classList.replace('flex', 'hidden');
+                userMenu.classList.replace('hidden', 'flex');
+                userName.textContent = user.displayName || user.email.split('@')[0];
+                if (user.photoURL) {
+                    userAvatar.innerHTML = `<img src="${user.photoURL}" alt="Avatar" class="w-full h-full object-cover">`;
                 }
-                return videoId;
-            };
+                loadTickets(user.uid); 
+            } else {
+                userMenu.classList.replace('flex', 'hidden');
+                loginTriggerBtn.classList.replace('hidden', 'flex');
+                ticketsList.innerHTML = ''; 
+            }
+        });
 
-            // Función para abrir el modal
-            const openModal = (e) => {
-                e.preventDefault(); // Prevenir que el enlace <a> navegue
-                const videoUrl = e.currentTarget.href;
-                const videoId = getYouTubeId(videoUrl);
+        // --- TICKET SYSTEM LOGIC ---
+        createTicketForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const subject = document.getElementById('ticket-subject').value;
+            const message = document.getElementById('ticket-msg').value;
 
-                if (!videoId) {
-                    console.error("Could not find video ID for:", videoUrl);
-                    // Si no se puede obtener el ID, simplemente abre el enlace en una nueva pestaña
-                    window.open(videoUrl, '_blank');
+            if(!currentUser || !subject || !message) return;
+
+            try {
+                await addDoc(collection(db, "tickets"), {
+                    userId: currentUser.uid,
+                    userEmail: currentUser.email,
+                    subject: subject,
+                    message: message,
+                    status: 'abierto',
+                    createdAt: serverTimestamp()
+                });
+                document.getElementById('ticket-subject').value = '';
+                document.getElementById('ticket-msg').value = '';
+                const btn = createTicketForm.querySelector('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<ion-icon name="checkmark-circle"></ion-icon> Enviado';
+                setTimeout(() => btn.innerHTML = originalText, 2000);
+
+            } catch (e) {
+                console.error("Error adding ticket: ", e);
+                alert("Error creando ticket: " + e.message);
+            }
+        });
+
+        function loadTickets(uid) {
+            const q = query(
+                collection(db, "tickets"), 
+                where("userId", "==", uid),
+                orderBy("createdAt", "desc")
+            );
+
+            onSnapshot(q, (snapshot) => {
+                ticketsList.innerHTML = '';
+                if (snapshot.empty) {
+                    ticketsList.innerHTML = '<p class="text-center text-gray-600 text-sm py-4">No tienes tickets creados.</p>';
                     return;
                 }
-
-                // Crear el iframe con autoplay
-                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
                 
-                videoContainer.innerHTML = `
-                    <iframe 
-                        class="w-full h-full" 
-                        src="${embedUrl}" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen
-                    ></iframe>
-                `;
-                
-                videoModal.classList.remove('hidden');
-                setTimeout(() => { // Pequeño delay para permitir la transición de opacidad
-                     videoModal.classList.remove('opacity-0');
-                }, 10); // 10ms es suficiente
-                document.body.classList.add('overflow-hidden'); // Evitar scroll del body
-            };
-
-            // Función para cerrar el modal
-            const closeModal = () => {
-                videoModal.classList.add('opacity-0');
-                setTimeout(() => { // Esperar a que termine la transición
-                    videoModal.classList.add('hidden');
-                    videoContainer.innerHTML = ''; // Detener el video destruyendo el iframe
-                }, 300); // 300ms (coincide con duration-300)
-                document.body.classList.remove('overflow-hidden');
-            };
-
-            // Asignar eventos a los botones de video
-            videoOpenBtns.forEach(btn => {
-                btn.addEventListener('click', openModal);
+                snapshot.forEach((doc) => {
+                    const t = doc.data();
+                    const date = t.createdAt ? t.createdAt.toDate().toLocaleDateString() : 'Reciente';
+                    const statusColor = t.status === 'abierto' ? 'text-green-500 bg-green-500/10 border-green-500/20' : 'text-gray-500 bg-gray-500/10 border-gray-500/20';
+                    
+                    const html = `
+                        <div class="bg-[#121212] border border-white/5 rounded-lg p-4 hover:border-brand/30 transition-colors group">
+                            <div class="flex justify-between items-start mb-1">
+                                <h5 class="text-white font-bold text-sm group-hover:text-brand transition-colors">${t.subject}</h5>
+                                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${statusColor}">${t.status}</span>
+                            </div>
+                            <p class="text-gray-500 text-xs mb-2 line-clamp-2">${t.message}</p>
+                            <div class="text-right text-[10px] text-gray-600">${date}</div>
+                        </div>
+                    `;
+                    ticketsList.innerHTML += html;
+                });
             });
+        }
 
-            // Asignar evento al botón de cerrar
-            closeModalBtn.addEventListener('click', closeModal);
+    </script>
 
-            // Cerrar al hacer clic en el fondo oscuro
-            videoModal.addEventListener('click', (e) => {
-                if (e.target === videoModal) {
-                    closeModal();
+    <script>
+        // --- UI & ANIMATION LOGIC ---
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        const products = [
+            {
+                id: 'logo-design', category: 'visual', title: 'Logo Design', price: '$15 - $100',
+                desc: 'Identidad visual única para tu marca personal o empresa.',
+                icon: 'color-palette-outline', features: ['Vectorizado (AI/EPS)', 'Alta Resolución', 'Versión PNG/JPG', 'Revisiones Incluidas'],
+                link: 'https://buy.stripe.com/test_Example', fromPrice: true
+            },
+            {
+                id: 'social-media', category: 'visual', title: 'Social Media', price: '$10 - $35',
+                desc: 'Banners y headers optimizados para todas las redes.',
+                icon: 'share-social-outline', features: ['YouTube / Twitch / Twitter', 'Diseño Responsivo', 'Entrega Rápida (48h)', 'PSD Incluido (Opcional)'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'motion', category: 'visual', title: 'Motion Graphics', price: '$20 - $60',
+                desc: 'Intros, alertas y pantallas de espera animadas.',
+                icon: 'videocam-outline', features: ['Animación Fluida (60 FPS)', 'Formato WebM/MOV', 'Sonido FX Incluido', 'Loop Perfecto'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'stream-pack', category: 'visual', title: 'Stream Packs', price: '$30 - $80',
+                desc: 'Paquete completo para renovar tu canal.',
+                icon: 'desktop-outline', features: ['Overlay + Webcam', 'Alertas + Paneles', 'Pantallas (Start/End/BRB)', 'Configuración OBS'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'flyers', category: 'visual', title: 'Flyers Design', price: '$5 - $40',
+                desc: 'Promociona tus eventos o torneos con estilo.',
+                icon: 'newspaper-outline', features: ['Alta Calidad de Impresión', 'Formato Redes Sociales', 'Estilo Llamativo', 'Entrega Express'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'thumbnails', category: 'visual', title: 'Thumbnails', price: '$5 - $15',
+                desc: 'Miniaturas que aumentan tu CTR en YouTube.',
+                icon: 'image-outline', features: ['Estilo Clickbait / Clean', 'Retoque Fotográfico', 'Alta Resolución', 'Pack de 3 Descuento'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'gfx-pack', category: 'packs', title: 'Ultimate GFX Pack', price: '$20.00',
+                desc: 'La caja de herramientas definitiva para diseñadores.',
+                icon: 'folder-open-outline', features: ['+500 Backgrounds', '+1000 Texturas', 'Iconos 3D Renderizados', 'Tutoriales Exclusivos'],
+                link: '#', fromPrice: false
+            },
+            {
+                id: 'edit-pack', category: 'packs', title: 'Editor Bundle', price: '$20.00',
+                desc: 'Recursos esenciales para edición de video.',
+                icon: 'cut-outline', features: ['+500 Presets Premiere', '+1000 SFX', 'Transiciones', 'Plantillas Edit By'],
+                link: '#', fromPrice: false
+            }
+        ];
+
+        const productsContainer = document.getElementById('products-container');
+        const tabVisual = document.getElementById('tab-visual');
+        const tabPacks = document.getElementById('tab-packs');
+
+        function renderProducts(filter = 'visual') {
+            productsContainer.innerHTML = '';
+            const filteredData = products.filter(p => p.category === filter);
+            filteredData.forEach((product, index) => {
+                const featuresHtml = product.features.map(f => `<li><ion-icon name="checkmark-circle"></ion-icon> <span>${f}</span></li>`).join('');
+                const priceLabel = product.fromPrice ? `<span class="block text-xs text-gray-500 mb-0.5">Desde</span>` : `<span class="block text-xs text-gray-500 mb-0.5">Precio</span>`;
+                const card = document.createElement('div');
+                card.className = 'reveal';
+                card.style.transitionDelay = `${index * 100}ms`;
+                card.innerHTML = `
+                    <div class="service-card group">
+                        <div class="flex justify-between items-start mb-6 relative z-10">
+                            <div class="card-icon-box"><ion-icon name="${product.icon}"></ion-icon></div>
+                            <div class="text-right">${priceLabel}<span class="text-xl lg:text-2xl font-bold text-white tracking-tight">${product.price}</span></div>
+                        </div>
+                        <h3 class="text-xl lg:text-2xl font-bold text-white mb-3 relative z-10">${product.title}</h3>
+                        <p class="text-gray-400 text-sm mb-8 leading-relaxed min-h-[40px] relative z-10">${product.desc}</p>
+                        <div class="w-full h-px bg-white/5 mb-6"></div>
+                        <ul class="check-list mb-8 flex-grow relative z-10">${featuresHtml}</ul>
+                        <div class="mt-auto relative z-10"><a href="${product.link}" class="block w-full btn-dark-action">${filter === 'packs' ? 'Comprar Ahora' : 'Ver Detalles / Cotizar'}</a></div>
+                    </div>`;
+                productsContainer.appendChild(card);
+            });
+            setTimeout(() => {
+                const newCards = productsContainer.querySelectorAll('.reveal');
+                newCards.forEach(c => c.classList.add('visible'));
+            }, 50);
+        }
+
+        function switchTab(activeBtn, inactiveBtn, category) {
+            activeBtn.classList.add('bg-brand', 'text-white', 'shadow-lg');
+            activeBtn.classList.remove('text-gray-400', 'hover:text-white', 'hover:bg-white/5');
+            inactiveBtn.classList.remove('bg-brand', 'text-white', 'shadow-lg');
+            inactiveBtn.classList.add('text-gray-400', 'hover:text-white', 'hover:bg-white/5');
+            renderProducts(category);
+        }
+
+        tabVisual.addEventListener('click', () => switchTab(tabVisual, tabPacks, 'visual'));
+        tabPacks.addEventListener('click', () => switchTab(tabPacks, tabVisual, 'packs'));
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => { document.querySelectorAll('#home .reveal').forEach(el => el.classList.add('visible')); }, 1000);
+            setTimeout(() => { loader.style.opacity = '0'; loader.style.visibility = 'hidden'; document.body.classList.remove('loading'); renderProducts('visual'); }, 1500);
+        });
+
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { if (window.scrollY > 20) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if(entry.target.querySelector('.progress-bar-fill')) {
+                         const bars = entry.target.querySelectorAll('.progress-bar-fill');
+                         bars.forEach(bar => { bar.style.width = bar.getAttribute('data-width'); });
+                    }
+                    observer.unobserve(entry.target);
                 }
             });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const toggleMenu = () => mobileMenu.classList.toggle('translate-x-full');
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', toggleMenu));
 
+        const videoModal = document.getElementById('video-modal');
+        const videoContainer = document.getElementById('modal-video-container');
+        const closeModalBtn = document.getElementById('modal-close-btn');
+        const modalContent = document.getElementById('video-modal-content');
+
+        document.querySelectorAll('.video-open-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const url = btn.getAttribute('href');
+                const videoId = url.match(/(?:v=|\/)([\w-]{11})/)?.[1];
+                if (videoId) {
+                    videoContainer.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
+                    videoModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        videoModal.classList.remove('opacity-0');
+                        modalContent.classList.remove('scale-95');
+                        modalContent.classList.add('scale-100');
+                    }, 10);
+                }
+            });
         });
+
+        const closeModal = () => {
+            videoModal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-100');
+            setTimeout(() => { videoModal.classList.add('hidden'); videoContainer.innerHTML = ''; }, 300);
+        };
+        closeModalBtn.addEventListener('click', closeModal);
+        videoModal.addEventListener('click', (e) => { if(e.target === videoModal) closeModal(); });
     </script>
 </body>
 </html>
-
