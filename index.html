@@ -223,6 +223,39 @@
             background-color: white; color: #1f1f1f;
         }
         .login-btn-google:hover { background-color: #f0f0f0; }
+
+        /* Form Styles */
+        .auth-input {
+            width: 100%;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            padding: 0.875rem 1rem;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+        .auth-input:focus {
+            border-color: #f97316;
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+            background-color: #222;
+        }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: #6b7280;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .auth-tab.active {
+            border-bottom-color: #f97316;
+            color: white;
+        }
         
         /* Masonry & Progress Bars */
         .masonry-grid {
@@ -264,6 +297,20 @@
         .feedback-avatar {
             background: linear-gradient(135deg, #333, #111); color: #f97316; font-weight: bold;
             display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Admin Badge */
+        .admin-badge {
+            background: linear-gradient(45deg, #c2410c, #f97316);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 8px;
+            box-shadow: 0 2px 5px rgba(249, 115, 22, 0.3);
         }
     </style>
 </head>
@@ -316,6 +363,12 @@
 
                 <!-- Menú USUARIO (Visible si SI hay usuario) -->
                 <div id="user-menu" class="hidden items-center gap-4">
+                    
+                    <!-- Botón Admin (Oculto por defecto) -->
+                    <button id="admin-panel-btn" class="hidden items-center gap-2 bg-red-900/20 border border-red-500/30 text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-900/40 hover:text-red-300 transition-all">
+                        <ion-icon name="shield-checkmark"></ion-icon> ADMIN
+                    </button>
+
                     <!-- Botón para abrir Dashboard -->
                     <button id="open-dashboard-btn" class="flex items-center gap-3 bg-white/5 border border-white/10 pr-4 pl-2 py-1.5 rounded-full hover:border-brand transition-all group">
                         <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-sm border border-white/20 overflow-hidden group-hover:scale-105 transition-transform">
@@ -722,40 +775,60 @@
 
     </main>
 
-    <!-- LOGIN MODAL -->
+    <!-- LOGIN MODAL ACTUALIZADO -->
     <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
         <div class="absolute inset-0 modal-backdrop" id="login-backdrop"></div>
-        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-2xl p-8 w-full max-w-md shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="login-content">
+        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="login-content">
             
-            <button id="close-login" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
-                <ion-icon name="close" class="text-2xl"></ion-icon>
-            </button>
+            <!-- Header Pestañas -->
+            <div class="flex border-b border-white/10">
+                <div id="tab-login" class="auth-tab active">Iniciar Sesión</div>
+                <div id="tab-register" class="auth-tab">Registrarse</div>
+            </div>
 
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand/20 text-brand text-3xl">
-                    <ion-icon name="person"></ion-icon>
+            <div class="p-8">
+                <button id="close-login" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                    <ion-icon name="close" class="text-2xl"></ion-icon>
+                </button>
+
+                <div class="text-center mb-6">
+                    <div class="w-14 h-14 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-3 border border-brand/20 text-brand text-2xl">
+                        <ion-icon name="person"></ion-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-white" id="auth-title">Bienvenido</h3>
+                    <p class="text-gray-400 text-xs mt-1">Gestiona tus pedidos y perfil.</p>
                 </div>
-                <h3 class="text-2xl font-bold text-white">Bienvenido</h3>
-                <p class="text-gray-400 text-sm mt-2">Inicia sesión para gestionar tus pedidos.</p>
-            </div>
 
-            <div class="space-y-3">
-                <button id="btn-google" class="login-btn-social login-btn-google">
-                    <ion-icon name="logo-google" class="text-xl"></ion-icon>
-                    Continuar con Google
-                </button>
-                
-                <button id="btn-discord" class="login-btn-social login-btn-discord">
-                    <ion-icon name="logo-discord" class="text-xl"></ion-icon>
-                    Continuar con Discord
-                </button>
-            </div>
+                <!-- Formulario Email -->
+                <form id="auth-form" class="mb-6">
+                    <div id="field-name-container" class="hidden">
+                        <input type="text" id="auth-name" placeholder="Nombre Completo" class="auth-input">
+                    </div>
+                    <input type="email" id="auth-email" placeholder="Correo Electrónico" class="auth-input" required>
+                    <input type="password" id="auth-password" placeholder="Contraseña" class="auth-input" required>
+                    
+                    <button type="submit" id="auth-submit-btn" class="w-full bg-brand hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand/20 mb-4">
+                        Iniciar Sesión
+                    </button>
+                </form>
 
-            <div class="mt-6 text-center">
-                <p class="text-xs text-gray-600">
-                    Al continuar, aceptas nuestros Términos y Condiciones. <br>
-                    Si el login de Discord falla, asegúrate de que la configuración de OAuth esté activa en tu panel.
-                </p>
+                <div class="relative flex py-2 items-center mb-6">
+                    <div class="flex-grow border-t border-white/10"></div>
+                    <span class="flex-shrink-0 mx-4 text-gray-500 text-xs">O continúa con</span>
+                    <div class="flex-grow border-t border-white/10"></div>
+                </div>
+
+                <div class="space-y-3">
+                    <button id="btn-google" class="login-btn-social login-btn-google">
+                        <ion-icon name="logo-google" class="text-xl"></ion-icon>
+                        Google
+                    </button>
+                    
+                    <button id="btn-discord" class="login-btn-social login-btn-discord">
+                        <ion-icon name="logo-discord" class="text-xl"></ion-icon>
+                        Discord
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -785,7 +858,7 @@
             <!-- Dash Content -->
             <div class="flex-1 overflow-y-auto p-6 relative">
                 
-                <!-- Tab: Pedidos (Simulado por ahora) -->
+                <!-- Tab: Pedidos -->
                 <div id="tab-pedidos" class="dash-pane space-y-4">
                     <div class="bg-black/40 border border-white/5 rounded-xl p-6 text-center py-12">
                         <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600">
@@ -797,7 +870,7 @@
                     </div>
                 </div>
 
-                <!-- Tab: Tickets (Funcional con Firebase) -->
+                <!-- Tab: Tickets -->
                 <div id="tab-tickets" class="dash-pane hidden h-full flex flex-col">
                     <div class="bg-black/40 border border-white/5 rounded-xl p-4 mb-6">
                         <h4 class="text-white font-bold mb-3 flex items-center gap-2">
@@ -821,6 +894,89 @@
         </div>
     </div>
 
+    <!-- ADMIN DASHBOARD MODAL (NUEVO) -->
+    <div id="admin-dashboard-modal" class="fixed inset-0 z-[95] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-md" id="admin-backdrop"></div>
+        <div class="relative bg-[#0f0f0f] border border-red-900/30 rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="admin-content">
+            
+            <!-- Admin Header -->
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-[#1a0505] to-[#0a0a0a]">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-red-600/20 text-red-500 rounded-lg flex items-center justify-center text-xl border border-red-500/20">
+                        <ion-icon name="shield"></ion-icon>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">Panel de <span class="text-red-500">Administración</span></h3>
+                        <p class="text-sm text-gray-400">Gestión Global del Sistema</p>
+                    </div>
+                </div>
+                <button id="close-admin" class="text-gray-500 hover:text-white p-2 bg-white/5 rounded-lg transition-colors">
+                    <ion-icon name="close" class="text-xl"></ion-icon>
+                </button>
+            </div>
+
+            <div class="flex h-full overflow-hidden">
+                <!-- Sidebar -->
+                <div class="w-64 bg-[#050505] border-r border-white/5 p-4 flex flex-col gap-2 hidden md:flex">
+                    <button class="admin-tab-btn active flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-900/20 border border-red-500/30" data-target="admin-overview">
+                        <ion-icon name="stats-chart"></ion-icon> Estadísticas
+                    </button>
+                    <button class="admin-tab-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-white/5 border border-transparent" data-target="admin-tickets">
+                        <ion-icon name="chatbubbles"></ion-icon> Tickets Soporte
+                    </button>
+                    <!-- Botón dummy para productos (futuro) -->
+                    <button class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-gray-600 cursor-not-allowed opacity-50" title="Próximamente">
+                        <ion-icon name="cube"></ion-icon> Productos
+                    </button>
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1 p-6 overflow-y-auto bg-[#0a0a0a]">
+                    
+                    <!-- View: Overview -->
+                    <div id="admin-overview" class="admin-pane space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
+                                <div class="text-gray-500 text-xs uppercase font-bold mb-2">Tickets Totales</div>
+                                <div class="text-3xl font-bold text-white" id="stat-total-tickets">0</div>
+                            </div>
+                            <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
+                                <div class="text-gray-500 text-xs uppercase font-bold mb-2">Usuarios Registrados</div>
+                                <div class="text-3xl font-bold text-white">--</div>
+                            </div>
+                            <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
+                                <div class="text-gray-500 text-xs uppercase font-bold mb-2">Ingresos (Mes)</div>
+                                <div class="text-3xl font-bold text-green-500">$0.00</div>
+                            </div>
+                        </div>
+                        <div class="bg-blue-900/10 border border-blue-500/20 p-4 rounded-xl flex items-center gap-4">
+                            <ion-icon name="information-circle" class="text-2xl text-blue-400"></ion-icon>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">Estado del Sistema</h4>
+                                <p class="text-gray-400 text-xs">Todos los servicios de Firebase están operando correctamente.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- View: Tickets -->
+                    <div id="admin-tickets" class="admin-pane hidden h-full flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-white">Bandeja de Entrada</h3>
+                            <button id="refresh-admin-tickets" class="text-xs bg-white/5 hover:bg-white/10 text-white px-3 py-1.5 rounded-lg transition-colors">
+                                <ion-icon name="refresh"></ion-icon> Actualizar
+                            </button>
+                        </div>
+                        <div id="admin-tickets-list" class="space-y-3 flex-1 overflow-y-auto pr-2">
+                            <!-- Tickets injected via JS -->
+                            <p class="text-center text-gray-600 py-10">Cargando tickets del sistema...</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Video Modal -->
     <div id="video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform scale-95 transition-transform duration-300" id="video-modal-content">
@@ -834,8 +990,8 @@
     <!-- FIREBASE LOGIC & SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, OAuthProvider, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp, orderBy, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
         // --- CONFIGURACIÓN EXACTA DE TU PROYECTO ---
         const firebaseConfig = {
@@ -861,13 +1017,14 @@
         const userName = document.getElementById('user-name');
         const logoutBtn = document.getElementById('logout-btn');
         const openDashboardBtn = document.getElementById('open-dashboard-btn');
+        const adminPanelBtn = document.getElementById('admin-panel-btn'); // Nuevo Botón Admin
         
         const loginModal = document.getElementById('login-modal');
         const loginContent = document.getElementById('login-content');
         const closeLoginBtn = document.getElementById('close-login');
         const loginBackdrop = document.getElementById('login-backdrop');
 
-        // Referencias Dashboard
+        // Referencias Dashboard Cliente
         const dashModal = document.getElementById('dashboard-modal');
         const dashContent = document.getElementById('dash-content');
         const dashBackdrop = document.getElementById('dash-backdrop');
@@ -876,10 +1033,56 @@
         const createTicketForm = document.getElementById('create-ticket-form');
         const ticketsList = document.getElementById('tickets-list');
 
+        // Referencias Dashboard Admin
+        const adminModal = document.getElementById('admin-dashboard-modal');
+        const adminContent = document.getElementById('admin-content');
+        const adminBackdrop = document.getElementById('admin-backdrop');
+        const closeAdminBtn = document.getElementById('close-admin');
+        const adminTicketsList = document.getElementById('admin-tickets-list');
+        const refreshAdminTicketsBtn = document.getElementById('refresh-admin-tickets');
+        const statTotalTickets = document.getElementById('stat-total-tickets');
+
         const btnGoogle = document.getElementById('btn-google');
         const btnDiscord = document.getElementById('btn-discord');
 
+        // Auth Form Refs
+        const tabLogin = document.getElementById('tab-login');
+        const tabRegister = document.getElementById('tab-register');
+        const authForm = document.getElementById('auth-form');
+        const authEmail = document.getElementById('auth-email');
+        const authPassword = document.getElementById('auth-password');
+        const authName = document.getElementById('auth-name');
+        const fieldNameContainer = document.getElementById('field-name-container');
+        const authSubmitBtn = document.getElementById('auth-submit-btn');
+        const authTitle = document.getElementById('auth-title');
+
         let currentUser = null;
+        let isRegisterMode = false;
+        // Lista de admins (Demo)
+        const admins = ['admin@smestudio.com', 'soporte@smestudio.com']; 
+
+        // --- AUTH TABS LOGIC ---
+        function switchAuthMode(register) {
+            isRegisterMode = register;
+            if (register) {
+                tabRegister.classList.add('active');
+                tabLogin.classList.remove('active');
+                fieldNameContainer.classList.remove('hidden');
+                authName.required = true;
+                authSubmitBtn.textContent = "Registrarse";
+                authTitle.textContent = "Crear Cuenta";
+            } else {
+                tabLogin.classList.add('active');
+                tabRegister.classList.remove('active');
+                fieldNameContainer.classList.add('hidden');
+                authName.required = false;
+                authSubmitBtn.textContent = "Iniciar Sesión";
+                authTitle.textContent = "Bienvenido";
+            }
+        }
+
+        tabLogin.addEventListener('click', () => switchAuthMode(false));
+        tabRegister.addEventListener('click', () => switchAuthMode(true));
 
         // --- MODAL LOGIC (LOGIN) ---
         function openLogin() {
@@ -897,30 +1100,32 @@
             setTimeout(() => {
                 loginModal.classList.add('hidden');
                 loginModal.classList.remove('flex');
+                // Reset form
+                authForm.reset();
+                switchAuthMode(false);
             }, 300);
         }
 
-        // --- MODAL LOGIC (DASHBOARD) ---
-        function openDashboard() {
-            dashModal.classList.remove('hidden');
-            dashModal.classList.add('flex');
-            if(currentUser) dashUserEmail.textContent = currentUser.email;
-            setTimeout(() => {
-                dashContent.classList.remove('scale-95', 'opacity-0');
-                dashContent.classList.add('scale-100', 'opacity-100');
-            }, 10);
+        // --- MODAL LOGIC (DASHBOARDS) ---
+        function toggleModal(modal, content, show) {
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            }
         }
 
-        function closeDashboard() {
-            dashContent.classList.remove('scale-100', 'opacity-100');
-            dashContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                dashModal.classList.add('hidden');
-                dashModal.classList.remove('flex');
-            }, 300);
-        }
-
-        // Event Listeners UI
+        // Listeners Modales
         loginTriggerBtn.addEventListener('click', openLogin);
         mobileLoginBtn.addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.add('translate-x-full');
@@ -929,11 +1134,19 @@
         closeLoginBtn.addEventListener('click', closeLogin);
         loginBackdrop.addEventListener('click', closeLogin);
         
-        openDashboardBtn.addEventListener('click', openDashboard);
-        closeDashBtn.addEventListener('click', closeDashboard);
-        dashBackdrop.addEventListener('click', closeDashboard);
+        openDashboardBtn.addEventListener('click', () => toggleModal(dashModal, dashContent, true));
+        closeDashBtn.addEventListener('click', () => toggleModal(dashModal, dashContent, false));
+        dashBackdrop.addEventListener('click', () => toggleModal(dashModal, dashContent, false));
 
-        // Tabs Logic
+        // Admin Modal Listeners
+        adminPanelBtn.addEventListener('click', () => {
+            toggleModal(adminModal, adminContent, true);
+            loadAdminTickets(); // Cargar datos al abrir
+        });
+        closeAdminBtn.addEventListener('click', () => toggleModal(adminModal, adminContent, false));
+        adminBackdrop.addEventListener('click', () => toggleModal(adminModal, adminContent, false));
+
+        // Tabs Logic (User Dash)
         document.querySelectorAll('.dash-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.dash-tab').forEach(t => t.classList.remove('active'));
@@ -943,16 +1156,60 @@
             });
         });
 
+        // Tabs Logic (Admin Dash)
+        document.querySelectorAll('.admin-tab-btn').forEach(tab => {
+            tab.addEventListener('click', () => {
+                if(tab.classList.contains('cursor-not-allowed')) return;
+                document.querySelectorAll('.admin-tab-btn').forEach(t => {
+                    t.classList.remove('active', 'bg-red-900/20', 'border-red-500/30', 'text-white');
+                    t.classList.add('text-gray-400', 'hover:text-white', 'hover:bg-white/5', 'border-transparent');
+                });
+                tab.classList.remove('text-gray-400', 'hover:text-white', 'hover:bg-white/5', 'border-transparent');
+                tab.classList.add('active', 'bg-red-900/20', 'border-red-500/30', 'text-white');
+                
+                document.querySelectorAll('.admin-pane').forEach(p => p.classList.add('hidden'));
+                document.getElementById(tab.dataset.target).classList.remove('hidden');
+            });
+        });
+
         // --- AUTH LOGIC ---
+        
+        // Email/Password Auth
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = authEmail.value;
+            const password = authPassword.value;
+            const name = authName.value;
+
+            try {
+                if (isRegisterMode) {
+                    // Registro
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    // Actualizar nombre
+                    await updateProfile(userCredential.user, { displayName: name });
+                    alert(`Cuenta creada con éxito, bienvenido ${name}!`);
+                } else {
+                    // Login
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+                closeLogin();
+            } catch (error) {
+                console.error(error);
+                let msg = "Error de autenticación.";
+                if(error.code === 'auth/email-already-in-use') msg = "Este correo ya está registrado.";
+                if(error.code === 'auth/wrong-password') msg = "Contraseña incorrecta.";
+                if(error.code === 'auth/user-not-found') msg = "Usuario no encontrado.";
+                if(error.code === 'auth/weak-password') msg = "La contraseña es muy débil (mínimo 6 caracteres).";
+                alert(msg);
+            }
+        });
+
         btnGoogle.addEventListener('click', async () => {
             try { 
                 await signInWithPopup(auth, new GoogleAuthProvider()); 
                 closeLogin(); 
             } 
-            catch (error) { 
-                console.error(error);
-                alert("Error Google: " + error.message); 
-            }
+            catch (error) { alert("Error Google: " + error.message); }
         });
 
         btnDiscord.addEventListener('click', async () => {
@@ -960,13 +1217,14 @@
                 await signInWithPopup(auth, new OAuthProvider('discord.com')); 
                 closeLogin(); 
             } 
-            catch (error) { 
-                console.error(error);
-                alert("Error Discord (Configura OAuth en Firebase): " + error.message); 
-            }
+            catch (error) { alert("Error Discord: " + error.message); }
         });
 
-        logoutBtn.addEventListener('click', () => signOut(auth));
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+            toggleModal(dashModal, dashContent, false);
+            toggleModal(adminModal, adminContent, false);
+        });
 
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
@@ -974,18 +1232,34 @@
                 loginTriggerBtn.classList.replace('flex', 'hidden');
                 userMenu.classList.replace('hidden', 'flex');
                 userName.textContent = user.displayName || user.email.split('@')[0];
+                
                 if (user.photoURL) {
                     userAvatar.innerHTML = `<img src="${user.photoURL}" alt="Avatar" class="w-full h-full object-cover">`;
+                } else {
+                    userAvatar.innerHTML = user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U';
                 }
+
                 loadTickets(user.uid); 
+
+                // Admin Check
+                if(admins.includes(user.email)) {
+                    adminPanelBtn.classList.remove('hidden');
+                    adminPanelBtn.classList.add('flex');
+                    userName.innerHTML += `<span class="admin-badge">ADMIN</span>`;
+                } else {
+                    adminPanelBtn.classList.add('hidden');
+                    adminPanelBtn.classList.remove('flex');
+                }
+
             } else {
                 userMenu.classList.replace('flex', 'hidden');
                 loginTriggerBtn.classList.replace('hidden', 'flex');
                 ticketsList.innerHTML = ''; 
+                adminPanelBtn.classList.add('hidden');
             }
         });
 
-        // --- TICKET SYSTEM LOGIC ---
+        // --- CLIENT TICKET SYSTEM ---
         createTicketForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const subject = document.getElementById('ticket-subject').value;
@@ -997,6 +1271,7 @@
                 await addDoc(collection(db, "tickets"), {
                     userId: currentUser.uid,
                     userEmail: currentUser.email,
+                    userName: currentUser.displayName || "Usuario",
                     subject: subject,
                     message: message,
                     status: 'abierto',
@@ -1008,7 +1283,6 @@
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '<ion-icon name="checkmark-circle"></ion-icon> Enviado';
                 setTimeout(() => btn.innerHTML = originalText, 2000);
-
             } catch (e) {
                 console.error("Error adding ticket: ", e);
                 alert("Error creando ticket: " + e.message);
@@ -1049,10 +1323,84 @@
             });
         }
 
+        // --- ADMIN PANEL LOGIC ---
+        async function loadAdminTickets() {
+            adminTicketsList.innerHTML = '<p class="text-center text-gray-600 py-4"><ion-icon name="sync" class="animate-spin"></ion-icon> Cargando...</p>';
+            
+            try {
+                // Nota: En un entorno de producción real, esto requeriría reglas de seguridad específicas
+                // y probablemente una Cloud Function, pero para este demo usamos client-side query.
+                const q = query(collection(db, "tickets"), orderBy("createdAt", "desc"));
+                const snapshot = await getDocs(q);
+                
+                adminTicketsList.innerHTML = '';
+                statTotalTickets.innerText = snapshot.size;
+
+                if(snapshot.empty) {
+                    adminTicketsList.innerHTML = '<p class="text-center text-gray-600 py-4">No hay tickets en el sistema.</p>';
+                    return;
+                }
+
+                snapshot.forEach(docSnapshot => {
+                    const t = docSnapshot.data();
+                    const id = docSnapshot.id;
+                    const date = t.createdAt ? t.createdAt.toDate().toLocaleDateString() : 'N/A';
+                    const statusClass = t.status === 'abierto' ? 'text-green-400' : 'text-gray-500';
+                    const isClosed = t.status === 'cerrado';
+
+                    const item = document.createElement('div');
+                    item.className = 'bg-[#121212] border border-white/5 rounded-xl p-4 flex flex-col gap-3 transition-all hover:border-white/10';
+                    item.innerHTML = `
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs font-bold bg-white/10 px-2 py-0.5 rounded text-gray-300">${t.userEmail}</span>
+                                    <span class="text-[10px] text-gray-500">${date}</span>
+                                </div>
+                                <h4 class="text-white font-bold">${t.subject}</h4>
+                                <p class="text-gray-400 text-sm mt-1">${t.message}</p>
+                            </div>
+                            <div class="flex flex-col gap-2 items-end">
+                                <span class="text-xs font-bold uppercase ${statusClass}">${t.status}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-end gap-2 mt-2 border-t border-white/5 pt-3">
+                            ${!isClosed ? `<button class="btn-close-ticket text-xs bg-green-900/30 text-green-400 hover:bg-green-900/50 px-3 py-1.5 rounded border border-green-500/20 transition-colors" data-id="${id}">Marcar Resuelto</button>` : ''}
+                            <button class="btn-delete-ticket text-xs bg-red-900/30 text-red-400 hover:bg-red-900/50 px-3 py-1.5 rounded border border-red-500/20 transition-colors" data-id="${id}">Eliminar</button>
+                        </div>
+                    `;
+                    adminTicketsList.appendChild(item);
+                });
+
+                // Add Event Listeners for Admin Actions
+                document.querySelectorAll('.btn-close-ticket').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        if(!confirm('¿Marcar ticket como resuelto?')) return;
+                        await updateDoc(doc(db, "tickets", e.target.dataset.id), { status: 'cerrado' });
+                        loadAdminTickets();
+                    });
+                });
+
+                document.querySelectorAll('.btn-delete-ticket').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        if(!confirm('¿Eliminar este ticket permanentemente?')) return;
+                        await deleteDoc(doc(db, "tickets", e.target.dataset.id));
+                        loadAdminTickets();
+                    });
+                });
+
+            } catch (error) {
+                console.error("Error admin load: ", error);
+                adminTicketsList.innerHTML = '<p class="text-center text-red-500 py-4">Error cargando tickets. Verifica permisos o consola.</p>';
+            }
+        }
+
+        refreshAdminTicketsBtn.addEventListener('click', loadAdminTickets);
+
     </script>
 
     <script>
-        // --- UI & ANIMATION LOGIC ---
+        // --- UI & ANIMATION LOGIC (Existente) ---
         document.addEventListener('mousemove', (e) => {
             const cards = document.querySelectorAll('.service-card');
             cards.forEach(card => {
