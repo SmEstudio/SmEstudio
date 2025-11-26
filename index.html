@@ -73,6 +73,7 @@
             overflow-x: hidden;
         }
         body.loading { overflow: hidden; }
+        body.dashboard-open { overflow: hidden; } /* Bloquea scroll del body cuando el dashboard está abierto */
 
         /* Fondo con gradiente sutil */
         .bg-grid-pattern {
@@ -194,84 +195,83 @@
             box-shadow: 0 5px 20px rgba(249, 115, 22, 0.4); 
         }
         
-        /* Dashboard Styles */
-        .dashboard-modal {
-            background-color: #0a0a0a; border: 1px solid #222;
+        /* --- DASHBOARD EXCLUSIVO STYLES --- */
+        #dashboard-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #050505; z-index: 100;
+            display: flex; flex-direction: column;
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        #dashboard-overlay.active {
+            transform: translateY(0);
         }
         
-        /* Estilos de Packs en Dashboard (ACORDEÓN) */
-        .pack-container {
-            background: #141414;
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 0.75rem;
-            margin-bottom: 0.75rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
+        /* Sidebar del Dashboard */
+        .dash-sidebar {
+            width: 100%; height: 100%; 
+            background-color: #0a0a0a; border-right: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column;
         }
-        .pack-container:hover {
-            border-color: rgba(255,255,255,0.1);
+        .dash-sidebar-header {
+            padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: center; gap: 10px;
         }
-        .pack-container.premium {
-            border: 1px solid rgba(249, 115, 22, 0.3);
-            background: linear-gradient(90deg, rgba(249,115,22,0.05), transparent);
-        }
-        .pack-header {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .pack-header:hover {
-            background-color: rgba(255,255,255,0.03);
-        }
-        .pack-icon {
-            width: 40px; height: 40px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            margin-right: 1rem;
-            color: #f97316;
-        }
-        .pack-body {
-            background-color: rgba(0,0,0,0.3);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
-        }
-        .pack-body.open {
-            max-height: 800px; /* Suficiente para contenido largo */
-            opacity: 1;
-            transition: max-height 0.5s ease-in, opacity 0.3s ease-in;
-        }
-        .pack-arrow {
-            margin-left: auto;
-            color: #6b7280;
-            transition: transform 0.3s ease;
-        }
-        .pack-container.active .pack-arrow {
-            transform: rotate(180deg);
-            color: #f97316;
-        }
-        .pack-badge {
-            background: #f97316; color: white;
-            font-size: 0.6rem; padding: 2px 6px; border-radius: 4px;
-            font-weight: bold; margin-bottom: 4px; display: inline-block;
-        }
-        .section-item {
+        .dash-sidebar-content { flex: 1; overflow-y: auto; padding: 1rem; }
+        
+        /* Items de la lista de packs en sidebar */
+        .sidebar-pack-item {
             display: flex; align-items: center; gap: 12px;
-            padding: 12px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-            transition: background 0.2s;
-            color: #d1d5db;
+            padding: 12px; border-radius: 12px;
+            cursor: pointer; transition: all 0.2s;
+            margin-bottom: 8px; border: 1px solid transparent;
         }
-        .section-item:last-child { border-bottom: none; }
-        .section-item:hover {
-            background-color: rgba(255,255,255,0.05);
-            color: #f97316;
+        .sidebar-pack-item:hover { background-color: rgba(255,255,255,0.03); }
+        .sidebar-pack-item.active {
+            background-color: rgba(249, 115, 22, 0.1);
+            border-color: rgba(249, 115, 22, 0.2);
         }
+        .sidebar-pack-icon {
+            width: 32px; height: 32px; background: rgba(255,255,255,0.05);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: #6b7280; transition: color 0.2s;
+        }
+        .sidebar-pack-item.active .sidebar-pack-icon { color: #f97316; background: rgba(249,115,22,0.1); }
+        
+        /* Main Area del Dashboard */
+        .dash-main {
+            flex: 1; display: flex; flex-direction: column; overflow: hidden; background-color: #050505;
+        }
+        .dash-main-content {
+            flex: 1; overflow-y: auto; padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%;
+        }
+        
+        /* Video Player Placeholder */
+        .video-placeholder {
+            width: 100%; aspect-ratio: 16/9; background-color: #000;
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 2rem; position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
+        }
+
+        /* Secciones/Lecciones (Acordeon Style pero listado) */
+        .lesson-list {
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .lesson-item {
+            display: flex; align-items: center; gap: 16px;
+            padding: 16px; background: #0f0f0f;
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 12px;
+            transition: all 0.2s; cursor: pointer;
+        }
+        .lesson-item:hover {
+            border-color: rgba(249,115,22,0.3); background: #141414;
+        }
+        .lesson-number {
+            font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.5rem;
+            color: rgba(255,255,255,0.1); width: 40px;
+        }
+        .lesson-item:hover .lesson-number { color: rgba(249,115,22,0.2); }
 
         /* LOGIN MODAL STYLES */
         .modal-backdrop {
@@ -437,18 +437,24 @@
                 <!-- Menú USUARIO (Visible si SI hay usuario) -->
                 <div id="user-menu" class="hidden items-center gap-4">
                     
+                    <!-- Botón "Mis Packs" DESTACADO (Nuevo) -->
+                    <button id="open-dashboard-btn" class="flex items-center gap-2 bg-gradient-to-r from-brand to-orange-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all transform hover:scale-105 mr-2">
+                        <ion-icon name="library"></ion-icon> Mis Packs
+                    </button>
+
                     <!-- Botón Admin (Oculto por defecto) -->
                     <button id="admin-panel-btn" class="hidden items-center gap-2 bg-red-900/20 border border-red-500/30 text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-900/40 hover:text-red-300 transition-all">
                         <ion-icon name="shield-checkmark"></ion-icon> ADMIN
                     </button>
 
-                    <!-- Botón para abrir Dashboard -->
-                    <button id="open-dashboard-btn" class="flex items-center gap-3 bg-white/5 border border-white/10 pr-4 pl-2 py-1.5 rounded-full hover:border-brand transition-all group">
-                        <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-sm border border-white/20 overflow-hidden group-hover:scale-105 transition-transform">
+                    <!-- Avatar Usuario -->
+                    <div class="flex items-center gap-3 bg-white/5 border border-white/10 pr-4 pl-2 py-1.5 rounded-full">
+                        <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-sm border border-white/20 overflow-hidden">
                             U
                         </div>
-                        <span id="user-name" class="text-sm font-medium text-white truncate max-w-[100px]">Usuario</span>
-                    </button>
+                        <span id="user-name" class="text-sm font-medium text-white truncate max-w-[80px]">User</span>
+                    </div>
+                    
                     <button id="logout-btn" class="text-gray-400 hover:text-red-500 transition-colors" title="Cerrar Sesión">
                         <ion-icon name="log-out-outline" class="text-xl"></ion-icon>
                     </button>
@@ -907,58 +913,80 @@
         </div>
     </div>
 
-    <!-- CLIENT DASHBOARD MODAL (MIS RECURSOS) -->
-    <div id="dashboard-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" id="dash-backdrop"></div>
-        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-3xl w-full max-w-lg flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="dash-content">
-            
-            <!-- Dash Header -->
-            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-[#121212]">
-                <div class="flex items-center gap-3">
-                    <div class="text-brand text-2xl">
-                        <ion-icon name="folder-open"></ion-icon>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white">Mis Recursos</h3>
-                        <p class="text-xs text-gray-400">Gestiona tus descargas</p>
-                    </div>
-                </div>
-                <button id="close-dash" class="text-gray-500 hover:text-white p-2 bg-white/5 rounded-lg transition-colors">
-                    <ion-icon name="close" class="text-xl"></ion-icon>
-                </button>
-            </div>
-
-            <!-- Dash Content (Aquí se cargan los packs dinámicamente) -->
-            <div class="flex-1 p-6 relative overflow-y-auto max-h-[60vh]">
-                 <!-- Loading State -->
-                 <div id="dash-loading" class="text-center py-8">
-                     <ion-icon name="sync" class="animate-spin text-3xl text-brand mb-2"></ion-icon>
-                     <p class="text-gray-500 text-sm">Cargando tus recursos...</p>
-                 </div>
-
-                 <!-- Container de Packs -->
-                 <div id="user-packs-container" class="hidden">
-                    <div class="text-xs font-bold text-gray-500 uppercase mb-4 tracking-wider">Packs Adquiridos</div>
-                    <div id="packs-list">
-                        <!-- Aquí se inyectan los packs desde JS -->
-                    </div>
-                 </div>
-
-                 <!-- Empty State (Si no tiene nada) -->
-                 <div id="dash-empty" class="hidden text-center py-8">
-                     <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600 text-3xl">
-                         <ion-icon name="cube-outline"></ion-icon>
+    <!-- DASHBOARD EXCLUSIVO (Pantalla Completa) -->
+    <div id="dashboard-overlay" class="hidden">
+        
+        <div class="flex w-full h-full">
+            <!-- Sidebar -->
+            <aside class="w-80 h-full dash-sidebar flex-shrink-0">
+                <div class="dash-sidebar-header">
+                     <div class="text-brand text-2xl"><ion-icon name="folder-open"></ion-icon></div>
+                     <div>
+                         <h3 class="text-lg font-bold text-white">Mis Recursos</h3>
+                         <p class="text-xs text-gray-400">Panel de Estudiante</p>
                      </div>
-                     <p class="text-gray-400 font-medium mb-2">No tienes recursos disponibles</p>
-                     <p class="text-xs text-gray-600 max-w-[200px] mx-auto">Tus compras aparecerán aquí una vez verificadas por el administrador.</p>
-                 </div>
-            </div>
+                </div>
+                
+                <div class="dash-sidebar-content">
+                    <div class="text-xs font-bold text-gray-500 uppercase mb-4 tracking-wider">Packs Adquiridos</div>
+                    
+                    <!-- Loading State Sidebar -->
+                    <div id="dash-loading" class="text-center py-4">
+                         <ion-icon name="sync" class="animate-spin text-xl text-brand mb-2"></ion-icon>
+                    </div>
 
-            <!-- Dash Footer -->
-            <div class="p-4 bg-[#0a0a0a] border-t border-white/5 text-center">
-                 <p class="text-xs text-gray-500" id="dash-user-email">Cargando usuario...</p>
-            </div>
+                    <!-- Lista de Packs (Generado por JS) -->
+                    <div id="sidebar-packs-list"></div>
+
+                     <!-- Empty State -->
+                     <div id="dash-empty" class="hidden text-center py-8">
+                         <p class="text-gray-400 text-sm">No tienes packs aún.</p>
+                     </div>
+                </div>
+                
+                <div class="p-4 border-t border-white/5 bg-black/20">
+                     <button id="close-dash-full" class="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-gray-300 py-2 rounded-lg transition-colors text-sm">
+                         <ion-icon name="arrow-back"></ion-icon> Volver al Inicio
+                     </button>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="dash-main">
+                <div class="dash-main-content">
+                    
+                    <!-- Header del Contenido -->
+                    <div class="mb-8">
+                        <span class="bg-brand/10 text-brand text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block" id="content-badge">Selecciona un Pack</span>
+                        <h1 class="text-3xl font-bold text-white mb-2" id="content-title">Bienvenido a tu Espacio</h1>
+                        <p class="text-gray-400" id="content-desc">Selecciona un pack del menú lateral para ver su contenido y comenzar a aprender.</p>
+                    </div>
+
+                    <!-- Video Player -->
+                    <div class="video-placeholder group">
+                        <div class="text-center">
+                            <ion-icon name="play-circle-outline" class="text-6xl text-white/20 group-hover:text-brand transition-colors duration-300 mb-2"></ion-icon>
+                            <p class="text-gray-500 text-sm">El reproductor se cargará aquí</p>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Lecciones / Descargas -->
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                            <ion-icon name="list"></ion-icon> Contenido del Curso
+                        </h3>
+                        <div id="content-lessons-list" class="lesson-list">
+                            <!-- Items generados por JS -->
+                            <div class="p-8 text-center border border-dashed border-white/10 rounded-xl text-gray-500">
+                                Selecciona un curso para ver sus lecciones.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
         </div>
+
     </div>
 
     <!-- ADMIN DASHBOARD MODAL (STATS ONLY) -->
@@ -1016,8 +1044,8 @@
         </div>
     </div>
 
-    <!-- Video Modal -->
-    <div id="video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+    <!-- Video Modal (Global) -->
+    <div id="video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 z-[200]">
         <div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform scale-95 transition-transform duration-300" id="video-modal-content">
             <div id="modal-video-container" class="w-full h-full"></div>
             <button id="modal-close-btn" class="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full hover:bg-brand transition-colors backdrop-blur-sm">
@@ -1062,15 +1090,18 @@
         const closeLoginBtn = document.getElementById('close-login');
         const loginBackdrop = document.getElementById('login-backdrop');
 
-        const dashModal = document.getElementById('dashboard-modal');
-        const dashContent = document.getElementById('dash-content');
-        const dashBackdrop = document.getElementById('dash-backdrop');
-        const closeDashBtn = document.getElementById('close-dash');
-        const dashUserEmail = document.getElementById('dash-user-email');
+        // Referencias para el Dashboard Full Screen
+        const dashOverlay = document.getElementById('dashboard-overlay');
+        const closeDashFullBtn = document.getElementById('close-dash-full');
         const dashLoading = document.getElementById('dash-loading');
         const dashEmpty = document.getElementById('dash-empty');
-        const userPacksContainer = document.getElementById('user-packs-container');
-        const packsList = document.getElementById('packs-list');
+        const sidebarPacksList = document.getElementById('sidebar-packs-list');
+        
+        // Referencias del Contenido Principal del Dashboard
+        const contentBadge = document.getElementById('content-badge');
+        const contentTitle = document.getElementById('content-title');
+        const contentDesc = document.getElementById('content-desc');
+        const contentLessonsList = document.getElementById('content-lessons-list');
 
         const adminModal = document.getElementById('admin-dashboard-modal');
         const adminContent = document.getElementById('admin-content');
@@ -1100,22 +1131,19 @@
                 name: 'Pack de Inicio GFX',
                 icon: 'cube-outline',
                 isPremium: false,
+                desc: 'Todo lo necesario para empezar en el diseño de banners.',
                 sections: [
                     { title: '01. Introducción y Conceptos Básicos', type: 'video', icon: 'play-circle-outline', duration: '10:24', url: '#' },
                     { title: '02. Instalación de Software', type: 'video', icon: 'play-circle-outline', duration: '05:12', url: '#' },
                     { title: '03. Interfaz de Photoshop', type: 'video', icon: 'play-circle-outline', duration: '15:45', url: '#' },
                     { title: '04. Herramientas Esenciales', type: 'video', icon: 'play-circle-outline', duration: '20:01', url: '#' },
                     { title: '05. Teoría del Color en GFX', type: 'video', icon: 'play-circle-outline', duration: '12:30', url: '#' },
-                    { title: '06. Composición y Espacio', type: 'video', icon: 'play-circle-outline', duration: '18:15', url: '#' },
-                    { title: '07. Uso de Efectos y Filtros', type: 'video', icon: 'play-circle-outline', duration: '22:10', url: '#' },
-                    { title: '08. Tipografía para Banners', type: 'video', icon: 'play-circle-outline', duration: '14:20', url: '#' },
-                    { title: '09. Renderizado y Exportación', type: 'video', icon: 'play-circle-outline', duration: '08:55', url: '#' },
                     { title: 'Materiales: Fuentes y Pinceles', type: 'download', icon: 'download-outline', size: '1.2 GB', url: '#' }
                 ]
             },
             'ultimate-bundle': {
                 name: 'Ultimate 3D Bundle',
-                desc: 'Renders 3D exclusivos',
+                desc: 'Renders 3D exclusivos en alta resolución.',
                 icon: 'diamond-outline',
                 isPremium: true,
                 sections: [
@@ -1128,6 +1156,7 @@
                 name: 'Editor Bundle',
                 icon: 'cut-outline',
                 isPremium: false,
+                desc: 'Recursos esenciales para editores de video.',
                 sections: [
                     { title: 'Presets Premiere Pro', type: 'download', icon: 'settings-outline', size: '150 MB', url: '#' },
                     { title: 'Librería de Efectos de Sonido', type: 'download', icon: 'musical-notes-outline', size: '450 MB', url: '#' },
@@ -1155,6 +1184,116 @@
             }
         }
 
+        // --- DASHBOARD LOGIC (NEW) ---
+        function openDashboard() {
+            dashOverlay.classList.remove('hidden');
+            setTimeout(() => dashOverlay.classList.add('active'), 10);
+            document.body.classList.add('dashboard-open');
+            if(currentUser) loadUserPacks(currentUser);
+        }
+
+        function closeDashboard() {
+            dashOverlay.classList.remove('active');
+            setTimeout(() => {
+                dashOverlay.classList.add('hidden');
+                document.body.classList.remove('dashboard-open');
+            }, 400);
+        }
+
+        function renderPackContent(packId) {
+            const pack = packDefinitions[packId];
+            if(!pack) return;
+
+            // Update Header
+            contentBadge.textContent = pack.isPremium ? "Premium Course" : "Curso Standard";
+            contentBadge.className = pack.isPremium ? 
+                "bg-orange-500/10 text-orange-500 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block" : 
+                "bg-brand/10 text-brand text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block";
+            
+            contentTitle.textContent = pack.name;
+            contentDesc.textContent = pack.desc || "Explora el contenido disponible en este paquete.";
+
+            // Render Lessons
+            contentLessonsList.innerHTML = '';
+            if(pack.sections && pack.sections.length > 0) {
+                pack.sections.forEach((section, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'lesson-item group';
+                    item.innerHTML = `
+                        <div class="lesson-number">${(index + 1).toString().padStart(2, '0')}</div>
+                        <div class="flex-grow">
+                            <h4 class="text-white font-bold text-sm mb-1 group-hover:text-brand transition-colors">${section.title}</h4>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <ion-icon name="${section.icon}"></ion-icon>
+                                <span>${section.type === 'video' ? 'Video • ' + section.duration : 'Descarga • ' + section.size}</span>
+                            </div>
+                        </div>
+                        <div class="text-gray-600 group-hover:text-white transition-colors">
+                            <ion-icon name="play-circle" class="text-2xl"></ion-icon>
+                        </div>
+                    `;
+                    contentLessonsList.appendChild(item);
+                });
+            } else {
+                contentLessonsList.innerHTML = `<div class="p-4 text-center text-gray-500">Este pack no tiene contenido visible.</div>`;
+            }
+        }
+
+        async function loadUserPacks(user) {
+            dashLoading.classList.remove('hidden');
+            sidebarPacksList.innerHTML = '';
+            dashEmpty.classList.add('hidden');
+
+            try {
+                const userDocRef = doc(db, "users", user.uid);
+                const userDocSnap = await getDoc(userDocRef);
+
+                if (userDocSnap.exists()) {
+                    const userData = userDocSnap.data();
+                    const userPacks = userData.packs || []; 
+
+                    if (userPacks.length > 0) {
+                        userPacks.forEach((packId, index) => {
+                            const packInfo = packDefinitions[packId];
+                            if (packInfo) {
+                                const item = document.createElement('div');
+                                item.className = `sidebar-pack-item ${index === 0 ? 'active' : ''}`; // Select first by default
+                                item.dataset.id = packId;
+                                item.innerHTML = `
+                                    <div class="sidebar-pack-icon">
+                                        <ion-icon name="${packInfo.icon}"></ion-icon>
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-300">${packInfo.name}</div>
+                                `;
+                                
+                                item.addEventListener('click', () => {
+                                    // Handle active state UI
+                                    document.querySelectorAll('.sidebar-pack-item').forEach(el => el.classList.remove('active'));
+                                    item.classList.add('active');
+                                    // Load Content
+                                    renderPackContent(packId);
+                                });
+
+                                sidebarPacksList.appendChild(item);
+                                
+                                // Load first pack automatically
+                                if(index === 0) renderPackContent(packId);
+                            }
+                        });
+                    } else {
+                        dashEmpty.classList.remove('hidden');
+                    }
+                } else {
+                    await setDoc(userDocRef, { email: user.email, packs: [] }, { merge: true });
+                    dashEmpty.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error fetching packs:", error);
+            } finally {
+                dashLoading.classList.add('hidden');
+            }
+        }
+
         function switchAuthMode(register) {
             isRegisterMode = register;
             if (register) {
@@ -1174,132 +1313,14 @@
             }
         }
 
-        // --- FETCH & RENDER PACKS ---
-        async function loadUserPacks(user) {
-            // Reset UI
-            dashLoading.classList.remove('hidden');
-            userPacksContainer.classList.add('hidden');
-            dashEmpty.classList.add('hidden');
-            packsList.innerHTML = '';
-
-            try {
-                // 1. Obtener documento del usuario en Firestore
-                const userDocRef = doc(db, "users", user.uid);
-                const userDocSnap = await getDoc(userDocRef);
-
-                if (userDocSnap.exists()) {
-                    const userData = userDocSnap.data();
-                    const userPacks = userData.packs || []; 
-
-                    if (userPacks.length > 0) {
-                        // Renderizar packs como acordeones
-                        userPacks.forEach(packId => {
-                            const packInfo = packDefinitions[packId];
-                            if (packInfo) {
-                                // Container principal del Pack
-                                const packContainer = document.createElement('div');
-                                const premiumClass = packInfo.isPremium ? 'premium' : '';
-                                const badgeHtml = packInfo.isPremium ? '<span class="pack-badge">PREMIUM</span>' : '';
-                                
-                                packContainer.className = `pack-container ${premiumClass}`;
-                                
-                                // Header del Pack (Clickable)
-                                const headerHtml = `
-                                    <div class="pack-header">
-                                        <div class="pack-icon">
-                                            <ion-icon name="${packInfo.icon}" class="text-xl"></ion-icon>
-                                        </div>
-                                        <div class="flex-grow">
-                                            ${badgeHtml}
-                                            <h4 class="text-white font-bold text-sm">${packInfo.name}</h4>
-                                            ${packInfo.desc ? `<p class="text-xs text-gray-500">${packInfo.desc}</p>` : ''}
-                                        </div>
-                                        <div class="pack-arrow">
-                                            <ion-icon name="chevron-down-outline" class="text-lg"></ion-icon>
-                                        </div>
-                                    </div>
-                                `;
-
-                                // Cuerpo del Pack (Secciones)
-                                let sectionsHtml = '<div class="pack-body">';
-                                
-                                if (packInfo.sections && packInfo.sections.length > 0) {
-                                    packInfo.sections.forEach(section => {
-                                        const meta = section.type === 'video' ? section.duration : section.size;
-                                        sectionsHtml += `
-                                            <a href="${section.url}" class="section-item group">
-                                                <div class="text-gray-500 group-hover:text-brand text-lg flex items-center">
-                                                    <ion-icon name="${section.icon}"></ion-icon>
-                                                </div>
-                                                <div class="flex-grow">
-                                                    <div class="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">${section.title}</div>
-                                                </div>
-                                                <div class="text-xs text-gray-600 border border-white/10 px-2 py-0.5 rounded">${meta}</div>
-                                            </a>
-                                        `;
-                                    });
-                                } else {
-                                    sectionsHtml += `<div class="p-4 text-xs text-center text-gray-500">No hay contenido disponible aún.</div>`;
-                                }
-                                sectionsHtml += '</div>';
-
-                                packContainer.innerHTML = headerHtml + sectionsHtml;
-
-                                // Lógica de Click para Abrir/Cerrar
-                                const headerEl = packContainer.querySelector('.pack-header');
-                                const bodyEl = packContainer.querySelector('.pack-body');
-                                
-                                headerEl.addEventListener('click', () => {
-                                    const isOpen = packContainer.classList.contains('active');
-                                    
-                                    // Cerrar otros (opcional, estilo acordeón estricto)
-                                    // document.querySelectorAll('.pack-container.active').forEach(el => {
-                                    //     if(el !== packContainer) {
-                                    //         el.classList.remove('active');
-                                    //         el.querySelector('.pack-body').classList.remove('open');
-                                    //     }
-                                    // });
-
-                                    if(isOpen) {
-                                        packContainer.classList.remove('active');
-                                        bodyEl.classList.remove('open');
-                                    } else {
-                                        packContainer.classList.add('active');
-                                        bodyEl.classList.add('open');
-                                    }
-                                });
-
-                                packsList.appendChild(packContainer);
-                            }
-                        });
-                        userPacksContainer.classList.remove('hidden');
-                    } else {
-                        dashEmpty.classList.remove('hidden');
-                    }
-                } else {
-                    await setDoc(userDocRef, { email: user.email, packs: [] }, { merge: true });
-                    dashEmpty.classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error("Error fetching packs:", error);
-                dashEmpty.innerHTML = `<p class="text-red-500 text-sm">Error al cargar recursos.</p>`;
-                dashEmpty.classList.remove('hidden');
-            } finally {
-                dashLoading.classList.add('hidden');
-            }
-        }
-
         // --- LISTENERS ---
         loginTriggerBtn.addEventListener('click', () => toggleModal(loginModal, loginContent, true));
         closeLoginBtn.addEventListener('click', () => toggleModal(loginModal, loginContent, false));
         loginBackdrop.addEventListener('click', () => toggleModal(loginModal, loginContent, false));
         
-        openDashboardBtn.addEventListener('click', () => {
-            toggleModal(dashModal, dashContent, true);
-            if(currentUser) loadUserPacks(currentUser); // Cargar packs al abrir
-        });
-        closeDashBtn.addEventListener('click', () => toggleModal(dashModal, dashContent, false));
-        dashBackdrop.addEventListener('click', () => toggleModal(dashModal, dashContent, false));
+        // Nuevo Listener para Dashboard Full Screen
+        openDashboardBtn.addEventListener('click', openDashboard);
+        closeDashFullBtn.addEventListener('click', closeDashboard);
 
         adminPanelBtn.addEventListener('click', () => {
             toggleModal(adminModal, adminContent, true);
@@ -1346,7 +1367,7 @@
 
         logoutBtn.addEventListener('click', () => {
             signOut(auth);
-            toggleModal(dashModal, dashContent, false);
+            closeDashboard();
             toggleModal(adminModal, adminContent, false);
         });
 
@@ -1359,8 +1380,6 @@
                 userName.textContent = user.displayName || user.email.split('@')[0];
                 userAvatar.innerHTML = user.photoURL ? `<img src="${user.photoURL}" class="w-full h-full object-cover">` : (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
 
-                if(dashUserEmail) dashUserEmail.textContent = user.email;
-
                 // Check Admin
                 if(admins.includes(user.email)) {
                     adminPanelBtn.classList.remove('hidden');
@@ -1372,6 +1391,7 @@
             } else {
                 userMenu.classList.replace('flex', 'hidden');
                 loginTriggerBtn.classList.replace('hidden', 'flex');
+                closeDashboard(); // Close if logged out
             }
         });
 
