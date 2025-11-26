@@ -1207,79 +1207,44 @@
             }, 400);
         }
 
-// Render Lessons
-contentLessonsList.innerHTML = '';
-if (pack.sections && pack.sections.length > 0) {
-    pack.sections.forEach((section, index) => {
-        const item = document.createElement('div');
-        item.className = 'lesson-item group';
+        function renderPackContent(packId) {
+            const pack = packDefinitions[packId];
+            if(!pack) return;
 
-        // *** LÓGICA DE VIDEO DINÁMICO ***
-        if (section.type === 'video' && section.url && section.url !== '#') {
-            item.classList.add('video-lesson-item'); // Clase de identificación para el listener
-            item.setAttribute('data-url', section.url); // Guardar la URL del video
-        }
-        // **********************************
-
-        item.innerHTML = `
-            <div class="lesson-number">${(index + 1).toString().padStart(2, '0')}</div>
-            <div class="flex-grow">
-                <h4 class="text-white font-bold text-sm mb-1 group-hover:text-brand transition-colors">${section.title}</h4>
-                <div class="flex items-center gap-2 text-xs text-gray-500">
-                    <ion-icon name="${section.icon}"></ion-icon>
-                    <span>${section.type === 'video' ? 'Video • ' + section.duration : 'Descarga • ' + section.size}</span>
-                </div>
-            </div>
-            <div class="text-gray-600 group-hover:text-white transition-colors">
-                ${section.type === 'video' ? '<ion-icon name="play-circle" class="text-2xl"></ion-icon>' : '<ion-icon name="download-outline" class="text-2xl"></ion-icon>'}
-            </div>
-        `;
-        contentLessonsList.appendChild(item);
-    });
-    
-    // *** ADJUNTAR LISTENERS DESPUÉS DE RENDERIZAR ***
-    setupLessonVideoPlayback();
-    // *************************************************
-
-} else {
-    contentLessonsList.innerHTML = `<div class="p-4 text-center text-gray-500">Este pack no tiene contenido visible.</div>`;
-}
-// --- NUEVA FUNCIÓN: ADJUNTA CLICK LISTENERS A LECCIONES CREADAS DINÁMICAMENTE ---
-function setupLessonVideoPlayback() {
-    const videoModal = document.getElementById('video-modal');
-    const videoContainer = document.getElementById('modal-video-container');
-    const modalContent = document.getElementById('video-modal-content');
-
-    // 1. Manejar la apertura de videos de lecciones
-    document.querySelectorAll('.video-lesson-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            const url = e.currentTarget.getAttribute('data-url');
+            // Update Header
+            contentBadge.textContent = pack.isPremium ? "Premium Course" : "Curso Standard";
+            contentBadge.className = pack.isPremium ? 
+                "bg-orange-500/10 text-orange-500 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block" : 
+                "bg-brand/10 text-brand text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block";
             
-            if (!url || url === '#') return;
+            contentTitle.textContent = pack.name;
+            contentDesc.textContent = pack.desc || "Explora el contenido disponible en este paquete.";
 
-            // Extraer el ID de YouTube (compatible con v= y youtu.be/)
-            const videoId = url.match(/(?:v=|youtu\.be\/|\/embed\/)([a-zA-Z0-9_-]{11})/)?.[1];
-            
-            if (videoId) {
-                // Cargar el iframe de YouTube
-                videoContainer.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
-                
-                // Abrir el modal (usa la misma lógica de transición)
-                videoModal.classList.remove('hidden');
-                setTimeout(() => {
-                    videoModal.classList.remove('opacity-0');
-                    modalContent.classList.remove('scale-95');
-                    modalContent.classList.add('scale-100');
-                }, 10);
+            // Render Lessons
+            contentLessonsList.innerHTML = '';
+            if(pack.sections && pack.sections.length > 0) {
+                pack.sections.forEach((section, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'lesson-item group';
+                    item.innerHTML = `
+                        <div class="lesson-number">${(index + 1).toString().padStart(2, '0')}</div>
+                        <div class="flex-grow">
+                            <h4 class="text-white font-bold text-sm mb-1 group-hover:text-brand transition-colors">${section.title}</h4>
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <ion-icon name="${section.icon}"></ion-icon>
+                                <span>${section.type === 'video' ? 'Video • ' + section.duration : 'Descarga • ' + section.size}</span>
+                            </div>
+                        </div>
+                        <div class="text-gray-600 group-hover:text-white transition-colors">
+                            <ion-icon name="play-circle" class="text-2xl"></ion-icon>
+                        </div>
+                    `;
+                    contentLessonsList.appendChild(item);
+                });
+            } else {
+                contentLessonsList.innerHTML = `<div class="p-4 text-center text-gray-500">Este pack no tiene contenido visible.</div>`;
             }
-        });
-    });
-
-    // 2. Si hay un listener global para '.video-open-btn' que maneja el mismo modal, 
-    // asegúrate de que no esté entrando en conflicto con esta nueva lógica. 
-    // Este código maneja específicamente el contenido dinámico del dashboard.
-}
+        }
 
         async function loadUserPacks(user) {
             dashLoading.classList.remove('hidden');
