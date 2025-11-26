@@ -7,15 +7,19 @@
     <title>Tienda | SM Estudio | Diseño Premium</title>
     <link rel="icon" href="https://i.imgur.com/eyMr4Ki.png" type="image/png">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Google Fonts: Poppins & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Iconos -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+    <!-- Configuración Tailwind personalizada -->
     <script>
         tailwind.config = {
             theme: {
@@ -241,6 +245,15 @@
             flex: 1; overflow-y: auto; padding: 2rem; max-width: 1200px; margin: 0 auto; width: 100%;
         }
         
+        /* Video Player Placeholder */
+        .video-placeholder {
+            width: 100%; aspect-ratio: 16/9; background-color: #000;
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 2rem; position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
+        }
+
         /* Secciones/Lecciones (Acordeon Style pero listado) */
         .lesson-list {
             display: flex; flex-direction: column; gap: 4px;
@@ -254,15 +267,11 @@
         .lesson-item:hover {
             border-color: rgba(249,115,22,0.3); background: #141414;
         }
-        .lesson-item.active-lesson {
-            background: rgba(249, 115, 22, 0.05);
-            border-color: rgba(249, 115, 22, 0.5);
-        }
         .lesson-number {
             font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.5rem;
             color: rgba(255,255,255,0.1); width: 40px;
         }
-        .lesson-item:hover .lesson-number, .lesson-item.active-lesson .lesson-number { color: rgba(249,115,22,0.5); }
+        .lesson-item:hover .lesson-number { color: rgba(249,115,22,0.2); }
 
         /* LOGIN MODAL STYLES */
         .modal-backdrop {
@@ -381,6 +390,7 @@
 
 <body class="antialiased font-sans selection:bg-brand selection:text-white loading">
     
+    <!-- Loader -->
     <div id="loader">
         <div class="loader-content">
             <img src="https://i.imgur.com/eyMr4Ki.png" alt="SM Estudio" class="loader-logo animate-pulse">
@@ -390,18 +400,22 @@
         </div>
     </div>
 
+    <!-- Background -->
     <div class="fixed inset-0 pointer-events-none z-0">
         <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
         <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-brand/5 rounded-full blur-[150px]"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-blue-600/5 rounded-full blur-[150px]"></div>
     </div>
 
+    <!-- Navigation -->
     <nav id="navbar">
         <div class="w-full h-full px-6 lg:px-8 flex justify-between items-center mx-auto max-w-7xl">
+            <!-- Logo -->
             <a href="#home" class="text-xl lg:text-2xl font-display font-bold text-white tracking-tight z-50 relative hover:scale-105 transition-transform flex-shrink-0">
                 SM<span class="text-brand">Estudio</span>
             </a>
             
+            <!-- Links Desktop -->
             <div class="hidden md:flex items-center justify-center flex-grow gap-6 lg:gap-8 text-sm font-medium">
                 <a href="#about" class="nav-link">Nosotros</a>
                 <a href="#proceso" class="nav-link">Proceso</a>
@@ -411,23 +425,29 @@
                 <a href="#contacto" class="nav-link">Contacto</a>
             </div>
 
+            <!-- User / Login Area -->
             <div class="flex items-center gap-4 z-50 relative flex-shrink-0">
                 
+                <!-- Botón LOGIN (Visible si NO hay usuario) -->
                 <button id="login-trigger-btn" class="hidden items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white px-5 py-2.5 rounded-full text-sm transition-all hover:border-brand/50 group">
                     <ion-icon name="log-in-outline" class="text-lg group-hover:text-brand"></ion-icon>
                     <span>Acceso Cliente</span>
                 </button>
 
+                <!-- Menú USUARIO (Visible si SI hay usuario) -->
                 <div id="user-menu" class="hidden items-center gap-4">
                     
+                    <!-- Botón "Mis Packs" DESTACADO (Nuevo) -->
                     <button id="open-dashboard-btn" class="flex items-center gap-2 bg-gradient-to-r from-brand to-orange-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all transform hover:scale-105 mr-2">
                         <ion-icon name="library"></ion-icon> Mis Packs
                     </button>
 
+                    <!-- Botón Admin (Oculto por defecto) -->
                     <button id="admin-panel-btn" class="hidden items-center gap-2 bg-red-900/20 border border-red-500/30 text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-900/40 hover:text-red-300 transition-all">
                         <ion-icon name="shield-checkmark"></ion-icon> ADMIN
                     </button>
 
+                    <!-- Avatar Usuario -->
                     <div class="flex items-center gap-3 bg-white/5 border border-white/10 pr-4 pl-2 py-1.5 rounded-full">
                         <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-sm border border-white/20 overflow-hidden">
                             U
@@ -446,6 +466,7 @@
             </div>
         </div>
         
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="fixed inset-0 bg-dark-950/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8">
             <a href="#about" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Nosotros</a>
             <a href="#proceso" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Proceso</a>
@@ -461,6 +482,7 @@
     </nav>
 
     <main class="relative z-10">
+        <!-- Hero Section -->
         <section id="home" class="min-h-screen flex items-center justify-center relative pt-24 pb-16 lg:pt-32 lg:pb-0">
             <div class="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div class="text-left order-2 lg:order-1 flex flex-col justify-center">
@@ -496,6 +518,7 @@
             </div>
         </section>
         
+        <!-- About & Skills -->
         <section id="about" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-dark-900/50 border-y border-white/5 scroll-mt-0">
             <div class="container mx-auto px-6 lg:px-12">
                 <div class="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
@@ -570,6 +593,7 @@
             </div>
         </section>
 
+        <!-- SECCIÓN: PROCESO -->
         <section id="proceso" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-[#080808] border-b border-white/5 relative overflow-hidden scroll-mt-0">
             <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
             <div class="container mx-auto px-6 lg:px-12 relative z-10">
@@ -579,6 +603,7 @@
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                    <!-- Steps -->
                     <div class="step-card reveal delay-100 group">
                         <div class="step-number">01</div>
                         <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
@@ -615,6 +640,7 @@
             </div>
         </section>
 
+        <!-- Servicios / Tienda -->
         <section id="tienda" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 relative scroll-mt-0">
             <div class="container mx-auto px-6 lg:px-12">
                 <div class="text-center max-w-3xl mx-auto mb-16 reveal">
@@ -635,6 +661,7 @@
             </div>
         </section>
 
+        <!-- Portafolio -->
         <section id="portfolio" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-dark-900/30 scroll-mt-0">
             <div class="container mx-auto px-6 lg:px-12">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-12 lg:mb-16 gap-6 reveal">
@@ -688,6 +715,7 @@
             </div>
         </section>
 
+        <!-- SECCIÓN FEEDBACKS (TESTIMONIOS) -->
         <section id="feedbacks" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 relative overflow-hidden scroll-mt-0 bg-[#080808]">
             <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
             <div class="absolute bottom-0 left-0 w-1/2 h-1/2 bg-discord/5 rounded-full blur-[120px] pointer-events-none"></div>
@@ -766,6 +794,7 @@
             </div>
         </section>
 
+        <!-- Contacto / Discord -->
         <section id="contacto" class="min-h-screen flex flex-col justify-between pt-32 pb-10 border-t border-white/5 relative overflow-hidden scroll-mt-0">
             <div class="absolute inset-0 pointer-events-none">
                 <div class="absolute top-1/2 left-1/4 w-64 h-64 lg:w-96 lg:h-96 bg-brand/5 rounded-full blur-[100px] lg:blur-[120px] -translate-y-1/2"></div>
@@ -825,10 +854,12 @@
 
     </main>
 
+    <!-- LOGIN MODAL -->
     <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
         <div class="absolute inset-0 modal-backdrop" id="login-backdrop"></div>
         <div class="relative bg-[#0f0f0f] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="login-content">
             
+            <!-- Header Pestañas -->
             <div class="flex border-b border-white/10">
                 <div id="tab-login" class="auth-tab active">Iniciar Sesión</div>
                 <div id="tab-register" class="auth-tab">Registrarse</div>
@@ -847,6 +878,7 @@
                     <p class="text-gray-400 text-xs mt-1">Gestiona tus pedidos y perfil.</p>
                 </div>
 
+                <!-- Formulario Email -->
                 <form id="auth-form" class="mb-6">
                     <div id="field-name-container" class="hidden">
                         <input type="text" id="auth-name" placeholder="Nombre Completo" class="auth-input">
@@ -865,6 +897,7 @@
                     <div class="flex-grow border-t border-white/10"></div>
                 </div>
 
+                <!-- Botones Sociales Corregidos -->
                 <div class="space-y-3">
                     <button id="btn-google" class="login-btn-social login-btn-google">
                         <ion-icon name="logo-google"></ion-icon>
@@ -880,10 +913,12 @@
         </div>
     </div>
 
+    <!-- DASHBOARD EXCLUSIVO (Pantalla Completa) -->
     <div id="dashboard-overlay" class="hidden">
         
         <div class="flex w-full h-full">
-            <aside class="w-80 h-full dash-sidebar flex-shrink-0 hidden md:flex">
+            <!-- Sidebar -->
+            <aside class="w-80 h-full dash-sidebar flex-shrink-0">
                 <div class="dash-sidebar-header">
                      <div class="text-brand text-2xl"><ion-icon name="folder-open"></ion-icon></div>
                      <div>
@@ -895,12 +930,15 @@
                 <div class="dash-sidebar-content">
                     <div class="text-xs font-bold text-gray-500 uppercase mb-4 tracking-wider">Packs Adquiridos</div>
                     
+                    <!-- Loading State Sidebar -->
                     <div id="dash-loading" class="text-center py-4">
                          <ion-icon name="sync" class="animate-spin text-xl text-brand mb-2"></ion-icon>
                     </div>
 
+                    <!-- Lista de Packs (Generado por JS) -->
                     <div id="sidebar-packs-list"></div>
 
+                     <!-- Empty State -->
                      <div id="dash-empty" class="hidden text-center py-8">
                          <p class="text-gray-400 text-sm">No tienes packs aún.</p>
                      </div>
@@ -913,38 +951,32 @@
                 </div>
             </aside>
 
+            <!-- Main Content Area -->
             <main class="dash-main">
                 <div class="dash-main-content">
                     
-                    <div class="md:hidden mb-4">
-                        <button id="close-dash-mobile" class="flex items-center gap-2 text-gray-400">
-                            <ion-icon name="arrow-back"></ion-icon> Salir
-                        </button>
-                    </div>
-
-                    <div class="mb-4">
+                    <!-- Header del Contenido -->
+                    <div class="mb-8">
                         <span class="bg-brand/10 text-brand text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-2 inline-block" id="content-badge">Selecciona un Pack</span>
                         <h1 class="text-3xl font-bold text-white mb-2" id="content-title">Bienvenido a tu Espacio</h1>
-                        <p class="text-gray-400 text-sm" id="content-desc">Selecciona un pack del menú lateral para ver su contenido y comenzar a aprender.</p>
+                        <p class="text-gray-400" id="content-desc">Selecciona un pack del menú lateral para ver su contenido y comenzar a aprender.</p>
                     </div>
 
-                    <div id="video-player-container" class="w-full aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 shadow-2xl mb-6 relative group">
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                            <ion-icon name="play-circle-outline" class="text-6xl text-white/20 mb-2"></ion-icon>
-                            <p class="text-gray-500 text-sm">Selecciona una lección de la lista para ver el video.</p>
+                    <!-- Video Player -->
+                    <div class="video-placeholder group">
+                        <div class="text-center">
+                            <ion-icon name="play-circle-outline" class="text-6xl text-white/20 group-hover:text-brand transition-colors duration-300 mb-2"></ion-icon>
+                            <p class="text-gray-500 text-sm">El reproductor se cargará aquí</p>
                         </div>
                     </div>
 
-                    <div class="mb-8 border-b border-white/10 pb-8">
-                         <h2 id="current-lesson-title" class="text-2xl font-bold text-white mb-2">Esperando selección...</h2>
-                         <p id="current-lesson-desc" class="text-gray-400 leading-relaxed text-sm">Haz clic en un ítem de la lista inferior para cargar el contenido.</p>
-                    </div>
-
+                    <!-- Lista de Lecciones / Descargas -->
                     <div>
                         <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
                             <ion-icon name="list"></ion-icon> Contenido del Curso
                         </h3>
                         <div id="content-lessons-list" class="lesson-list">
+                            <!-- Items generados por JS -->
                             <div class="p-8 text-center border border-dashed border-white/10 rounded-xl text-gray-500">
                                 Selecciona un curso para ver sus lecciones.
                             </div>
@@ -957,10 +989,12 @@
 
     </div>
 
+    <!-- ADMIN DASHBOARD MODAL (STATS ONLY) -->
     <div id="admin-dashboard-modal" class="fixed inset-0 z-[95] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/95 backdrop-blur-md" id="admin-backdrop"></div>
         <div class="relative bg-[#0f0f0f] border border-red-900/30 rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="admin-content">
             
+            <!-- Admin Header -->
             <div class="p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-[#1a0505] to-[#0a0a0a]">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-red-600/20 text-red-500 rounded-lg flex items-center justify-center text-xl border border-red-500/20">
@@ -977,14 +1011,17 @@
             </div>
 
             <div class="flex h-full overflow-hidden">
+                <!-- Sidebar -->
                 <div class="w-64 bg-[#050505] border-r border-white/5 p-4 flex flex-col gap-2 hidden md:flex">
                     <button class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-900/20 border border-red-500/30">
                         <ion-icon name="stats-chart"></ion-icon> Estadísticas
                     </button>
                 </div>
 
+                <!-- Content -->
                 <div class="flex-1 p-6 overflow-y-auto bg-[#0a0a0a]">
                     
+                    <!-- View: Overview -->
                     <div class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
@@ -1007,6 +1044,7 @@
         </div>
     </div>
 
+    <!-- Video Modal (Global) -->
     <div id="video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 z-[200]">
         <div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform scale-95 transition-transform duration-300" id="video-modal-content">
             <div id="modal-video-container" class="w-full h-full"></div>
@@ -1016,6 +1054,7 @@
         </div>
     </div>
 
+    <!-- FIREBASE LOGIC & SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
@@ -1054,7 +1093,6 @@
         // Referencias para el Dashboard Full Screen
         const dashOverlay = document.getElementById('dashboard-overlay');
         const closeDashFullBtn = document.getElementById('close-dash-full');
-        const closeDashMobile = document.getElementById('close-dash-mobile');
         const dashLoading = document.getElementById('dash-loading');
         const dashEmpty = document.getElementById('dash-empty');
         const sidebarPacksList = document.getElementById('sidebar-packs-list');
@@ -1064,11 +1102,6 @@
         const contentTitle = document.getElementById('content-title');
         const contentDesc = document.getElementById('content-desc');
         const contentLessonsList = document.getElementById('content-lessons-list');
-        
-        // Referencias del Reproductor y Texto Dinámico
-        const videoPlayerContainer = document.getElementById('video-player-container');
-        const currentLessonTitle = document.getElementById('current-lesson-title');
-        const currentLessonDesc = document.getElementById('current-lesson-desc');
 
         const adminModal = document.getElementById('admin-dashboard-modal');
         const adminContent = document.getElementById('admin-content');
@@ -1092,7 +1125,7 @@
         
         const admins = ['admin@smestudio.com', 'soporte@smestudio.com']; 
 
-        // --- DEFINICIÓN DE PACKS (ACTUALIZADA con Videos reales) ---
+        // --- DEFINICIÓN DE PACKS (Base de datos local visual) ---
         const packDefinitions = {
             'gfx-pack': {
                 name: 'Pack de Inicio GFX',
@@ -1100,54 +1133,19 @@
                 isPremium: false,
                 desc: 'Todo lo necesario para empezar en el diseño de banners.',
                 sections: [
-                    { 
-                        title: '01. Introducción y Conceptos Básicos', 
-                        type: 'video', 
-                        icon: 'play-circle-outline', 
-                        duration: '10:24', 
-                        videoId: 'l9gb6D6I9IQ', // ID de Youtube de ejemplo
-                        longDesc: 'En esta primera lección aprenderemos qué es el diseño GFX, los formatos más comunes y cómo preparar tu espacio de trabajo para comenzar a crear banners profesionales.' 
-                    },
-                    { 
-                        title: '02. Instalación de Software', 
-                        type: 'video', 
-                        icon: 'play-circle-outline', 
-                        duration: '05:12', 
-                        videoId: 'IuI455qWqow', // ID de Youtube de ejemplo
-                        longDesc: 'Guía paso a paso para instalar Photoshop y Blender, las dos herramientas fundamentales que usaremos durante todo el curso. Incluye configuración de rendimiento.' 
-                    },
-                    { 
-                        title: '03. Interfaz de Photoshop', 
-                        type: 'video', 
-                        icon: 'play-circle-outline', 
-                        duration: '15:45', 
-                        videoId: 'IyR_uYsRdPs', 
-                        longDesc: 'Recorrido completo por la interfaz de Adobe Photoshop. Aprende dónde están las herramientas, paneles y cómo personalizar tu vista para ser más eficiente.' 
-                    },
-                    { 
-                        title: '04. Herramientas Esenciales', 
-                        type: 'video', 
-                        icon: 'play-circle-outline', 
-                        duration: '20:01', 
-                        videoId: 'U_8y1d_3e5c', 
-                        longDesc: 'Dominaremos la Pluma, Máscaras de Capa, Modos de Fusión y Filtros. Estas son las técnicas que usarás en el 90% de tus diseños.' 
-                    },
-                    { 
-                        title: '05. Teoría del Color en GFX', 
-                        type: 'video', 
-                        icon: 'play-circle-outline', 
-                        duration: '12:30', 
-                        videoId: 'AvgBkHem9Jk', 
-                        longDesc: 'Cómo combinar colores para crear impacto visual. Uso de la rueda cromática, contrastes y psicología del color aplicada a banners de gaming.' 
-                    },
-                    { 
-                        title: 'Materiales: Fuentes y Pinceles', 
-                        type: 'download', 
-                        icon: 'download-outline', 
-                        size: '1.2 GB', 
-                        url: '#',
-                        longDesc: 'Descarga el paquete completo de recursos utilizado en el curso. Incluye fuentes, pinceles, texturas y plantillas.' 
-                    }
+                    { title: '01. Introducción y Conceptos Básicos', type: 'video', icon: 'play-circle-outline', duration: '10:24', url: '#' },
+                    { title: '02. Instalación de Software', type: 'video', icon: 'play-circle-outline', duration: '05:12', url: '#' },
+                    { title: '03. Interfaz de Photoshop', type: 'video', icon: 'play-circle-outline', duration: '15:45', url: '#' },
+                    { title: '04. Herramientas Esenciales', type: 'video', icon: 'play-circle-outline', duration: '20:01', url: '#' },
+                    { title: '05. Glow Effect', type: 'video', icon: 'play-circle-outline', duration: '1:16', url: '#' },
+                    { title: '06. Glass Effect', type: 'video', icon: 'play-circle-outline', duration: '2:13', url: '#' },
+                    { title: '07. Text Effect', type: 'video', icon: 'play-circle-outline', duration: '2:07', url: '#' },
+                    { title: '08. Glow Effect Thumbnail', type: 'video', icon: 'play-circle-outline', duration: '8:14', url: '#' },
+                    { title: '09. Effect Poster Etc', type: 'video', icon: 'play-circle-outline', duration: '7:21', url: '#' },
+                    { title: '10. How To Use Psd thumbnail in 5 minutes', type: 'video', icon: 'play-circle-outline', duration: '3:54', url: '#' },
+                    { title: '11. Tutorial Logo PT1', type: 'video', icon: 'play-circle-outline', duration: '9:54', url: '#' },
+                    { title: '12. Tutorial Logo PT2', type: 'video', icon: 'play-circle-outline', duration: '12:06', url: '#' },
+                    { title: 'Materiales: Fuentes y Pinceles', type: 'download', icon: 'download-outline', size: '1.2 GB', url: '#' }
                 ]
             },
             'ultimate-bundle': {
@@ -1156,9 +1154,9 @@
                 icon: 'diamond-outline',
                 isPremium: true,
                 sections: [
-                     { title: 'Pack de Renders 4K (Personajes)', type: 'download', icon: 'cloud-download-outline', size: '2.4 GB', url: '#', longDesc: 'Colección de 50 renders de personajes en 4K con fondo transparente.' },
-                     { title: 'Pack de Renders 4K (Fondos)', type: 'download', icon: 'image-outline', size: '3.1 GB', url: '#', longDesc: 'Escenarios 3D renderizados listos para usar como fondo en tus composiciones.' },
-                     { title: 'Texturas Pro', type: 'download', icon: 'brush-outline', size: '850 MB', url: '#' , longDesc: 'Texturas metálicas, grunge y orgánicas de alta resolución.'}
+                     { title: 'Pack de Renders 4K (Personajes)', type: 'download', icon: 'cloud-download-outline', size: '2.4 GB', url: '#' },
+                     { title: 'Pack de Renders 4K (Fondos)', type: 'download', icon: 'image-outline', size: '3.1 GB', url: '#' },
+                     { title: 'Texturas Pro', type: 'download', icon: 'brush-outline', size: '850 MB', url: '#' }
                 ]
             },
             'editor-pack': {
@@ -1167,9 +1165,9 @@
                 isPremium: false,
                 desc: 'Recursos esenciales para editores de video.',
                 sections: [
-                    { title: 'Presets Premiere Pro', type: 'download', icon: 'settings-outline', size: '150 MB', url: '#', longDesc: 'Presets de color y efectos de audio para Premiere Pro.' },
-                    { title: 'Librería de Efectos de Sonido', type: 'download', icon: 'musical-notes-outline', size: '450 MB', url: '#', longDesc: 'SFX de impacto, risers, wooshes y glitch para transiciones.' },
-                    { title: 'Transiciones Glitch', type: 'video', icon: 'play-circle-outline', duration: '08:00', videoId: 'Dig3h60A6H4', longDesc: 'Tutorial sobre cómo aplicar y modificar las transiciones glitch incluidas en el pack.' }
+                    { title: 'Presets Premiere Pro', type: 'download', icon: 'settings-outline', size: '150 MB', url: '#' },
+                    { title: 'Librería de Efectos de Sonido', type: 'download', icon: 'musical-notes-outline', size: '450 MB', url: '#' },
+                    { title: 'Transiciones Glitch', type: 'video', icon: 'play-circle-outline', duration: '08:00', url: '#' }
                 ]
             }
         };
@@ -1193,7 +1191,7 @@
             }
         }
 
-        // --- DASHBOARD LOGIC (MODIFICADO) ---
+        // --- DASHBOARD LOGIC (NEW) ---
         function openDashboard() {
             dashOverlay.classList.remove('hidden');
             setTimeout(() => dashOverlay.classList.add('active'), 10);
@@ -1206,47 +1204,7 @@
             setTimeout(() => {
                 dashOverlay.classList.add('hidden');
                 document.body.classList.remove('dashboard-open');
-                // Reset Video Player
-                videoPlayerContainer.innerHTML = `
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                        <ion-icon name="play-circle-outline" class="text-6xl text-white/20 mb-2"></ion-icon>
-                        <p class="text-gray-500 text-sm">Selecciona una lección de la lista para ver el video.</p>
-                    </div>`;
             }, 400);
-        }
-
-        // Función para reproducir el video seleccionado
-        function playLesson(sectionData) {
-            // Actualizar Título y Descripción
-            currentLessonTitle.textContent = sectionData.title;
-            currentLessonDesc.textContent = sectionData.longDesc || "Sin descripción disponible.";
-
-            // Actualizar Reproductor
-            if (sectionData.type === 'video' && sectionData.videoId) {
-                videoPlayerContainer.innerHTML = `
-                    <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="https://www.youtube.com/embed/${sectionData.videoId}?autoplay=1&rel=0&modestbranding=1" 
-                        title="${sectionData.title}" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        class="absolute inset-0 w-full h-full"
-                    ></iframe>
-                `;
-            } else if (sectionData.type === 'download') {
-                videoPlayerContainer.innerHTML = `
-                     <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-[#1a1a1a]">
-                        <ion-icon name="cloud-download" class="text-6xl text-brand mb-4"></ion-icon>
-                        <h3 class="text-2xl font-bold text-white mb-2">Recurso Descargable</h3>
-                        <p class="text-gray-400 mb-6">Este item es un archivo, no un video.</p>
-                        <button class="bg-brand hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg shadow-brand/20">
-                            Descargar Archivo (${sectionData.size})
-                        </button>
-                    </div>
-                `;
-            }
         }
 
         function renderPackContent(packId) {
@@ -1278,20 +1236,9 @@
                             </div>
                         </div>
                         <div class="text-gray-600 group-hover:text-white transition-colors">
-                            <ion-icon name="${section.type === 'video' ? 'play-circle' : 'download'}" class="text-2xl"></ion-icon>
+                            <ion-icon name="play-circle" class="text-2xl"></ion-icon>
                         </div>
                     `;
-                    
-                    // CLICK EVENT para cargar el video
-                    item.addEventListener('click', () => {
-                        // Remover clase activa de otros items
-                        document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active-lesson'));
-                        // Añadir clase activa al actual
-                        item.classList.add('active-lesson');
-                        // Reproducir
-                        playLesson(section);
-                    });
-
                     contentLessonsList.appendChild(item);
                 });
             } else {
@@ -1381,7 +1328,6 @@
         // Nuevo Listener para Dashboard Full Screen
         openDashboardBtn.addEventListener('click', openDashboard);
         closeDashFullBtn.addEventListener('click', closeDashboard);
-        if(closeDashMobile) closeDashMobile.addEventListener('click', closeDashboard);
 
         adminPanelBtn.addEventListener('click', () => {
             toggleModal(adminModal, adminContent, true);
