@@ -1,261 +1,1043 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda | SM Estudio | Diseño Premium</title>
-    
-    <!-- --- ASSETS ORIGINALES --- -->
     <link rel="icon" href="https://i.imgur.com/eyMr4Ki.png" type="image/png">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Iconos -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+    <!-- Configuración Tailwind personalizada -->
     <script>
-        tailwind.config={theme:{extend:{screens:{'xs':'375px'},fontFamily:{sans:['Inter','sans-serif'],display:['Poppins','sans-serif']},colors:{brand:{DEFAULT:'#f97316',dark:'#c2410c',glow:'rgba(249, 115, 22, 0.5)'},dark:{950:'#050505',900:'#0a0a0a',800:'#121212',card:'#0f0f0f'},discord:'#5865F2'},animation:{'float':'float 6s ease-in-out infinite','fade-in-up':'fadeInUp 0.8s cubic-bezier(0.5, 0, 0, 1) forwards','pulse-glow':'pulseGlow 3s infinite'},keyframes:{float:{'0%, 100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-20px)'}},fadeInUp:{'0%':{opacity:'0',transform:'translateY(20px)'},'100%':{opacity:'1',transform:'translateY(0)'}},pulseGlow:{'0%, 100%':{boxShadow:'0 0 20px rgba(249, 115, 22, 0.1)'},'50%':{boxShadow:'0 0 40px rgba(249, 115, 22, 0.3)'}}}}}}
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#f97316', // Naranja original
+                            dark: '#c2410c',
+                            glow: 'rgba(249, 115, 22, 0.5)'
+                        },
+                        dark: {
+                            950: '#050505', // Fondo principal más oscuro
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            card: '#0f0f0f' // Fondo de tarjeta
+                        },
+                        discord: '#5865F2'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.5, 0, 0, 1) forwards',
+                        'pulse-glow': 'pulseGlow 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(249, 115, 22, 0.1)' },
+                            '50%': { boxShadow: '0 0 40px rgba(249, 115, 22, 0.3)' },
+                        }
+                    }
+                }
+            }
+        }
     </script>
 
     <style>
-        /* ESTILOS ORIGINALES */
-        body{background-color:#050505;color:#e5e7eb;overflow-x:hidden;-webkit-tap-highlight-color:transparent}body.loading{overflow:hidden}.bg-grid-pattern{background-image:linear-gradient(to right,rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at center,black 40%,transparent 100%)}@media (min-width:768px){.bg-grid-pattern{background-size:50px 50px}}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0a0a0a}::-webkit-scrollbar-thumb{background:#333;border-radius:4px}::-webkit-scrollbar-thumb:hover{background:#f97316}@media (min-width:768px){::-webkit-scrollbar{width:8px}}.reveal{opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.25,0.46,0.45,0.94);will-change:opacity,transform}.reveal.visible{opacity:1;transform:translateY(0)}#loader{position:fixed;inset:0;background:#050505;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.6s ease-out,visibility 0.6s}.loader-content{text-align:center;position:relative}.loader-logo{width:60px;margin-bottom:20px;filter:drop-shadow(0 0 15px rgba(249,115,22,0.4))}@media (min-width:768px){.loader-logo{width:80px}}.loader-bar-container{width:100px;height:2px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;margin:0 auto}.loader-bar{height:100%;background:#f97316;width:0%;animation:loadProgress 1.5s cubic-bezier(0.22,1,0.36,1) forwards;box-shadow:0 0 10px #f97316}@keyframes loadProgress{0%{width:0%}100%{width:100%}}#navbar{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;padding:1rem 0;background:transparent;border:1px solid transparent;border-radius:0;transition:all 0.4s cubic-bezier(0.16,1,0.3,1);z-index:50}@media (min-width:1024px){#navbar{padding:1.5rem 0}}#navbar.scrolled{top:0.5rem;width:95%;max-width:1280px;padding:0.5rem 1.25rem;background-color:rgba(10,10,10,0.85);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.08);border-radius:100px;box-shadow:0 10px 30px -10px rgba(0,0,0,0.8),0 0 0 1px rgba(255,255,255,0.05) inset}@media (min-width:768px){#navbar.scrolled{top:1.5rem;width:95%;padding:0.75rem 2rem;background-color:rgba(10,10,10,0.75)}}.nav-link{position:relative;color:#a1a1aa;transition:color 0.3s;font-weight:500;font-size:0.95rem;white-space:nowrap}.nav-link:hover{color:white}.nav-link::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:0;height:2px;background:linear-gradient(90deg,#f97316,#fb923c);transition:width 0.3s ease;border-radius:2px}.nav-link:hover::after{width:100%}.service-card{background-color:#0f0f0f;border:1px solid rgba(255,255,255,0.06);border-radius:1.25rem;padding:1.75rem;display:flex;flex-direction:column;height:100%;transition:all 0.4s cubic-bezier(0.25,0.8,0.25,1);position:relative;overflow:hidden}@media (min-width:768px){.service-card{padding:2.5rem 2rem}}.service-card:hover{border-color:rgba(249,115,22,0.5);transform:translateY(-5px);box-shadow:0 20px 40px -10px rgba(0,0,0,0.8),0 0 20px rgba(249,115,22,0.1);background-color:#121212}.card-icon-box{width:42px;height:42px;background-color:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:#a1a1aa;margin-bottom:1.25rem;transition:all 0.4s ease}@media (min-width:768px){.card-icon-box{width:50px;height:50px;border-radius:1rem;font-size:1.5rem;margin-bottom:1.5rem}}.service-card:hover .card-icon-box{background-color:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.2);color:#f97316;transform:scale(1.05) rotate(3deg)}.check-list li{display:flex;align-items:start;gap:0.75rem;margin-bottom:0.75rem;color:#9ca3af;font-size:0.85rem;line-height:1.5}.check-list ion-icon{color:#f97316;min-width:16px;margin-top:3px}.btn-dark-action{background-color:rgba(255,255,255,0.05);color:white;font-weight:600;border-radius:0.75rem;padding:0.875rem;text-align:center;transition:all 0.3s ease;border:1px solid transparent;font-size:0.95rem}.btn-dark-action:hover{background-color:#f97316;border-color:#f97316;color:white;box-shadow:0 5px 20px rgba(249,115,22,0.4)}.auth-input{width:100%;background-color:#1a1a1a;border:1px solid #333;border-radius:0.75rem;padding:0.875rem 1rem;color:white;font-size:0.95rem;outline:none;transition:all 0.3s;margin-bottom:1rem}.auth-input:focus{border-color:#f97316;box-shadow:0 0 0 2px rgba(249,115,22,0.2);background-color:#222}.auth-tab{flex:1;text-align:center;padding:0.75rem;cursor:pointer;border-bottom:2px solid transparent;color:#6b7280;font-weight:600;transition:all 0.3s}.auth-tab.active{border-bottom-color:#f97316;color:white}.masonry-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;grid-auto-rows:250px}@media (max-width:640px){.masonry-grid{grid-template-columns:1fr;grid-auto-rows:240px}}@media (min-width:768px){.masonry-grid{gap:1.5rem;grid-auto-rows:280px}}.masonry-item-large{grid-column:span 1;grid-row:span 1}@media (min-width:1024px){.masonry-item-large{grid-column:span 2;grid-row:span 2}}.skill-container{margin-bottom:1.25rem}.progress-bar-bg{width:100%;height:6px;background-color:rgba(255,255,255,0.05);border-radius:999px;overflow:hidden}.progress-bar-fill{height:100%;background:linear-gradient(90deg,#f97316,#fb923c);width:0;transition:width 2s cubic-bezier(0.22,1,0.36,1);border-radius:999px}.step-card{position:relative;padding:1.5rem;border:1px solid rgba(255,255,255,0.05);border-radius:1.25rem;background:rgba(255,255,255,0.01);transition:all 0.4s ease;overflow:hidden}@media (min-width:768px){.step-card{padding:2rem;border-radius:1.5rem}}.step-card:hover{background:rgba(255,255,255,0.03);border-color:rgba(249,115,22,0.3);transform:translateY(-5px);box-shadow:0 20px 40px -10px rgba(0,0,0,0.5),0 0 20px rgba(249,115,22,0.1)}.step-number{position:absolute;top:-5px;right:10px;font-size:4rem;font-weight:800;color:rgba(255,255,255,0.02);line-height:1;transition:color 0.3s}.step-card:hover .step-number{color:rgba(249,115,22,0.1)}.admin-badge{background:linear-gradient(45deg,#c2410c,#f97316);color:white;padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px;margin-left:8px;box-shadow:0 2px 5px rgba(249,115,22,0.3)}.modal-content-wrapper{max-height:90vh;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}.modal-content-wrapper::-webkit-scrollbar{display:none}.feedback-card{background-color:#0f0f0f;border:1px solid rgba(255,255,255,0.06);border-radius:1rem;padding:1.5rem;transition:all 0.3s ease;display:flex;flex-direction:column;position:relative}.feedback-card:hover{border-color:rgba(249,115,22,0.3);transform:translateY(-5px);background-color:#141414;box-shadow:0 10px 30px -5px rgba(0,0,0,0.5)}.feedback-avatar{background:linear-gradient(135deg,#333,#111);color:#f97316;font-weight:bold;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.1)}
+        body {
+            background-color: #050505;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+        body.loading { overflow: hidden; }
+
+        /* Fondo con gradiente sutil */
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f97316; }
+
+        /* Animaciones de revelado */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed; inset: 0; background: #050505; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            z-index: 9999; transition: opacity 0.6s ease-out, visibility 0.6s;
+        }
+        .loader-content { text-align: center; position: relative; }
+        .loader-logo { width: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(249,115,22,0.4)); }
+        .loader-bar-container {
+            width: 120px; height: 2px; background: rgba(255,255,255,0.1);
+            border-radius: 4px; overflow: hidden; margin: 0 auto;
+        }
+        .loader-bar {
+            height: 100%; background: #f97316; width: 0%;
+            animation: loadProgress 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            box-shadow: 0 0 10px #f97316;
+        }
+        @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
+
+        /* --- NAVBAR FLOTANTE --- */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            padding: 1.5rem 0;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 50;
+        }
+        #navbar.scrolled {
+            top: 1.5rem;
+            width: 95%;
+            max-width: 1280px;
+            padding: 0.75rem 2rem;
+            background-color: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+        }
+        .nav-link {
+            position: relative; color: #a1a1aa; transition: color 0.3s; font-weight: 500; font-size: 0.95rem; white-space: nowrap;
+        }
+        .nav-link:hover { color: white; }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 2px; background: linear-gradient(90deg, #f97316, #fb923c);
+            transition: width 0.3s ease; border-radius: 2px;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Cards & Styles */
+        .service-card {
+            background-color: #0f0f0f; border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1.25rem; padding: 2rem; display: flex; flex-direction: column; height: 100%;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden;
+        }
+        @media (min-width: 768px) { .service-card { padding: 2.5rem 2rem; } }
+        .service-card:hover {
+            border-color: rgba(249, 115, 22, 0.5); transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(249, 115, 22, 0.1);
+            background-color: #121212;
+        }
+        .card-icon-box {
+            width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #a1a1aa; margin-bottom: 1.5rem; transition: all 0.4s ease;
+        }
+        .service-card:hover .card-icon-box { 
+            background-color: rgba(249, 115, 22, 0.1); border-color: rgba(249, 115, 22, 0.2);
+            color: #f97316; transform: scale(1.05) rotate(3deg);
+        }
+        .check-list li {
+            display: flex; align-items: start; gap: 0.75rem; margin-bottom: 0.85rem;
+            color: #9ca3af; font-size: 0.9rem; line-height: 1.5;
+        }
+        .check-list ion-icon { color: #f97316; min-width: 18px; margin-top: 3px; }
+        .btn-dark-action {
+            background-color: rgba(255, 255, 255, 0.05); color: white; font-weight: 600;
+            border-radius: 0.75rem; padding: 1rem; text-align: center; transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .btn-dark-action:hover { 
+            background-color: #f97316; border-color: #f97316; color: white; 
+            box-shadow: 0 5px 20px rgba(249, 115, 22, 0.4); 
+        }
         
-        /* --- ESTILOS ÁREA DE ALUMNOS (NUEVO) --- */
-        #student-docs-view { display: none; padding-top: 100px; min-height: 100vh; }
-        #student-docs-view.active { display: block; animation: fadeIn 0.5s ease forwards; }
-        .doc-sidebar-item { padding: 10px 15px; border-radius: 8px; cursor: pointer; color: #9ca3af; transition: all 0.2s; display: flex; items-center; gap: 10px; font-size: 0.9rem; }
-        .doc-sidebar-item:hover { background: rgba(255,255,255,0.05); color: white; }
-        .doc-sidebar-item.active { background: rgba(249, 115, 22, 0.1); color: #f97316; border-left: 2px solid #f97316; }
-        .doc-content-area { background: #0a0a0a; border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; min-height: 600px; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Dashboard Styles */
+        .dashboard-modal {
+            background-color: #0a0a0a; border: 1px solid #222;
+        }
+        
+        /* Estilos de Packs en Dashboard */
+        .pack-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: #141414;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s;
+        }
+        .pack-item:hover {
+            border-color: rgba(249, 115, 22, 0.3);
+            background: #1a1a1a;
+        }
+        .pack-icon {
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 1rem;
+            color: #f97316;
+        }
+        .pack-item.premium {
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            background: linear-gradient(90deg, rgba(249,115,22,0.05), transparent);
+        }
+        .pack-badge {
+            background: #f97316; color: white;
+            font-size: 0.6rem; padding: 2px 6px; border-radius: 4px;
+            font-weight: bold; margin-bottom: 4px; display: inline-block;
+        }
+
+        /* LOGIN MODAL STYLES */
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
+        }
+        .login-btn-social {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            width: 100%; padding: 12px; border-radius: 12px; font-weight: 600;
+            transition: all 0.2s; border: 1px solid transparent;
+            position: relative;
+        }
+        /* Icono fijo a la izquierda para mejor alineación */
+        .login-btn-social ion-icon {
+            font-size: 1.4rem;
+        }
+        
+        .login-btn-discord {
+            background-color: #5865F2; color: white;
+        }
+        .login-btn-discord:hover { background-color: #4752c4; box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3); }
+        .login-btn-google {
+            background-color: white; color: #1f1f1f;
+        }
+        .login-btn-google:hover { background-color: #f0f0f0; }
+
+        /* Form Styles */
+        .auth-input {
+            width: 100%;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            padding: 0.875rem 1rem;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+        .auth-input:focus {
+            border-color: #f97316;
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+            background-color: #222;
+        }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: #6b7280;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .auth-tab.active {
+            border-bottom-color: #f97316;
+            color: white;
+        }
+        
+        /* Masonry & Progress Bars */
+        .masonry-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem; grid-auto-rows: 280px;
+        }
+        @media (max-width: 640px) { .masonry-grid { grid-template-columns: 1fr; grid-auto-rows: 300px; } }
+        .masonry-item-large { grid-column: span 2; grid-row: span 2; }
+        @media (min-width: 641px) and (max-width: 768px) { .masonry-item-large { grid-column: span 1; grid-row: span 1; } }
+        .skill-container { margin-bottom: 1.5rem; }
+        .progress-bar-bg { width: 100%; height: 6px; background-color: rgba(255,255,255,0.05); border-radius: 999px; overflow: hidden; }
+        .progress-bar-fill { 
+            height: 100%; background: linear-gradient(90deg, #f97316, #fb923c); width: 0;
+            transition: width 2s cubic-bezier(0.22, 1, 0.36, 1); border-radius: 999px; 
+        }
+        
+        /* Step & Feedback Cards */
+        .step-card {
+            position: relative; padding: 2rem; border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem; background: rgba(255, 255, 255, 0.01); transition: all 0.4s ease; overflow: hidden;
+        }
+        .step-card:hover {
+            background: rgba(255, 255, 255, 0.03); border-color: rgba(249, 115, 22, 0.3);
+            transform: translateY(-10px); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(249, 115, 22, 0.1);
+        }
+        .step-number {
+            position: absolute; top: -10px; right: 10px; font-size: 5rem; font-weight: 800;
+            color: rgba(255, 255, 255, 0.02); line-height: 1; transition: color 0.3s;
+        }
+        .step-card:hover .step-number { color: rgba(249, 115, 22, 0.1); }
+        .feedback-card {
+            background-color: #0f0f0f; border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1rem; padding: 1.5rem; transition: all 0.3s ease; display: flex; flex-direction: column; position: relative;
+        }
+        .feedback-card:hover {
+            border-color: rgba(249, 115, 22, 0.3); transform: translateY(-5px);
+            background-color: #141414; box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+        }
+        .feedback-avatar {
+            background: linear-gradient(135deg, #333, #111); color: #f97316; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Admin Badge */
+        .admin-badge {
+            background: linear-gradient(45deg, #c2410c, #f97316);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 8px;
+            box-shadow: 0 2px 5px rgba(249, 115, 22, 0.3);
+        }
     </style>
 </head>
+
 <body class="antialiased font-sans selection:bg-brand selection:text-white loading">
     
-    <!-- LOADER -->
-    <div id="loader"><div class="loader-content"><img src="https://i.imgur.com/eyMr4Ki.png" alt="SM Estudio" class="loader-logo animate-pulse"><div class="loader-bar-container"><div class="loader-bar"></div></div></div></div>
-    
-    <!-- BACKGROUND -->
-    <div class="fixed inset-0 pointer-events-none z-0"><div class="absolute inset-0 bg-grid-pattern opacity-20"></div><div class="absolute top-[-10%] left-[-10%] w-[70vw] h-[70vw] bg-brand/5 rounded-full blur-[100px] lg:blur-[150px]"></div><div class="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-blue-600/5 rounded-full blur-[100px] lg:blur-[150px]"></div></div>
-    
-    <!-- NAVBAR (Modificada) -->
-    <nav id="navbar">
-        <div class="w-full h-full px-4 sm:px-6 lg:px-8 flex justify-between items-center mx-auto max-w-7xl">
-            <a href="#" onclick="showLanding()" class="text-lg sm:text-xl lg:text-2xl font-display font-bold text-white tracking-tight z-50 relative hover:scale-105 transition-transform flex-shrink-0 flex items-center gap-2">
-                <img src="https://i.imgur.com/eyMr4Ki.png" alt="Logo" class="w-6 h-6 sm:w-8 sm:h-8 lg:hidden"><span>SM<span class="text-brand">Estudio</span></span>
-            </a>
-            
-            <div id="main-nav-links" class="hidden lg:flex items-center justify-center flex-grow gap-6 lg:gap-8 text-sm font-medium">
-                <a onclick="showLanding()" href="#about" class="nav-link">Nosotros</a>
-                <a onclick="showLanding()" href="#proceso" class="nav-link">Proceso</a>
-                <a onclick="showLanding()" href="#tienda" class="nav-link">Servicios</a>
-                <a onclick="showLanding()" href="#portfolio" class="nav-link">Portafolio</a>
-                <a onclick="showLanding()" href="#feedbacks" class="nav-link">Testimonios</a>
-                <a onclick="showLanding()" href="#contacto" class="nav-link">Contacto</a>
-            </div>
-
-            <div class="flex items-center gap-2 sm:gap-4 z-50 relative flex-shrink-0">
-                <button id="login-trigger-btn" class="hidden items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white px-3 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm transition-all hover:border-brand/50 group"><ion-icon name="log-in-outline" class="text-base sm:text-lg group-hover:text-brand"></ion-icon><span class="hidden sm:inline">Acceso Cliente</span><span class="sm:hidden">Entrar</span></button>
-                
-                <div id="user-menu" class="hidden items-center gap-2 sm:gap-4">
-                    <!-- BOTÓN ÁREA DE ALUMNOS (NUEVO) -->
-                    <button id="student-area-btn" onclick="showDocs()" class="hidden items-center gap-2 bg-brand hover:bg-orange-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-bold shadow-lg shadow-brand/20 transition-all transform hover:-translate-y-0.5">
-                        <ion-icon name="library-outline"></ion-icon>
-                        <span class="hidden sm:inline">Mis Packs</span>
-                    </button>
-
-                    <button id="admin-panel-btn" class="hidden items-center gap-1 sm:gap-2 bg-red-900/20 border border-red-500/30 text-red-400 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-bold hover:bg-red-900/40 hover:text-red-300 transition-all"><ion-icon name="shield-checkmark"></ion-icon> <span class="hidden sm:inline">ADMIN</span></button>
-                    <button id="open-dashboard-btn" class="flex items-center gap-2 sm:gap-3 bg-white/5 border border-white/10 pr-2 sm:pr-4 pl-1.5 sm:pl-2 py-1.5 rounded-full hover:border-brand transition-all group max-w-[140px] sm:max-w-none">
-                        <div id="user-avatar" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-xs sm:text-sm border border-white/20 overflow-hidden group-hover:scale-105 transition-transform flex-shrink-0">U</div>
-                        <span id="user-name" class="text-xs sm:text-sm font-medium text-white truncate max-w-[80px] sm:max-w-[100px]">Usuario</span>
-                    </button>
-                    <button id="logout-btn" class="text-gray-400 hover:text-red-500 transition-colors p-1" title="Cerrar Sesión"><ion-icon name="log-out-outline" class="text-lg sm:text-xl"></ion-icon></button>
-                </div>
-                <button id="mobile-menu-btn" class="lg:hidden text-white text-2xl sm:text-3xl hover:text-brand transition-colors ml-1"><ion-icon name="menu-outline"></ion-icon></button>
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-content">
+            <img src="https://i.imgur.com/eyMr4Ki.png" alt="SM Estudio" class="loader-logo animate-pulse">
+            <div class="loader-bar-container">
+                <div class="loader-bar"></div>
             </div>
         </div>
+    </div>
 
-        <!-- MENU MOBILE -->
-        <div id="mobile-menu" class="fixed inset-0 bg-dark-950/98 backdrop-blur-xl z-[60] transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-6 p-6">
-            <button id="close-menu-btn" class="absolute top-6 right-6 text-white text-4xl hover:text-brand transition-colors p-2"><ion-icon name="close-outline"></ion-icon></button>
-            <a onclick="showLanding(); toggleMobileMenu()" href="#home" class="text-4xl font-display font-bold text-white mb-4 mobile-link"><span class="text-brand">SM</span>Estudio</a>
+    <!-- Background -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-brand/5 rounded-full blur-[150px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-blue-600/5 rounded-full blur-[150px]"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="w-full h-full px-6 lg:px-8 flex justify-between items-center mx-auto max-w-7xl">
+            <!-- Logo -->
+            <a href="#home" class="text-xl lg:text-2xl font-display font-bold text-white tracking-tight z-50 relative hover:scale-105 transition-transform flex-shrink-0">
+                SM<span class="text-brand">Estudio</span>
+            </a>
             
-            <!-- Botón Móvil Área Alumnos -->
-            <button id="mobile-student-btn" onclick="showDocs(); toggleMobileMenu()" class="hidden w-full max-w-xs bg-brand/10 border border-brand/50 text-brand font-bold py-3 px-6 rounded-xl hover:bg-brand hover:text-white transition-all flex items-center justify-center gap-2">
-                <ion-icon name="library"></ion-icon> Área Alumnos
-            </button>
+            <!-- Links Desktop -->
+            <div class="hidden md:flex items-center justify-center flex-grow gap-6 lg:gap-8 text-sm font-medium">
+                <a href="#about" class="nav-link">Nosotros</a>
+                <a href="#proceso" class="nav-link">Proceso</a>
+                <a href="#tienda" class="nav-link">Servicios</a>
+                <a href="#portfolio" class="nav-link">Portafolio</a>
+                <a href="#feedbacks" class="nav-link">Testimonios</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </div>
 
-            <div class="w-12 h-1 bg-white/10 rounded-full mb-4"></div>
-            <a onclick="showLanding(); toggleMobileMenu()" href="#about" class="text-2xl text-white font-display font-medium mobile-link hover:text-brand transition-colors">Nosotros</a>
-            <a onclick="showLanding(); toggleMobileMenu()" href="#proceso" class="text-2xl text-white font-display font-medium mobile-link hover:text-brand transition-colors">Proceso</a>
-            <a onclick="showLanding(); toggleMobileMenu()" href="#tienda" class="text-2xl text-white font-display font-medium mobile-link hover:text-brand transition-colors">Servicios</a>
-            <a onclick="showLanding(); toggleMobileMenu()" href="#portfolio" class="text-2xl text-white font-display font-medium mobile-link hover:text-brand transition-colors">Portafolio</a>
-            <a onclick="showLanding(); toggleMobileMenu()" href="#feedbacks" class="text-2xl text-white font-display font-medium mobile-link hover:text-brand transition-colors">Testimonios</a>
-            <a onclick="showLanding(); toggleMobileMenu()" href="#contact" class="text-2xl text-white font-display font-medium mobile-link hover:text-brand transition-colors">Contacto</a>
-            <div class="pt-8 w-full max-w-xs"><button id="mobile-login-btn-inner" class="w-full flex items-center justify-center gap-2 text-xl text-brand font-bold border border-brand/50 px-6 py-3 rounded-xl hover:bg-brand/10 transition-colors mobile-link"><ion-icon name="log-in-outline"></ion-icon> Login / Registro</button></div>
+            <!-- User / Login Area -->
+            <div class="flex items-center gap-4 z-50 relative flex-shrink-0">
+                
+                <!-- Botón LOGIN (Visible si NO hay usuario) -->
+                <button id="login-trigger-btn" class="hidden items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white px-5 py-2.5 rounded-full text-sm transition-all hover:border-brand/50 group">
+                    <ion-icon name="log-in-outline" class="text-lg group-hover:text-brand"></ion-icon>
+                    <span>Acceso Cliente</span>
+                </button>
+
+                <!-- Menú USUARIO (Visible si SI hay usuario) -->
+                <div id="user-menu" class="hidden items-center gap-4">
+                    
+                    <!-- Botón Admin (Oculto por defecto) -->
+                    <button id="admin-panel-btn" class="hidden items-center gap-2 bg-red-900/20 border border-red-500/30 text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-900/40 hover:text-red-300 transition-all">
+                        <ion-icon name="shield-checkmark"></ion-icon> ADMIN
+                    </button>
+
+                    <!-- Botón para abrir Dashboard -->
+                    <button id="open-dashboard-btn" class="flex items-center gap-3 bg-white/5 border border-white/10 pr-4 pl-2 py-1.5 rounded-full hover:border-brand transition-all group">
+                        <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-sm border border-white/20 overflow-hidden group-hover:scale-105 transition-transform">
+                            U
+                        </div>
+                        <span id="user-name" class="text-sm font-medium text-white truncate max-w-[100px]">Usuario</span>
+                    </button>
+                    <button id="logout-btn" class="text-gray-400 hover:text-red-500 transition-colors" title="Cerrar Sesión">
+                        <ion-icon name="log-out-outline" class="text-xl"></ion-icon>
+                    </button>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white text-3xl hover:text-brand transition-colors ml-2">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-dark-950/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8">
+            <a href="#about" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Nosotros</a>
+            <a href="#proceso" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Proceso</a>
+            <a href="#tienda" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Servicios</a>
+            <a href="#portfolio" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Portafolio</a>
+            <button id="mobile-login-btn" class="text-2xl text-brand font-bold border border-brand/50 px-6 py-2 rounded-xl">
+                <ion-icon name="log-in-outline" class="mr-2"></ion-icon> Login / Registro
+            </button>
+            <button id="close-menu-btn" class="absolute top-8 right-8 text-white text-4xl hover:text-brand transition-colors">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
         </div>
     </nav>
 
-    <!-- WRAPPER 1: LANDING PAGE COMPLETA -->
-    <div id="landing-page-wrapper">
-        <main class="relative z-10">
-            <section id="home" class="min-h-screen flex items-center justify-center relative pt-28 pb-16 lg:pt-32 lg:pb-0"><div class="container mx-auto px-4 sm:px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center"><div class="text-left order-2 lg:order-1 flex flex-col justify-center"><div class="reveal delay-100 inline-flex items-center gap-3 px-3 py-1.5 rounded-full bg-brand/5 border border-brand/20 text-brand text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-6 hover:bg-brand/10 transition-colors w-fit cursor-default"><span class="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span><span class="relative inline-flex rounded-full h-full w-full bg-brand"></span></span>Disponible para proyectos</div><h1 class="reveal delay-200 text-3xl xs:text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-white leading-[1.1] mb-4 sm:mb-6 lg:mb-8">Diseño Visual <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-orange-300">De Impacto.</span></h1><p class="reveal delay-300 text-gray-400 text-sm sm:text-lg lg:text-xl max-w-xl mb-6 sm:mb-8 lg:mb-10 leading-relaxed">Potenciamos tu marca con identidades visuales únicas. Desde logotipos hasta motion graphics completos.</p><div class="reveal delay-300 flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-5"><a href="#tienda" class="group bg-brand text-white px-6 py-3.5 lg:px-8 lg:py-4 rounded-xl font-bold flex items-center justify-center gap-3 shadow-lg shadow-brand/20 hover:bg-orange-500 transition-all hover:shadow-brand/40 hover:-translate-y-1 text-sm sm:text-base">Ver Servicios <ion-icon name="arrow-forward-outline" class="text-lg group-hover:translate-x-1 transition-transform"></ion-icon></a><a href="#portfolio" class="px-6 py-3.5 lg:px-8 lg:py-4 rounded-xl font-bold text-white border border-white/10 hover:bg-white/5 transition-all hover:border-white/30 text-center text-sm sm:text-base">Explorar Portafolio</a></div></div><div class="order-1 lg:order-2 flex justify-center reveal delay-300 lg:justify-end items-center"><div class="relative w-full max-w-[300px] sm:max-w-sm lg:max-w-lg group"><div class="absolute -inset-1 bg-gradient-to-tr from-brand to-purple-600 rounded-3xl blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-700"></div><img src="https://i.imgur.com/eyMr4Ki.png" alt="Hero Banner" class="relative w-full animate-float rounded-3xl shadow-2xl border border-white/5 bg-black/20 backdrop-blur-sm p-4"></div></div></div></section>
+    <main class="relative z-10">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center relative pt-24 pb-16 lg:pt-32 lg:pb-0">
+            <div class="container mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="text-left order-2 lg:order-1 flex flex-col justify-center">
+                    <div class="reveal delay-100 inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-brand/5 border border-brand/20 text-brand text-xs font-bold uppercase tracking-wider mb-6 lg:mb-8 hover:bg-brand/10 transition-colors w-fit cursor-default">
+                        <span class="relative flex h-2.5 w-2.5">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand"></span>
+                        </span>
+                        Disponible para proyectos
+                    </div>
+                    <h1 class="reveal delay-200 text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-white leading-[1.1] mb-6 lg:mb-8">
+                        Diseño Visual <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-orange-300">De Impacto.</span>
+                    </h1>
+                    <p class="reveal delay-300 text-gray-400 text-base sm:text-lg lg:text-xl max-w-xl mb-8 lg:mb-10 leading-relaxed">
+                        Potenciamos tu marca con identidades visuales únicas. Desde logotipos hasta motion graphics completos.
+                    </p>
+                    <div class="reveal delay-300 flex flex-wrap gap-4 lg:gap-5">
+                        <a href="#tienda" class="group bg-brand text-white px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold flex items-center gap-3 shadow-lg shadow-brand/20 hover:bg-orange-500 transition-all hover:shadow-brand/40 hover:-translate-y-1 text-sm lg:text-base">
+                            Ver Servicios <ion-icon name="arrow-forward-outline" class="text-lg lg:text-xl group-hover:translate-x-1 transition-transform"></ion-icon>
+                        </a>
+                        <a href="#portfolio" class="px-6 lg:px-8 py-3 lg:py-4 rounded-xl font-bold text-white border border-white/10 hover:bg-white/5 transition-all hover:border-white/30 text-sm lg:text-base">
+                            Explorar Portafolio
+                        </a>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 flex justify-center reveal delay-300 lg:justify-end items-center">
+                    <div class="relative w-full max-w-sm lg:max-w-lg group">
+                        <div class="absolute -inset-1 bg-gradient-to-tr from-brand to-purple-600 rounded-3xl blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-700"></div>
+                        <img src="https://i.imgur.com/eyMr4Ki.png" alt="Hero Banner" class="relative w-full animate-float rounded-3xl shadow-2xl border border-white/5 bg-black/20 backdrop-blur-sm p-4">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About & Skills -->
+        <section id="about" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-dark-900/50 border-y border-white/5 scroll-mt-0">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+                    <div class="lg:col-span-7 reveal">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="h-px w-12 bg-brand"></div>
+                            <span class="text-brand font-bold uppercase tracking-widest text-xs lg:text-sm">Sobre Nosotros</span>
+                        </div>
+                        <h3 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6 lg:mb-8 leading-tight">
+                            Más que diseño, creamos <br> <span class="text-white/50">experiencias visuales.</span>
+                        </h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed text-base lg:text-lg">
+                            En <strong>SM Estudio</strong>, fusionamos arte y estrategia. Nuestro equipo se dedica a crear piezas que no solo se ven bien, sino que comunican la esencia y profesionalismo de tu marca.
+                        </p>
+                        <p class="text-gray-400 mb-8 lg:mb-10 leading-relaxed text-base lg:text-lg">
+                            Desde 2020 ayudando a creadores de contenido y empresas a destacar en un mercado saturado con soluciones a medida.
+                        </p>
+                        
+                        <div class="grid grid-cols-3 gap-4 lg:gap-8 border-t border-white/10 pt-8 lg:pt-10">
+                            <div>
+                                <div class="text-2xl lg:text-4xl font-bold text-white mb-1">3+</div>
+                                <div class="text-gray-600 text-[10px] lg:text-xs font-bold uppercase tracking-wider">Años Exp.</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl lg:text-4xl font-bold text-white mb-1">100+</div>
+                                <div class="text-gray-600 text-[10px] lg:text-xs font-bold uppercase tracking-wider">Clientes</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl lg:text-4xl font-bold text-white mb-1">100%</div>
+                                <div class="text-gray-600 text-[10px] lg:text-xs font-bold uppercase tracking-wider">Calidad</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 bg-[#0a0a0a] p-6 sm:p-10 rounded-3xl border border-white/5 shadow-2xl reveal relative overflow-hidden group hover:border-brand/20 transition-colors duration-500" style="transition-delay: 200ms;">
+                        <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand/5 rounded-full blur-3xl group-hover:bg-brand/10 transition-all"></div>
+                        <h4 class="text-xl lg:text-2xl font-bold text-white mb-8 lg:mb-10 flex items-center gap-3 relative z-10">
+                            <ion-icon name="layers-outline" class="text-brand"></ion-icon> Stack Creativo
+                        </h4>
+                        <div class="space-y-6 lg:space-y-8 relative z-10">
+                            <div class="skill-container">
+                                <div class="flex justify-between mb-2 lg:mb-3 text-sm font-medium">
+                                    <span class="text-gray-300">Photoshop / Manipulación</span>
+                                    <span class="text-brand">95%</span>
+                                </div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="95%" style="width: 0;"></div></div>
+                            </div>
+                            <div class="skill-container">
+                                <div class="flex justify-between mb-2 lg:mb-3 text-sm font-medium">
+                                    <span class="text-gray-300">Illustrator / Branding</span>
+                                    <span class="text-brand">90%</span>
+                                </div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="90%" style="width: 0;"></div></div>
+                            </div>
+                            <div class="skill-container">
+                                <div class="flex justify-between mb-2 lg:mb-3 text-sm font-medium">
+                                    <span class="text-gray-300">After Effects / Motion</span>
+                                    <span class="text-brand">90%</span>
+                                </div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="85%" style="width: 0;"></div></div>
+                            </div>
+                             <div class="skill-container">
+                                <div class="flex justify-between mb-2 lg:mb-3 text-sm font-medium">
+                                    <span class="text-gray-300">Blender / 3D Art</span>
+                                    <span class="text-brand">40%</span>
+                                </div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="75%" style="width: 0;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: PROCESO -->
+        <section id="proceso" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-[#080808] border-b border-white/5 relative overflow-hidden scroll-mt-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+            <div class="container mx-auto px-6 lg:px-12 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-6">Nuestro <span class="text-brand">Proceso</span></h2>
+                    <p class="text-gray-400 text-base lg:text-lg">Flujo de trabajo optimizado para garantizar resultados excepcionales en tiempo récord.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                    <!-- Steps -->
+                    <div class="step-card reveal delay-100 group">
+                        <div class="step-number">01</div>
+                        <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand transition-colors">Consulta</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed relative z-10">Hablamos sobre tus ideas, referencias y objetivos para entender la visión de tu marca.</p>
+                    </div>
+                    <div class="step-card reveal delay-200 group">
+                        <div class="step-number">02</div>
+                        <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                            <ion-icon name="brush-outline"></ion-icon>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand transition-colors">Diseño</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed relative z-10">Comenzamos a crear los primeros bocetos y conceptos visuales basados en el briefing.</p>
+                    </div>
+                    <div class="step-card reveal delay-300 group">
+                        <div class="step-number">03</div>
+                        <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                            <ion-icon name="sync-outline"></ion-icon>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand transition-colors">Revisión</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed relative z-10">Te presentamos los avances y aplicamos el feedback necesario para pulir cada detalle.</p>
+                    </div>
+                    <div class="step-card reveal group" style="transition-delay: 400ms;">
+                        <div class="step-number">04</div>
+                        <div class="text-brand text-4xl mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all transform group-hover:scale-110 duration-300 origin-left bg-white/5 w-16 h-16 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-brand/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                            <ion-icon name="rocket-outline"></ion-icon>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3 relative z-10 group-hover:text-brand transition-colors">Entrega</h4>
+                        <p class="text-gray-500 text-sm leading-relaxed relative z-10">Recibes todos los archivos finales en alta calidad, listos para ser utilizados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Servicios / Tienda -->
+        <section id="tienda" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 relative scroll-mt-0">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <h2 class="text-3xl md:text-6xl font-display font-bold text-white mb-6">Nuestros <span class="text-brand">Servicios</span></h2>
+                    <p class="text-gray-400 text-base lg:text-lg">Soluciones visuales adaptadas a tus necesidades. Elige calidad premium.</p>
+                </div>
+                <div class="flex justify-center mb-16 reveal delay-100">
+                    <div class="bg-[#0a0a0a] border border-white/10 p-1.5 rounded-2xl inline-flex shadow-2xl max-w-full overflow-x-auto">
+                        <button id="tab-visual" class="px-6 lg:px-8 py-3 rounded-xl text-white font-semibold bg-brand shadow-lg transition-all duration-300 text-sm lg:text-base whitespace-nowrap">Diseño Visual</button>
+                        <button id="tab-packs" class="px-6 lg:px-8 py-3 rounded-xl text-gray-400 hover:text-white font-semibold transition-all duration-300 hover:bg-white/5 text-sm lg:text-base whitespace-nowrap">Packs & Recursos</button>
+                    </div>
+                </div>
+                <div id="products-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto"></div>
+                <div class="mt-20 text-center reveal delay-200">
+                    <p class="text-gray-500 mb-4 text-xs lg:text-sm uppercase tracking-wider">¿Buscas algo a medida?</p>
+                    <button id="custom-order-btn" class="text-white text-base lg:text-lg font-semibold hover:text-brand transition-colors border-b-2 border-brand/50 hover:border-brand pb-1">Solicitar Cotización Personalizada</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portafolio -->
+        <section id="portfolio" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 bg-dark-900/30 scroll-mt-0">
+            <div class="container mx-auto px-6 lg:px-12">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 lg:mb-16 gap-6 reveal">
+                    <div>
+                        <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-4">Trabajos Recientes</h2>
+                        <p class="text-gray-400 text-base lg:text-lg">Una selección de nuestros mejores proyectos.</p>
+                    </div>
+                    <a href="#contacto" class="group text-white font-semibold hover:text-brand transition-colors flex items-center gap-2 pb-2 border-b border-white/10 hover:border-brand text-sm lg:text-base">
+                        Ver portafolio completo <ion-icon name="arrow-forward" class="group-hover:translate-x-1 transition-transform"></ion-icon>
+                    </a>
+                </div>
+
+                <div class="masonry-grid max-w-7xl mx-auto">
+                    <div class="masonry-item-large group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-2xl delay-100">
+                        <img src="https://i.imgur.com/9XT76y7.png" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Banner Design">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 lg:p-8">
+                            <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                                <span class="text-brand font-bold text-xs uppercase tracking-widest mb-2 block">Branding</span>
+                                <span class="text-white font-bold text-xl lg:text-2xl">HC Team Identity</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-200">
+                        <img src="https://i.imgur.com/TMf0zNS.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Legacy RP">
+                         <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                            <span class="text-white font-bold text-lg scale-90 group-hover:scale-100 transition-transform border border-white/20 px-6 py-2 rounded-full">Legacy RP</span>
+                        </div>
+                    </div>
+
+                    <div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-300">
+                        <img src="https://i.imgur.com/EEd2qSS.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Logo 3D">
+                    </div>
+
+                    <div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 video-open-btn shadow-xl delay-200" href="https://www.youtube.com/watch?v=u6iYHqIKPbc">
+                        <img src="https://img.youtube.com/vi/u6iYHqIKPbc/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Video">
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors backdrop-blur-[2px]">
+                            <div class="w-12 h-12 lg:w-14 lg:h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white text-xl lg:text-2xl border border-white/30 group-hover:scale-110 transition-transform shadow-lg">
+                                <ion-icon name="play" class="ml-1"></ion-icon>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-300">
+                        <img src="https://i.imgur.com/hOCgIOi.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Flyer Design">
+                         <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                            <span class="text-white font-bold text-lg">Social Media</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN FEEDBACKS (TESTIMONIOS) -->
+        <section id="feedbacks" class="min-h-screen flex flex-col justify-center py-20 lg:py-32 relative overflow-hidden scroll-mt-0 bg-[#080808]">
+            <div class="absolute top-0 right-0 w-1/2 h-1/2 bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-1/2 h-1/2 bg-discord/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div class="container mx-auto px-6 lg:px-12 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-400 text-xs font-bold mb-4 uppercase tracking-wider">
+                        <ion-icon name="star" class="text-brand"></ion-icon> +100 Clientes Felices
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-display font-bold text-white mb-6">
+                        La opinión de la <span class="text-brand">Comunidad</span>
+                    </h2>
+                    <p class="text-gray-400 text-base lg:text-lg">
+                        La transparencia es clave. Aquí tienes algunos de los comentarios reales que recibimos en nuestro servidor.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                    <div class="feedback-card reveal delay-100 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full feedback-avatar text-xl">M</div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">Malwarex</h4>
+                                <span class="text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Cliente Verificado</span>
+                            </div>
+                        </div>
+                        <div class="flex text-brand mb-3 text-sm">
+                            <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">"10 de 10 responde rápido y todo funciona al pelo. Muy satisfecho con el resultado final."</p>
+                        <div class="absolute top-6 right-6 text-white/5 text-4xl group-hover:text-brand/10 transition-colors">
+                            <ion-icon name="chatquote"></ion-icon>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-card reveal delay-200 group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full feedback-avatar text-xl bg-gradient-to-br from-blue-900 to-black text-blue-400">K</div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">kobaa</h4>
+                                <span class="text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Cliente Verificado</span>
+                            </div>
+                        </div>
+                        <div class="flex text-brand mb-3 text-sm">
+                            <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon>
+                        </div>
+                        <p class="text-gray-300 text-sm leading-relaxed">"La kabra 10/10 eres el mejor bro. Diseño increíble y entrega súper rápida."</p>
+                        <div class="absolute top-6 right-6 text-white/5 text-4xl group-hover:text-brand/10 transition-colors">
+                            <ion-icon name="chatquote"></ion-icon>
+                        </div>
+                    </div>
+
+                    <div class="feedback-card reveal delay-300 group border-brand/30 bg-brand/5">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full feedback-avatar text-xl bg-gradient-to-br from-purple-900 to-black text-purple-400">A</div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg">xAndrew | RSZ</h4>
+                                <span class="text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Compra: Intro</span>
+                            </div>
+                        </div>
+                        <div class="flex text-brand mb-3 text-sm">
+                            <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon>
+                        </div>
+                        <p class="text-gray-200 text-sm leading-relaxed font-medium">"10/10 la intro bro, el mejor. Superó mis expectativas totalmente."</p>
+                        <div class="absolute top-6 right-6 text-brand/20 text-4xl">
+                            <ion-icon name="videocam"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center reveal">
+                    <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm border-b border-transparent hover:border-brand pb-1">
+                        Ver todos los feedbacks en Discord <ion-icon name="open-outline"></ion-icon>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto / Discord -->
+        <section id="contacto" class="min-h-screen flex flex-col justify-between pt-32 pb-10 border-t border-white/5 relative overflow-hidden scroll-mt-0">
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-1/2 left-1/4 w-64 h-64 lg:w-96 lg:h-96 bg-brand/5 rounded-full blur-[100px] lg:blur-[120px] -translate-y-1/2"></div>
+                <div class="absolute bottom-0 right-0 w-80 h-80 lg:w-[500px] lg:h-[500px] bg-discord/5 rounded-full blur-[100px] lg:blur-[120px]"></div>
+            </div>
+
+            <div class="container mx-auto px-6 lg:px-12 relative z-10 flex-grow flex items-center">
+                <div class="w-full max-w-7xl mx-auto bg-[#0a0a0a]/80 backdrop-blur-sm border border-white/5 rounded-[2rem] p-6 md:p-16 lg:p-20 shadow-2xl reveal overflow-hidden relative group">
+                    <div class="absolute inset-0 rounded-[2rem] border border-white/5 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                    
+                    <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+                        <div class="flex-1 text-center lg:text-left">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-discord/10 border border-discord/20 text-[#5865F2] text-xs font-bold mb-6 uppercase tracking-wider">
+                                <ion-icon name="people"></ion-icon> Comunidad Exclusiva
+                            </div>
+                            <h3 class="text-3xl sm:text-4xl md:text-6xl font-display font-bold text-white mb-8 leading-tight">
+                                ¿Listo para elevar <br> tu marca?
+                            </h3>
+                            <p class="text-gray-400 text-base lg:text-xl mb-10 lg:mb-12 leading-relaxed max-w-md mx-auto lg:mx-0">
+                                Únete a nuestro servidor de Discord. Abre tickets de pedido, charla con el equipo y accede a descuentos exclusivos.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                                <a href="https://discord.gg/4q56XZbWaV" target="_blank" class="inline-flex items-center justify-center gap-3 bg-[#5865F2] hover:bg-[#4752c4] text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-discord/25 hover:shadow-discord/40 hover:-translate-y-1 text-base lg:text-lg">
+                                    <ion-icon name="logo-discord" class="text-2xl"></ion-icon>
+                                    <span>Entrar al Servidor</span>
+                                </a>
+                                <a href="mailto:contacto@smestudio.com" class="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 text-white font-medium py-4 px-8 rounded-xl border border-white/10 hover:border-white/20 transition-all text-base lg:text-lg">
+                                    <ion-icon name="mail-outline" class="text-2xl"></ion-icon>
+                                    <span>Enviar Email</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-[450px] relative">
+                            <div class="absolute -inset-2 bg-gradient-to-r from-brand/20 to-discord/20 rounded-2xl blur-xl opacity-50"></div>
+                            <div class="relative bg-[#0f0f0f] rounded-xl border border-white/10 overflow-hidden shadow-2xl transform transition-transform hover:scale-[1.02] h-[350px] lg:h-[450px]">
+                                <iframe src="https://canary.discord.com/widget?id=1278801961092644995&theme=dark" class="w-full h-full" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="container mx-auto px-6 lg:px-12 mt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-gray-500 text-xs lg:text-sm border-t border-white/5 pt-8">
+                <div class="flex items-center gap-2">
+                    <img src="https://i.imgur.com/eyMr4Ki.png" alt="Logo" class="w-6 h-6 opacity-50 grayscale">
+                    <p>&copy; 2025 SM Estudio.</p>
+                </div>
+                <div class="flex gap-6 lg:gap-8">
+                    <a href="#" class="hover:text-brand transition-colors">Términos</a>
+                    <a href="#" class="hover:text-brand transition-colors">Privacidad</a>
+                    <a href="#" class="hover:text-brand transition-colors">Twitter</a>
+                    <a href="#" class="hover:text-brand transition-colors">Instagram</a>
+                </div>
+            </footer>
+        </section>
+
+    </main>
+
+    <!-- LOGIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 modal-backdrop" id="login-backdrop"></div>
+        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="login-content">
             
-            <section id="about" class="min-h-screen flex flex-col justify-center py-16 lg:py-32 bg-dark-900/50 border-y border-white/5 scroll-mt-0"><div class="container mx-auto px-4 sm:px-6 lg:px-12"><div class="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center"><div class="lg:col-span-7 reveal"><div class="flex items-center gap-4 mb-4 sm:mb-6"><div class="h-px w-8 sm:w-12 bg-brand"></div><span class="text-brand font-bold uppercase tracking-widest text-xs">Sobre Nosotros</span></div><h3 class="text-2xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-4 sm:mb-6 lg:mb-8 leading-tight">Más que diseño, creamos <br> <span class="text-white/50">experiencias visuales.</span></h3><p class="text-gray-400 mb-6 leading-relaxed text-sm sm:text-base lg:text-lg">En <strong>SM Estudio</strong>, fusionamos arte y estrategia. Nuestro equipo se dedica a crear piezas que no solo se ven bien, sino que comunican la esencia y profesionalismo de tu marca.</p><div class="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-8 border-t border-white/10 pt-6 sm:pt-8 lg:pt-10"><div><div class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-1">3+</div><div class="text-gray-600 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Años Exp.</div></div><div><div class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-1">100+</div><div class="text-gray-600 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Clientes</div></div><div><div class="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-1">100%</div><div class="text-gray-600 text-[10px] sm:text-xs font-bold uppercase tracking-wider">Calidad</div></div></div></div><div class="lg:col-span-5 bg-[#0a0a0a] p-6 sm:p-10 rounded-3xl border border-white/5 shadow-2xl reveal relative overflow-hidden group hover:border-brand/20 transition-colors duration-500" style="transition-delay:200ms;"><div class="absolute -top-20 -right-20 w-64 h-64 bg-brand/5 rounded-full blur-3xl group-hover:bg-brand/10 transition-all"></div><h4 class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-6 sm:mb-8 lg:mb-10 flex items-center gap-3 relative z-10"><ion-icon name="layers-outline" class="text-brand"></ion-icon> Stack Creativo</h4><div class="space-y-6 lg:space-y-8 relative z-10"><div class="skill-container"><div class="flex justify-between mb-2 text-xs sm:text-sm font-medium"><span class="text-gray-300">Photoshop / Manipulación</span><span class="text-brand">95%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="95%" style="width:0;"></div></div></div><div class="skill-container"><div class="flex justify-between mb-2 text-xs sm:text-sm font-medium"><span class="text-gray-300">Illustrator / Branding</span><span class="text-brand">90%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="90%" style="width:0;"></div></div></div><div class="skill-container"><div class="flex justify-between mb-2 text-xs sm:text-sm font-medium"><span class="text-gray-300">After Effects / Motion</span><span class="text-brand">90%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="85%" style="width:0;"></div></div></div><div class="skill-container"><div class="flex justify-between mb-2 text-xs sm:text-sm font-medium"><span class="text-gray-300">Blender / 3D Art</span><span class="text-brand">40%</span></div><div class="progress-bar-bg"><div class="progress-bar-fill shadow-[0_0_10px_#f97316]" data-width="75%" style="width:0;"></div></div></div></div></div></div></div></section>
-            
-            <section id="proceso" class="min-h-screen flex flex-col justify-center py-16 lg:py-32 bg-[#080808] border-b border-white/5 relative overflow-hidden scroll-mt-0"><div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div><div class="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10"><div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal"><h2 class="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white mb-4 sm:mb-6">Nuestro <span class="text-brand">Proceso</span></h2><p class="text-gray-400 text-sm sm:text-base lg:text-lg">Flujo de trabajo optimizado para garantizar resultados excepcionales en tiempo récord.</p></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"><div class="step-card reveal delay-100 group"><div class="step-number">01</div><div class="text-brand text-3xl sm:text-4xl mb-4 sm:mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all bg-white/5 w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border border-white/10"><ion-icon name="chatbubble-ellipses-outline"></ion-icon></div><h4 class="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 relative z-10 group-hover:text-brand transition-colors">Consulta</h4><p class="text-gray-500 text-xs sm:text-sm leading-relaxed relative z-10">Hablamos sobre tus ideas, referencias y objetivos para entender la visión.</p></div><div class="step-card reveal delay-200 group"><div class="step-number">02</div><div class="text-brand text-3xl sm:text-4xl mb-4 sm:mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all bg-white/5 w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border border-white/10"><ion-icon name="brush-outline"></ion-icon></div><h4 class="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 relative z-10 group-hover:text-brand transition-colors">Diseño</h4><p class="text-gray-500 text-xs sm:text-sm leading-relaxed relative z-10">Comenzamos a crear los primeros bocetos y conceptos visuales.</p></div><div class="step-card reveal delay-300 group"><div class="step-number">03</div><div class="text-brand text-3xl sm:text-4xl mb-4 sm:mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all bg-white/5 w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border border-white/10"><ion-icon name="sync-outline"></ion-icon></div><h4 class="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 relative z-10 group-hover:text-brand transition-colors">Revisión</h4><p class="text-gray-500 text-xs sm:text-sm leading-relaxed relative z-10">Te presentamos los avances y aplicamos el feedback necesario.</p></div><div class="step-card reveal group" style="transition-delay:400ms;"><div class="step-number">04</div><div class="text-brand text-3xl sm:text-4xl mb-4 sm:mb-6 relative z-10 opacity-80 group-hover:opacity-100 transition-all bg-white/5 w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center border border-white/10"><ion-icon name="rocket-outline"></ion-icon></div><h4 class="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 relative z-10 group-hover:text-brand transition-colors">Entrega</h4><p class="text-gray-500 text-xs sm:text-sm leading-relaxed relative z-10">Recibes todos los archivos finales en alta calidad, listos para usar.</p></div></div></div></section>
-            
-            <section id="tienda" class="min-h-screen flex flex-col justify-center py-16 lg:py-32 relative scroll-mt-0"><div class="container mx-auto px-4 sm:px-6 lg:px-12"><div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal"><h2 class="text-3xl sm:text-4xl md:text-6xl font-display font-bold text-white mb-4 sm:mb-6">Nuestros <span class="text-brand">Servicios</span></h2><p class="text-gray-400 text-sm sm:text-base lg:text-lg">Soluciones visuales adaptadas a tus necesidades. Calidad premium.</p></div><div class="flex justify-center mb-12 sm:mb-16 reveal delay-100"><div class="bg-[#0a0a0a] border border-white/10 p-1.5 rounded-2xl inline-flex shadow-2xl max-w-full overflow-x-auto scrollbar-none"><button id="tab-visual" class="px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl text-white font-semibold bg-brand shadow-lg transition-all duration-300 text-xs sm:text-sm lg:text-base whitespace-nowrap">Diseño Visual</button><button id="tab-packs" class="px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl text-gray-400 hover:text-white font-semibold transition-all duration-300 hover:bg-white/5 text-xs sm:text-sm lg:text-base whitespace-nowrap">Packs & Recursos</button></div></div><div id="products-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto"></div><div class="mt-16 sm:mt-20 text-center reveal delay-200"><p class="text-gray-500 mb-4 text-[10px] sm:text-xs lg:text-sm uppercase tracking-wider">¿Buscas algo a medida?</p><button id="custom-order-btn" class="text-white text-sm sm:text-base lg:text-lg font-semibold hover:text-brand transition-colors border-b-2 border-brand/50 hover:border-brand pb-1">Solicitar Cotización Personalizada</button></div></div></section>
-            
-            <section id="portfolio" class="min-h-screen flex flex-col justify-center py-16 lg:py-32 bg-dark-900/30 scroll-mt-0"><div class="container mx-auto px-4 sm:px-6 lg:px-12"><div class="flex flex-col md:flex-row justify-between items-end mb-8 sm:mb-12 lg:mb-16 gap-4 sm:gap-6 reveal"><div><h2 class="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white mb-2 sm:mb-4">Trabajos Recientes</h2><p class="text-gray-400 text-sm sm:text-base lg:text-lg">Una selección de nuestros mejores proyectos.</p></div><a href="#contacto" class="group text-white font-semibold hover:text-brand transition-colors flex items-center gap-2 pb-2 border-b border-white/10 hover:border-brand text-xs sm:text-sm lg:text-base">Ver portafolio completo <ion-icon name="arrow-forward" class="group-hover:translate-x-1 transition-transform"></ion-icon></a></div><div class="masonry-grid max-w-7xl mx-auto"><div class="masonry-item-large group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-2xl delay-100"><img src="https://i.imgur.com/9XT76y7.png" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Banner Design"><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6"><div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"><span class="text-brand font-bold text-xs uppercase tracking-widest mb-1 block">Branding</span><span class="text-white font-bold text-lg sm:text-xl lg:text-2xl">HC Team Identity</span></div></div></div><div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-200"><img src="https://i.imgur.com/TMf0zNS.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Legacy RP"></div><div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-300"><img src="https://i.imgur.com/EEd2qSS.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Logo 3D"></div><div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 video-open-btn shadow-xl delay-200" href="https://www.youtube.com/watch?v=u6iYHqIKPbc"><img src="https://img.youtube.com/vi/u6iYHqIKPbc/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Video"><div class="absolute inset-0 flex items-center justify-center bg-black/40 group-hover:bg-black/60 transition-colors backdrop-blur-[2px]"><div class="w-10 h-10 lg:w-14 lg:h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white text-lg lg:text-2xl border border-white/30 group-hover:scale-110 transition-transform shadow-lg"><ion-icon name="play" class="ml-1"></ion-icon></div></div></div><div class="group relative rounded-2xl overflow-hidden cursor-pointer reveal border border-white/5 shadow-xl delay-300"><img src="https://i.imgur.com/hOCgIOi.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Flyer Design"></div></div></div></section>
-            
-            <section id="feedbacks" class="min-h-screen flex flex-col justify-center py-16 lg:py-32 relative overflow-hidden scroll-mt-0 bg-[#080808]"><div class="absolute top-0 right-0 w-1/2 h-1/2 bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div><div class="absolute bottom-0 left-0 w-1/2 h-1/2 bg-discord/5 rounded-full blur-[120px] pointer-events-none"></div><div class="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10"><div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 reveal"><div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-400 text-[10px] sm:text-xs font-bold mb-4 uppercase tracking-wider"><ion-icon name="star" class="text-brand"></ion-icon> +100 Clientes Felices</div><h2 class="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white mb-4 sm:mb-6">La opinión de la <span class="text-brand">Comunidad</span></h2><p class="text-gray-400 text-sm sm:text-base lg:text-lg">La transparencia es clave. Comentarios reales de nuestro servidor.</p></div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"><div class="feedback-card reveal delay-100 group"><div class="flex items-center gap-4 mb-4"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full feedback-avatar text-lg sm:text-xl">M</div><div><h4 class="font-bold text-white text-base sm:text-lg">Malwarex</h4><span class="text-[10px] sm:text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Cliente Verificado</span></div></div><div class="flex text-brand mb-3 text-xs sm:text-sm"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></div><p class="text-gray-300 text-xs sm:text-sm leading-relaxed">"10 de 10 responde rápido y todo funciona al pelo. Muy satisfecho con el resultado final."</p><div class="absolute top-6 right-6 text-white/5 text-4xl group-hover:text-brand/10 transition-colors"><ion-icon name="chatquote"></ion-icon></div></div><div class="feedback-card reveal delay-200 group"><div class="flex items-center gap-4 mb-4"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full feedback-avatar text-lg sm:text-xl bg-gradient-to-br from-blue-900 to-black text-blue-400">K</div><div><h4 class="font-bold text-white text-base sm:text-lg">kobaa</h4><span class="text-[10px] sm:text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Cliente Verificado</span></div></div><div class="flex text-brand mb-3 text-xs sm:text-sm"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></div><p class="text-gray-300 text-xs sm:text-sm leading-relaxed">"La kabra 10/10 eres el mejor bro. Diseño increíble y entrega súper rápida."</p><div class="absolute top-6 right-6 text-white/5 text-4xl group-hover:text-brand/10 transition-colors"><ion-icon name="chatquote"></ion-icon></div></div><div class="feedback-card reveal delay-300 group border-brand/30 bg-brand/5"><div class="flex items-center gap-4 mb-4"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full feedback-avatar text-lg sm:text-xl bg-gradient-to-br from-purple-900 to-black text-purple-400">A</div><div><h4 class="font-bold text-white text-base sm:text-lg">xAndrew</h4><span class="text-[10px] sm:text-xs text-gray-500 flex items-center gap-1"><ion-icon name="checkmark-circle" class="text-brand"></ion-icon> Compra: Intro</span></div></div><div class="flex text-brand mb-3 text-xs sm:text-sm"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></div><p class="text-gray-200 text-xs sm:text-sm leading-relaxed font-medium">"10/10 la intro bro, el mejor. Superó mis expectativas totalmente."</p><div class="absolute top-6 right-6 text-brand/20 text-4xl"><ion-icon name="videocam"></ion-icon></div></div></div><div class="mt-10 sm:mt-12 text-center reveal"><a href="https://discord.gg/4q56XZbWaV" target="_blank" class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-xs sm:text-sm border-b border-transparent hover:border-brand pb-1">Ver todos los feedbacks en Discord <ion-icon name="open-outline"></ion-icon></a></div></div></section>
-            
-            <section id="contacto" class="min-h-screen flex flex-col justify-between pt-20 sm:pt-32 pb-8 sm:pb-10 border-t border-white/5 relative overflow-hidden scroll-mt-0"><div class="absolute inset-0 pointer-events-none"><div class="absolute top-1/2 left-1/4 w-64 h-64 bg-brand/5 rounded-full blur-[100px] -translate-y-1/2"></div><div class="absolute bottom-0 right-0 w-64 h-64 bg-discord/5 rounded-full blur-[100px]"></div></div><div class="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10 flex-grow flex items-center"><div class="w-full max-w-7xl mx-auto bg-[#0a0a0a]/80 backdrop-blur-sm border border-white/5 rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-10 lg:p-20 shadow-2xl reveal overflow-hidden relative group"><div class="absolute inset-0 rounded-[2rem] border border-white/5 pointer-events-none"></div><div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center"><div class="flex-1 text-center lg:text-left"><div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-discord/10 border border-discord/20 text-[#5865F2] text-[10px] sm:text-xs font-bold mb-4 sm:mb-6 uppercase tracking-wider"><ion-icon name="people"></ion-icon> Comunidad Exclusiva</div><h3 class="text-2xl sm:text-4xl md:text-6xl font-display font-bold text-white mb-6 sm:mb-8 leading-tight">¿Listo para elevar <br> tu marca?</h3><p class="text-gray-400 text-sm sm:text-base lg:text-xl mb-8 lg:mb-12 leading-relaxed max-w-md mx-auto lg:mx-0">Únete a nuestro servidor de Discord. Abre tickets de pedido, charla con el equipo y accede a descuentos exclusivos.</p><div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start w-full sm:w-auto"><a href="https://discord.gg/4q56XZbWaV" target="_blank" class="inline-flex items-center justify-center gap-3 bg-[#5865F2] hover:bg-[#4752c4] text-white font-bold py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl transition-all shadow-lg shadow-discord/25 hover:shadow-discord/40 hover:-translate-y-1 text-sm sm:text-base lg:text-lg w-full sm:w-auto"><ion-icon name="logo-discord" class="text-xl sm:text-2xl"></ion-icon><span>Entrar al Servidor</span></a><a href="mailto:contacto@smestudio.com" class="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 text-white font-medium py-3.5 sm:py-4 px-6 sm:px-8 rounded-xl border border-white/10 hover:border-white/20 transition-all text-sm sm:text-base lg:text-lg w-full sm:w-auto"><ion-icon name="mail-outline" class="text-xl sm:text-2xl"></ion-icon><span>Enviar Email</span></a></div></div><div class="w-full lg:w-[450px] relative hidden sm:block"><div class="absolute -inset-2 bg-gradient-to-r from-brand/20 to-discord/20 rounded-2xl blur-xl opacity-50"></div><div class="relative bg-[#0f0f0f] rounded-xl border border-white/10 overflow-hidden shadow-2xl transform transition-transform hover:scale-[1.02] h-[300px] lg:h-[450px]"><iframe src="https://canary.discord.com/widget?id=1278801961092644995&theme=dark" class="w-full h-full" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe></div></div></div></div></div><footer class="container mx-auto px-4 sm:px-6 lg:px-12 mt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-gray-500 text-xs sm:text-sm border-t border-white/5 pt-8"><div class="flex items-center gap-2"><img src="https://i.imgur.com/eyMr4Ki.png" alt="Logo" class="w-5 h-5 sm:w-6 sm:h-6 opacity-50 grayscale"><p>&copy; 2025 SM Estudio.</p></div><div class="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8"><a href="#" class="hover:text-brand transition-colors">Términos</a><a href="#" class="hover:text-brand transition-colors">Privacidad</a><a href="#" class="hover:text-brand transition-colors">Twitter</a><a href="#" class="hover:text-brand transition-colors">Instagram</a></div></footer></section>
-        </main>
+            <!-- Header Pestañas -->
+            <div class="flex border-b border-white/10">
+                <div id="tab-login" class="auth-tab active">Iniciar Sesión</div>
+                <div id="tab-register" class="auth-tab">Registrarse</div>
+            </div>
+
+            <div class="p-8">
+                <button id="close-login" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                    <ion-icon name="close" class="text-2xl"></ion-icon>
+                </button>
+
+                <div class="text-center mb-6">
+                    <div class="w-14 h-14 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-3 border border-brand/20 text-brand text-2xl">
+                        <ion-icon name="person"></ion-icon>
+                    </div>
+                    <h3 class="text-xl font-bold text-white" id="auth-title">Bienvenido</h3>
+                    <p class="text-gray-400 text-xs mt-1">Gestiona tus pedidos y perfil.</p>
+                </div>
+
+                <!-- Formulario Email -->
+                <form id="auth-form" class="mb-6">
+                    <div id="field-name-container" class="hidden">
+                        <input type="text" id="auth-name" placeholder="Nombre Completo" class="auth-input">
+                    </div>
+                    <input type="email" id="auth-email" placeholder="Correo Electrónico" class="auth-input" required>
+                    <input type="password" id="auth-password" placeholder="Contraseña" class="auth-input" required>
+                    
+                    <button type="submit" id="auth-submit-btn" class="w-full bg-brand hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand/20 mb-4">
+                        Iniciar Sesión
+                    </button>
+                </form>
+
+                <div class="relative flex py-2 items-center mb-6">
+                    <div class="flex-grow border-t border-white/10"></div>
+                    <span class="flex-shrink-0 mx-4 text-gray-500 text-xs">O continúa con</span>
+                    <div class="flex-grow border-t border-white/10"></div>
+                </div>
+
+                <!-- Botones Sociales Corregidos -->
+                <div class="space-y-3">
+                    <button id="btn-google" class="login-btn-social login-btn-google">
+                        <ion-icon name="logo-google"></ion-icon>
+                        <span>Continuar con Google</span>
+                    </button>
+                    
+                    <button id="btn-discord" class="login-btn-social login-btn-discord">
+                        <ion-icon name="logo-discord"></ion-icon>
+                        <span>Continuar con Discord</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- WRAPPER 2: ÁREA DE DOCUMENTACIÓN/ALUMNOS (NUEVO) -->
-    <div id="student-docs-view" class="container mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="mb-8 flex items-center justify-between">
-            <h1 class="text-2xl md:text-3xl font-display font-bold text-white flex items-center gap-3">
-                <ion-icon name="folder-open" class="text-brand"></ion-icon> Mis Recursos
-            </h1>
-            <button onclick="showLanding()" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors bg-white/5 px-4 py-2 rounded-lg border border-white/10 hover:border-brand/30">
-                <ion-icon name="arrow-back"></ion-icon> Volver al Inicio
+    <!-- CLIENT DASHBOARD MODAL (MIS RECURSOS) -->
+    <div id="dashboard-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" id="dash-backdrop"></div>
+        <div class="relative bg-[#0f0f0f] border border-white/10 rounded-3xl w-full max-w-lg flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="dash-content">
+            
+            <!-- Dash Header -->
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-[#121212]">
+                <div class="flex items-center gap-3">
+                    <div class="text-brand text-2xl">
+                        <ion-icon name="folder-open"></ion-icon>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Mis Recursos</h3>
+                        <p class="text-xs text-gray-400">Gestiona tus descargas</p>
+                    </div>
+                </div>
+                <button id="close-dash" class="text-gray-500 hover:text-white p-2 bg-white/5 rounded-lg transition-colors">
+                    <ion-icon name="close" class="text-xl"></ion-icon>
+                </button>
+            </div>
+
+            <!-- Dash Content (Aquí se cargan los packs dinámicamente) -->
+            <div class="flex-1 p-6 relative overflow-y-auto max-h-[60vh]">
+                 <!-- Loading State -->
+                 <div id="dash-loading" class="text-center py-8">
+                     <ion-icon name="sync" class="animate-spin text-3xl text-brand mb-2"></ion-icon>
+                     <p class="text-gray-500 text-sm">Cargando tus recursos...</p>
+                 </div>
+
+                 <!-- Container de Packs -->
+                 <div id="user-packs-container" class="hidden">
+                    <div class="text-xs font-bold text-gray-500 uppercase mb-4 tracking-wider">Packs Adquiridos</div>
+                    <div id="packs-list">
+                        <!-- Aquí se inyectan los packs desde JS -->
+                    </div>
+                 </div>
+
+                 <!-- Empty State (Si no tiene nada) -->
+                 <div id="dash-empty" class="hidden text-center py-8">
+                     <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-600 text-3xl">
+                         <ion-icon name="cube-outline"></ion-icon>
+                     </div>
+                     <p class="text-gray-400 font-medium mb-2">No tienes recursos disponibles</p>
+                     <p class="text-xs text-gray-600 max-w-[200px] mx-auto">Tus compras aparecerán aquí una vez verificadas por el administrador.</p>
+                 </div>
+            </div>
+
+            <!-- Dash Footer -->
+            <div class="p-4 bg-[#0a0a0a] border-t border-white/5 text-center">
+                 <p class="text-xs text-gray-500" id="dash-user-email">Cargando usuario...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD MODAL (STATS ONLY) -->
+    <div id="admin-dashboard-modal" class="fixed inset-0 z-[95] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-md" id="admin-backdrop"></div>
+        <div class="relative bg-[#0f0f0f] border border-red-900/30 rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="admin-content">
+            
+            <!-- Admin Header -->
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-[#1a0505] to-[#0a0a0a]">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-red-600/20 text-red-500 rounded-lg flex items-center justify-center text-xl border border-red-500/20">
+                        <ion-icon name="shield"></ion-icon>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">Panel de <span class="text-red-500">Administración</span></h3>
+                        <p class="text-sm text-gray-400">Gestión Global del Sistema</p>
+                    </div>
+                </div>
+                <button id="close-admin" class="text-gray-500 hover:text-white p-2 bg-white/5 rounded-lg transition-colors">
+                    <ion-icon name="close" class="text-xl"></ion-icon>
+                </button>
+            </div>
+
+            <div class="flex h-full overflow-hidden">
+                <!-- Sidebar -->
+                <div class="w-64 bg-[#050505] border-r border-white/5 p-4 flex flex-col gap-2 hidden md:flex">
+                    <button class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-900/20 border border-red-500/30">
+                        <ion-icon name="stats-chart"></ion-icon> Estadísticas
+                    </button>
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1 p-6 overflow-y-auto bg-[#0a0a0a]">
+                    
+                    <!-- View: Overview -->
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
+                                <div class="text-gray-500 text-xs uppercase font-bold mb-2">Usuarios Registrados</div>
+                                <div class="text-3xl font-bold text-white">--</div>
+                            </div>
+                            <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
+                                <div class="text-gray-500 text-xs uppercase font-bold mb-2">Ingresos (Mes)</div>
+                                <div class="text-3xl font-bold text-green-500">$0.00</div>
+                            </div>
+                             <div class="bg-[#121212] border border-white/5 p-6 rounded-2xl">
+                                <div class="text-gray-500 text-xs uppercase font-bold mb-2">Estado Servidor</div>
+                                <div class="text-3xl font-bold text-brand">Online</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform scale-95 transition-transform duration-300" id="video-modal-content">
+            <div id="modal-video-container" class="w-full h-full"></div>
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full hover:bg-brand transition-colors backdrop-blur-sm">
+                <ion-icon name="close" size="large"></ion-icon>
             </button>
         </div>
-
-        <div class="grid lg:grid-cols-4 gap-6">
-            <!-- Sidebar Navigation -->
-            <div class="lg:col-span-1">
-                <div class="bg-[#0f0f0f] border border-white/10 rounded-xl p-4 sticky top-24">
-                    <h3 class="text-xs font-bold text-gray-500 uppercase mb-4 tracking-wider px-2">Packs Adquiridos</h3>
-                    <div class="space-y-1" id="docs-sidebar-list">
-                        <!-- Items inyectados vía JS -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Area -->
-            <div class="lg:col-span-3">
-                <div class="doc-content-area p-6 sm:p-10 relative overflow-hidden">
-                    <div id="doc-content-placeholder" class="flex flex-col items-center justify-center h-full min-h-[400px] text-center text-gray-500">
-                        <ion-icon name="library-outline" class="text-6xl mb-4 opacity-20"></ion-icon>
-                        <p>Selecciona un recurso de la izquierda para ver su contenido.</p>
-                    </div>
-                    <div id="doc-content-real" class="hidden">
-                        <!-- Header del Recurso -->
-                        <div class="border-b border-white/10 pb-6 mb-6">
-                            <span class="inline-block px-3 py-1 rounded-full bg-brand/10 text-brand text-xs font-bold mb-3 border border-brand/20" id="doc-badge">PREMIUM</span>
-                            <h2 class="text-3xl font-bold text-white mb-2" id="doc-title">Título del Pack</h2>
-                            <p class="text-gray-400 text-sm" id="doc-desc">Descripción corta del recurso.</p>
-                        </div>
-                        
-                        <!-- Video Container -->
-                        <div class="aspect-video bg-black rounded-xl overflow-hidden mb-8 border border-white/10 shadow-2xl relative group">
-                            <iframe id="doc-video" class="w-full h-full" src="" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-
-                        <!-- Botones de Descarga -->
-                        <div class="bg-white/5 rounded-xl p-6 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                            <div>
-                                <h4 class="font-bold text-white flex items-center gap-2"><ion-icon name="cloud-download-outline"></ion-icon> Archivos del Pack</h4>
-                                <p class="text-xs text-gray-500 mt-1">Incluye todos los assets y licencias de uso.</p>
-                            </div>
-                            <button class="bg-brand hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg flex items-center gap-2">
-                                <ion-icon name="download"></ion-icon> Descargar .ZIP
-                            </button>
-                        </div>
-
-                        <!-- Instrucciones Texto -->
-                        <div class="mt-8 prose prose-invert max-w-none text-gray-300 text-sm leading-relaxed" id="doc-body">
-                            <!-- Texto inyectado -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-    
-    <!-- MODALS ORIGINALES -->
-    <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4"><div class="absolute inset-0 modal-backdrop" id="login-backdrop"></div><div class="relative bg-[#0f0f0f] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden modal-content-wrapper" id="login-content"><div class="flex border-b border-white/10 sticky top-0 bg-[#0f0f0f] z-10"><div id="tab-login" class="auth-tab active text-sm sm:text-base">Iniciar Sesión</div><div id="tab-register" class="auth-tab text-sm sm:text-base">Registrarse</div></div><div class="p-6 sm:p-8"><button id="close-login" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors p-2"><ion-icon name="close" class="text-xl sm:text-2xl"></ion-icon></button><div class="text-center mb-6"><div class="w-12 h-12 sm:w-14 sm:h-14 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-3 border border-brand/20 text-brand text-xl sm:text-2xl"><ion-icon name="person"></ion-icon></div><h3 class="text-lg sm:text-xl font-bold text-white" id="auth-title">Bienvenido</h3><p class="text-gray-400 text-xs mt-1">Gestiona tus pedidos y perfil.</p></div><form id="auth-form" class="mb-6"><div id="field-name-container" class="hidden"><input type="text" id="auth-name" placeholder="Nombre Completo" class="auth-input"></div><input type="email" id="auth-email" placeholder="Correo Electrónico" class="auth-input" required><input type="password" id="auth-password" placeholder="Contraseña" class="auth-input" required><button type="submit" id="auth-submit-btn" class="w-full bg-brand hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand/20 mb-4 text-sm sm:text-base">Iniciar Sesión</button></form><div class="relative flex py-2 items-center mb-6"><div class="flex-grow border-t border-white/10"></div><span class="flex-shrink-0 mx-4 text-gray-500 text-[10px] sm:text-xs">O continúa con</span><div class="flex-grow border-t border-white/10"></div></div><div class="space-y-3"><button id="btn-google" class="login-btn-social login-btn-google text-sm sm:text-base"><ion-icon name="logo-google" class="text-lg sm:text-xl"></ion-icon>Google</button><button id="btn-discord" class="login-btn-social login-btn-discord text-sm sm:text-base"><ion-icon name="logo-discord" class="text-lg sm:text-xl"></ion-icon>Discord</button></div></div></div></div>
-    <div id="dashboard-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4"><div class="absolute inset-0 bg-black/90 backdrop-blur-md" id="dash-backdrop"></div><div class="relative bg-[#0f0f0f] border border-white/10 rounded-3xl w-full max-w-md flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden modal-content-wrapper" id="dash-content"><div class="p-6 border-b border-white/10 flex justify-between items-center bg-[#121212] sticky top-0 z-10"><div><h3 class="text-xl sm:text-2xl font-bold text-white">Panel <span class="text-brand">Cliente</span></h3></div><button id="close-dash" class="text-gray-500 hover:text-white p-2 bg-white/5 rounded-lg transition-colors"><ion-icon name="close" class="text-lg sm:text-xl"></ion-icon></button></div><div class="flex-1 p-6 relative text-center space-y-4"><div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand to-purple-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl sm:text-3xl font-bold shadow-lg"><ion-icon name="person"></ion-icon></div><h4 class="text-white font-bold text-lg sm:text-xl">Bienvenido</h4><p class="text-xs sm:text-sm text-gray-500" id="dash-user-email">Cargando...</p><div class="bg-white/5 border border-white/5 rounded-xl p-4 text-xs text-gray-400 mt-4"><p>Gestiona tu perfil y configuraciones aquí.</p></div></div></div></div>
-    <div id="admin-dashboard-modal" class="fixed inset-0 z-[95] hidden items-center justify-center p-4"><div class="absolute inset-0 bg-black/95 backdrop-blur-md" id="admin-backdrop"></div><div class="relative bg-[#0f0f0f] border border-red-900/30 rounded-2xl sm:rounded-3xl w-full max-w-5xl h-[90vh] md:h-[85vh] flex flex-col shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="admin-content"><div class="p-4 sm:p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-[#1a0505] to-[#0a0a0a]"><div class="flex items-center gap-3"><div class="w-8 h-8 sm:w-10 sm:h-10 bg-red-600/20 text-red-500 rounded-lg flex items-center justify-center text-lg sm:text-xl border border-red-500/20"><ion-icon name="shield"></ion-icon></div><div><h3 class="text-lg sm:text-2xl font-bold text-white">Panel <span class="text-red-500 hidden sm:inline">Admin</span></h3><p class="text-[10px] sm:text-sm text-gray-400 hidden sm:block">Gestión Global del Sistema</p></div></div><button id="close-admin" class="text-gray-500 hover:text-white p-2 bg-white/5 rounded-lg transition-colors"><ion-icon name="close" class="text-lg sm:text-xl"></ion-icon></button></div><div class="flex h-full overflow-hidden"><div class="w-64 bg-[#050505] border-r border-white/5 p-4 flex flex-col gap-2 hidden md:flex"><button class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-white bg-red-900/20 border border-red-500/30"><ion-icon name="stats-chart"></ion-icon> Estadísticas</button></div><div class="flex-1 p-4 sm:p-6 overflow-y-auto bg-[#0a0a0a]"><div class="space-y-6"><div class="grid grid-cols-1 sm:grid-cols-3 gap-4"><div class="bg-[#121212] border border-white/5 p-4 sm:p-6 rounded-2xl"><div class="text-gray-500 text-[10px] sm:text-xs uppercase font-bold mb-2">Usuarios</div><div class="text-2xl sm:text-3xl font-bold text-white">--</div></div><div class="bg-[#121212] border border-white/5 p-4 sm:p-6 rounded-2xl"><div class="text-gray-500 text-[10px] sm:text-xs uppercase font-bold mb-2">Ingresos</div><div class="text-2xl sm:text-3xl font-bold text-green-500">$0.00</div></div><div class="bg-[#121212] border border-white/5 p-4 sm:p-6 rounded-2xl"><div class="text-gray-500 text-[10px] sm:text-xs uppercase font-bold mb-2">Estado</div><div class="text-2xl sm:text-3xl font-bold text-brand">Online</div></div></div></div></div></div></div></div>
-    <div id="video-modal" class="fixed inset-0 z-[110] bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300"><div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform scale-95 transition-transform duration-300" id="video-modal-content"><div id="modal-video-container" class="w-full h-full"></div><button id="modal-close-btn" class="absolute top-4 right-4 text-white bg-black/50 p-2 rounded-full hover:bg-brand transition-colors backdrop-blur-sm"><ion-icon name="close" size="large"></ion-icon></button></div></div>
 
+    <!-- FIREBASE LOGIC & SCRIPTS -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
-        const firebaseConfig=JSON.parse('{"apiKey":"AIzaSyDUJvGVwXeckfA-bVi2szQJt7AFTPvx0_g","authDomain":"smestudio-89646.firebaseapp.com","projectId":"smestudio-89646","storageBucket":"smestudio-89646.firebasestorage.app","messagingSenderId":"471317369468","appId":"1:471317369468:web:4cd0e569b762cae586eff9","measurementId":"G-0T8YHH7H7M"}');
-        const app=initializeApp(firebaseConfig);
-        const auth=getAuth(app);
-        const db=getFirestore(app);
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-        // --- AUTH SETUP ---
-        const initAuth = async () => {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                try { await signInWithCustomToken(auth, __initial_auth_token); } catch (e) { console.error(e); }
-            }
+        // --- CONFIGURACIÓN ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUJvGVwXeckfA-bVi2szQJt7AFTPvx0_g",
+            authDomain: "smestudio-89646.firebaseapp.com",
+            projectId: "smestudio-89646",
+            storageBucket: "smestudio-89646.firebasestorage.app",
+            messagingSenderId: "471317369468",
+            appId: "1:471317369468:web:4cd0e569b762cae586eff9",
+            measurementId: "G-0T8YHH7H7M"
         };
-        initAuth();
 
-        // --- MOCKUP PACKS DATA ---
-        const myPacksData = [
-            {
-                id: 'starter',
-                title: 'Pack de Inicio GFX',
-                desc: 'Todo lo necesario para empezar en el diseño de banners.',
-                video: 'u6iYHqIKPbc',
-                content: '<p>Bienvenido al pack de inicio. Aquí encontrarás las fuentes básicas (Gotham, Montserrat), degradados metálicos y pinceles de luz.</p><h5 class="text-white font-bold mt-4">Instalación:</h5><ul class="list-disc pl-4 mt-2"><li>Descomprime el .ZIP</li><li>Instala las fuentes (.ttf)</li><li>Arrastra los pinceles a Photoshop</li></ul>'
-            },
-            {
-                id: 'ultimate',
-                title: 'Ultimate 3D Bundle',
-                desc: 'Renders 3D exclusivos en 4K y texturas premium.',
-                video: 'dQw4w9WgXcQ',
-                content: '<p>Este es el paquete más completo. Incluye más de 500 assets renderizados en Blender. Usa el mapa de normales para dar profundidad a tus composiciones.</p>'
-            }
-        ];
-
-        // --- DOM ELEMENTS ---
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // --- REFERENCIAS DOM ---
         const loginTriggerBtn = document.getElementById('login-trigger-btn');
-        const mobileLoginBtnInner = document.getElementById('mobile-login-btn-inner');
+        const mobileLoginBtn = document.getElementById('mobile-login-btn');
         const userMenu = document.getElementById('user-menu');
         const userAvatar = document.getElementById('user-avatar');
         const userName = document.getElementById('user-name');
         const logoutBtn = document.getElementById('logout-btn');
         const openDashboardBtn = document.getElementById('open-dashboard-btn');
         const adminPanelBtn = document.getElementById('admin-panel-btn');
-        const studentAreaBtn = document.getElementById('student-area-btn');
-        const mobileStudentBtn = document.getElementById('mobile-student-btn');
-
-        // Layout Wrappers
-        const landingWrapper = document.getElementById('landing-page-wrapper');
-        const docsWrapper = document.getElementById('student-docs-view');
-
-        // Modals
+        
         const loginModal = document.getElementById('login-modal');
         const loginContent = document.getElementById('login-content');
         const closeLoginBtn = document.getElementById('close-login');
         const loginBackdrop = document.getElementById('login-backdrop');
+
         const dashModal = document.getElementById('dashboard-modal');
         const dashContent = document.getElementById('dash-content');
         const dashBackdrop = document.getElementById('dash-backdrop');
         const closeDashBtn = document.getElementById('close-dash');
         const dashUserEmail = document.getElementById('dash-user-email');
+        const dashLoading = document.getElementById('dash-loading');
+        const dashEmpty = document.getElementById('dash-empty');
+        const userPacksContainer = document.getElementById('user-packs-container');
+        const packsList = document.getElementById('packs-list');
+
         const adminModal = document.getElementById('admin-dashboard-modal');
         const adminContent = document.getElementById('admin-content');
         const adminBackdrop = document.getElementById('admin-backdrop');
         const closeAdminBtn = document.getElementById('close-admin');
-        
-        // Auth Form Elements
+
         const btnGoogle = document.getElementById('btn-google');
+        const btnDiscord = document.getElementById('btn-discord');
         const tabLogin = document.getElementById('tab-login');
         const tabRegister = document.getElementById('tab-register');
         const authForm = document.getElementById('auth-form');
@@ -268,132 +1050,390 @@
 
         let currentUser = null;
         let isRegisterMode = false;
-        const admins = ['admin@smestudio.com', 'soporte@smestudio.com'];
+        
+        const admins = ['admin@smestudio.com', 'soporte@smestudio.com']; 
 
-        // --- VIEW SWITCHING LOGIC ---
-        window.showLanding = () => {
-            docsWrapper.classList.remove('active');
-            setTimeout(() => {
-                docsWrapper.style.display = 'none';
-                landingWrapper.style.display = 'block';
-                window.scrollTo(0, 0);
-            }, 100);
+        // --- DEFINICIÓN DE PACKS (Base de datos local visual) ---
+        // Aquí defines cómo se ven los packs. La DB solo guarda el ID ('gfx-pack', 'ultimate-bundle').
+        const packDefinitions = {
+            'gfx-pack': {
+                name: 'Pack de Inicio GFX',
+                icon: 'cube-outline',
+                isPremium: false,
+                link: '#'
+            },
+            'ultimate-bundle': {
+                name: 'Ultimate 3D Bundle',
+                desc: 'Renders 3D exclusivos',
+                icon: 'diamond-outline', // Icono diferente
+                isPremium: true,
+                link: '#'
+            },
+            'editor-pack': {
+                name: 'Editor Bundle',
+                icon: 'cut-outline',
+                isPremium: false,
+                link: '#'
+            }
         };
 
-        window.showDocs = () => {
-            landingWrapper.style.display = 'none';
-            docsWrapper.style.display = 'block';
-            setTimeout(() => {
-                docsWrapper.classList.add('active');
-                window.scrollTo(0, 0);
-                // Renderizar Sidebar solo la primera vez si se desea, o siempre
-                renderSidebar();
-            }, 10);
-        };
-
-        // --- DOCS RENDER LOGIC ---
-        function renderSidebar() {
-            const list = document.getElementById('docs-sidebar-list');
-            list.innerHTML = '';
-            
-            myPacksData.forEach((pack) => {
-                const item = document.createElement('div');
-                item.className = 'doc-sidebar-item';
-                item.innerHTML = `<ion-icon name="cube-outline"></ion-icon> ${pack.title}`;
-                item.onclick = () => loadPackContent(pack, item);
-                list.appendChild(item);
-            });
+        // --- UI HELPERS ---
+        function toggleModal(modal, content, show) {
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                    content.classList.remove('scale-95', 'opacity-0');
+                    content.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            } else {
+                content.classList.remove('scale-100', 'opacity-100');
+                content.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            }
         }
 
-        function loadPackContent(pack, activeItemElement) {
-            document.querySelectorAll('.doc-sidebar-item').forEach(el => el.classList.remove('active'));
-            activeItemElement.classList.add('active');
-            document.getElementById('doc-content-placeholder').classList.add('hidden');
-            document.getElementById('doc-content-real').classList.remove('hidden');
-            document.getElementById('doc-title').textContent = pack.title;
-            document.getElementById('doc-desc').textContent = pack.desc;
-            document.getElementById('doc-video').src = `https://www.youtube.com/embed/${pack.video}`;
-            document.getElementById('doc-body').innerHTML = pack.content;
+        function switchAuthMode(register) {
+            isRegisterMode = register;
+            if (register) {
+                tabRegister.classList.add('active');
+                tabLogin.classList.remove('active');
+                fieldNameContainer.classList.remove('hidden');
+                authName.required = true;
+                authSubmitBtn.textContent = "Registrarse";
+                authTitle.textContent = "Crear Cuenta";
+            } else {
+                tabLogin.classList.add('active');
+                tabRegister.classList.remove('active');
+                fieldNameContainer.classList.add('hidden');
+                authName.required = false;
+                authSubmitBtn.textContent = "Iniciar Sesión";
+                authTitle.textContent = "Bienvenido";
+            }
         }
 
-        // --- AUTH & MODAL FUNCTIONS ---
-        function toggleModal(m,c,s){if(s){m.classList.remove('hidden');m.classList.add('flex');setTimeout(()=>{c.classList.remove('scale-95','opacity-0');c.classList.add('scale-100','opacity-100')},10)}else{c.classList.remove('scale-100','opacity-100');c.classList.add('scale-95','opacity-0');setTimeout(()=>{m.classList.add('hidden');m.classList.remove('flex')},300)}}
-        function switchAuthMode(r){isRegisterMode=r;if(r){tabRegister.classList.add('active');tabLogin.classList.remove('active');fieldNameContainer.classList.remove('hidden');authName.required=true;authSubmitBtn.textContent="Registrarse";authTitle.textContent="Crear Cuenta"}else{tabLogin.classList.add('active');tabRegister.classList.remove('active');fieldNameContainer.classList.add('hidden');authName.required=false;authSubmitBtn.textContent="Iniciar Sesión";authTitle.textContent="Bienvenido"}}
+        // --- FETCH & RENDER PACKS ---
+        async function loadUserPacks(user) {
+            // Reset UI
+            dashLoading.classList.remove('hidden');
+            userPacksContainer.classList.add('hidden');
+            dashEmpty.classList.add('hidden');
+            packsList.innerHTML = '';
+
+            try {
+                // 1. Obtener documento del usuario en Firestore
+                const userDocRef = doc(db, "users", user.uid);
+                const userDocSnap = await getDoc(userDocRef);
+
+                if (userDocSnap.exists()) {
+                    const userData = userDocSnap.data();
+                    // Buscamos el array 'packs' en la DB
+                    const userPacks = userData.packs || []; 
+
+                    if (userPacks.length > 0) {
+                        // Renderizar packs
+                        userPacks.forEach(packId => {
+                            const packInfo = packDefinitions[packId];
+                            if (packInfo) {
+                                const packEl = document.createElement('div');
+                                const premiumClass = packInfo.isPremium ? 'premium' : '';
+                                const badgeHtml = packInfo.isPremium ? '<span class="pack-badge">PREMIUM</span>' : '';
+                                
+                                packEl.className = `pack-item ${premiumClass} group cursor-pointer`;
+                                packEl.innerHTML = `
+                                    <div class="pack-icon group-hover:text-white transition-colors">
+                                        <ion-icon name="${packInfo.icon}" class="text-xl"></ion-icon>
+                                    </div>
+                                    <div class="flex-grow">
+                                        ${badgeHtml}
+                                        <h4 class="text-white font-bold text-sm group-hover:text-brand transition-colors">${packInfo.name}</h4>
+                                        ${packInfo.desc ? `<p class="text-xs text-gray-500">${packInfo.desc}</p>` : ''}
+                                    </div>
+                                    <div class="text-gray-500 group-hover:text-white">
+                                        <ion-icon name="download-outline" class="text-lg"></ion-icon>
+                                    </div>
+                                `;
+                                packsList.appendChild(packEl);
+                            }
+                        });
+                        userPacksContainer.classList.remove('hidden');
+                    } else {
+                        dashEmpty.classList.remove('hidden');
+                    }
+                } else {
+                    // El documento no existe, creamos uno básico o mostramos vacío
+                    // Opcional: Crear el documento si es primera vez
+                    await setDoc(userDocRef, { email: user.email, packs: [] }, { merge: true });
+                    dashEmpty.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error fetching packs:", error);
+                dashEmpty.innerHTML = `<p class="text-red-500 text-sm">Error al cargar recursos.</p>`;
+                dashEmpty.classList.remove('hidden');
+            } finally {
+                dashLoading.classList.add('hidden');
+            }
+        }
+
+        // --- LISTENERS ---
+        loginTriggerBtn.addEventListener('click', () => toggleModal(loginModal, loginContent, true));
+        closeLoginBtn.addEventListener('click', () => toggleModal(loginModal, loginContent, false));
+        loginBackdrop.addEventListener('click', () => toggleModal(loginModal, loginContent, false));
         
-        const openLogin=()=>{if(!document.getElementById('mobile-menu').classList.contains('translate-x-full')){document.getElementById('mobile-menu').classList.add('translate-x-full')}toggleModal(loginModal,loginContent,true)};
-        
-        loginTriggerBtn.addEventListener('click',openLogin);
-        if(mobileLoginBtnInner)mobileLoginBtnInner.addEventListener('click',openLogin);
-        closeLoginBtn.addEventListener('click',()=>toggleModal(loginModal,loginContent,false));
-        loginBackdrop.addEventListener('click',()=>toggleModal(loginModal,loginContent,false));
-        
-        openDashboardBtn.addEventListener('click',()=>toggleModal(dashModal,dashContent,true));
-        closeDashBtn.addEventListener('click',()=>toggleModal(dashModal,dashContent,false));
-        dashBackdrop.addEventListener('click',()=>toggleModal(dashModal,dashContent,false));
-        
-        adminPanelBtn.addEventListener('click',()=>toggleModal(adminModal,adminContent,true));
-        closeAdminBtn.addEventListener('click',()=>toggleModal(adminModal,adminContent,false));
-        adminBackdrop.addEventListener('click',()=>toggleModal(adminModal,adminContent,false));
-        
-        tabLogin.addEventListener('click',()=>switchAuthMode(false));
-        tabRegister.addEventListener('click',()=>switchAuthMode(true));
-        
-        authForm.addEventListener('submit',async(e)=>{e.preventDefault();const email=authEmail.value;const password=authPassword.value;const name=authName.value;try{if(isRegisterMode){const u=await createUserWithEmailAndPassword(auth,email,password);await updateProfile(u.user,{displayName:name})}else{await signInWithEmailAndPassword(auth,email,password)}toggleModal(loginModal,loginContent,false)}catch(err){console.error(err)}});
-        btnGoogle.addEventListener('click',async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider());toggleModal(loginModal,loginContent,false)}catch(e){console.error(e)}});
-        
-        logoutBtn.addEventListener('click',()=>{
-            signOut(auth);
-            toggleModal(dashModal,dashContent,false);
-            toggleModal(adminModal,adminContent,false);
-            showLanding(); // Volver al home al salir
+        openDashboardBtn.addEventListener('click', () => {
+            toggleModal(dashModal, dashContent, true);
+            if(currentUser) loadUserPacks(currentUser); // Cargar packs al abrir
         });
+        closeDashBtn.addEventListener('click', () => toggleModal(dashModal, dashContent, false));
+        dashBackdrop.addEventListener('click', () => toggleModal(dashModal, dashContent, false));
 
-        // --- AUTH OBSERVER ---
-        onAuthStateChanged(auth,(u)=>{
-            currentUser=u;
-            if(u){
-                loginTriggerBtn.classList.replace('flex','hidden');
-                userMenu.classList.replace('hidden','flex');
-                
-                // Mostrar botones de alumno
-                studentAreaBtn.classList.remove('hidden');
-                studentAreaBtn.classList.add('flex');
-                mobileStudentBtn.classList.remove('hidden');
-                mobileStudentBtn.classList.add('flex');
+        adminPanelBtn.addEventListener('click', () => {
+            toggleModal(adminModal, adminContent, true);
+        });
+        closeAdminBtn.addEventListener('click', () => toggleModal(adminModal, adminContent, false));
+        adminBackdrop.addEventListener('click', () => toggleModal(adminModal, adminContent, false));
 
-                if(mobileLoginBtnInner){mobileLoginBtnInner.innerHTML=`<ion-icon name="person"></ion-icon> Hola, ${u.displayName||'Usuario'}`}
-                userName.textContent=u.displayName||u.email.split('@')[0];
-                userAvatar.innerHTML=u.photoURL?`<img src="${u.photoURL}" class="w-full h-full object-cover">`:(u.displayName?u.displayName.charAt(0).toUpperCase():'U');
-                if(dashUserEmail)dashUserEmail.textContent=u.email;
-                if(admins.includes(u.email)){adminPanelBtn.classList.remove('hidden');adminPanelBtn.classList.add('flex')}else{adminPanelBtn.classList.add('hidden');adminPanelBtn.classList.remove('flex')}
-            }else{
-                userMenu.classList.replace('flex','hidden');
-                loginTriggerBtn.classList.replace('hidden','flex');
-                
-                // Ocultar botones de alumno
-                studentAreaBtn.classList.add('hidden');
-                studentAreaBtn.classList.remove('flex');
-                mobileStudentBtn.classList.add('hidden');
-                mobileStudentBtn.classList.remove('flex');
-                
-                if(mobileLoginBtnInner)mobileLoginBtnInner.innerHTML=`<ion-icon name="log-in-outline"></ion-icon> Login / Registro`
+        tabLogin.addEventListener('click', () => switchAuthMode(false));
+        tabRegister.addEventListener('click', () => switchAuthMode(true));
+
+        // --- AUTH ---
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = authEmail.value;
+            const password = authPassword.value;
+            const name = authName.value;
+
+            try {
+                if (isRegisterMode) {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    await updateProfile(userCredential.user, { displayName: name });
+                    // Crear doc inicial
+                    await setDoc(doc(db, "users", userCredential.user.uid), {
+                        email: email,
+                        packs: [] // Empieza sin packs
+                    });
+                    alert(`Bienvenido ${name}!`);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+                toggleModal(loginModal, loginContent, false);
+            } catch (error) {
+                alert("Error: " + error.message);
             }
         });
+
+        btnGoogle.addEventListener('click', async () => {
+            try { 
+                await signInWithPopup(auth, new GoogleAuthProvider()); 
+                toggleModal(loginModal, loginContent, false); 
+            } 
+            catch (error) { alert("Error Google: " + error.message); }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+            toggleModal(dashModal, dashContent, false);
+            toggleModal(adminModal, adminContent, false);
+        });
+
+        // --- GLOBAL AUTH OBSERVER ---
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                loginTriggerBtn.classList.replace('flex', 'hidden');
+                userMenu.classList.replace('hidden', 'flex');
+                userName.textContent = user.displayName || user.email.split('@')[0];
+                userAvatar.innerHTML = user.photoURL ? `<img src="${user.photoURL}" class="w-full h-full object-cover">` : (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
+
+                if(dashUserEmail) dashUserEmail.textContent = user.email;
+
+                // Check Admin
+                if(admins.includes(user.email)) {
+                    adminPanelBtn.classList.remove('hidden');
+                    adminPanelBtn.classList.add('flex');
+                } else {
+                    adminPanelBtn.classList.add('hidden');
+                    adminPanelBtn.classList.remove('flex');
+                }
+            } else {
+                userMenu.classList.replace('flex', 'hidden');
+                loginTriggerBtn.classList.replace('hidden', 'flex');
+            }
+        });
+
     </script>
 
-    <!-- JS ORIGINAL DE UI (Scroll, Animaciones, Productos) -->
     <script>
-        document.addEventListener('mousemove',(e)=>{if(window.innerWidth>768){const c=document.querySelectorAll('.service-card');c.forEach(card=>{const r=card.getBoundingClientRect();card.style.setProperty('--mouse-x',`${e.clientX-r.left}px`);card.style.setProperty('--mouse-y',`${e.clientY-r.top}px`)})}});
-        const products=[{id:'logo-design',category:'visual',title:'Logo Design',price:'$15 - $100',desc:'Identidad visual única para tu marca personal o empresa.',icon:'color-palette-outline',features:['Vectorizado (AI/EPS)','Alta Resolución','Versión PNG/JPG','Revisiones Incluidas'],link:'#',fromPrice:true},{id:'social-media',category:'visual',title:'Social Media',price:'$10 - $35',desc:'Banners y headers optimizados para todas las redes.',icon:'share-social-outline',features:['YouTube / Twitch / Twitter','Diseño Responsivo','Entrega Rápida (48h)','PSD Incluido (Opcional)'],link:'#',fromPrice:true},{id:'motion',category:'visual',title:'Motion Graphics',price:'$20 - $60',desc:'Intros, alertas y pantallas de espera animadas.',icon:'videocam-outline',features:['Animación Fluida (60 FPS)','Formato WebM/MOV','Sonido FX Incluido','Loop Perfecto'],link:'#',fromPrice:true},{id:'stream-pack',category:'visual',title:'Stream Packs',price:'$30 - $80',desc:'Paquete completo para renovar tu canal.',icon:'desktop-outline',features:['Overlay + Webcam','Alertas + Paneles','Pantallas (Start/End/BRB)','Configuración OBS'],link:'#',fromPrice:true},{id:'flyers',category:'visual',title:'Flyers Design',price:'$5 - $40',desc:'Promociona tus eventos o torneos con estilo.',icon:'newspaper-outline',features:['Alta Calidad de Impresión','Formato Redes Sociales','Estilo Llamativo','Entrega Express'],link:'#',fromPrice:true},{id:'thumbnails',category:'visual',title:'Thumbnails',price:'$5 - $15',desc:'Miniaturas que aumentan tu CTR en YouTube.',icon:'image-outline',features:['Estilo Clickbait / Clean','Retoque Fotográfico','Alta Resolución','Pack de 3 Descuento'],link:'#',fromPrice:true},{id:'gfx-pack',category:'packs',title:'Ultimate GFX Pack',price:'$20.00',desc:'La caja de herramientas definitiva para diseñadores.',icon:'folder-open-outline',features:['+500 Backgrounds','+1000 Texturas','Iconos 3D Renderizados','Tutoriales Exclusivos'],link:'#',fromPrice:false},{id:'edit-pack',category:'packs',title:'Editor Bundle',price:'$20.00',desc:'Recursos esenciales para edición de video.',icon:'cut-outline',features:['+500 Presets Premiere','+1000 SFX','Transiciones','Plantillas Edit By'],link:'#',fromPrice:false}];
-        const productsContainer=document.getElementById('products-container');const tabVisual=document.getElementById('tab-visual');const tabPacks=document.getElementById('tab-packs');
-        function renderProducts(f='visual'){productsContainer.innerHTML='';products.filter(p=>p.category===f).forEach((p,i)=>{const fh=p.features.map(feat=>`<li><ion-icon name="checkmark-circle"></ion-icon> <span>${feat}</span></li>`).join('');const pl=p.fromPrice?`<span class="block text-xs text-gray-500 mb-0.5">Desde</span>`:`<span class="block text-xs text-gray-500 mb-0.5">Precio</span>`;const c=document.createElement('div');c.className='reveal';c.style.transitionDelay=`${i*50}ms`;c.innerHTML=`<div class="service-card group"><div class="flex justify-between items-start mb-4 sm:mb-6 relative z-10"><div class="card-icon-box"><ion-icon name="${p.icon}"></ion-icon></div><div class="text-right">${pl}<span class="text-xl lg:text-2xl font-bold text-white tracking-tight">${p.price}</span></div></div><h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3 relative z-10">${p.title}</h3><p class="text-gray-400 text-xs sm:text-sm mb-6 leading-relaxed min-h-[40px] relative z-10">${p.desc}</p><div class="w-full h-px bg-white/5 mb-4 sm:mb-6"></div><ul class="check-list mb-6 flex-grow relative z-10">${fh}</ul><div class="mt-auto relative z-10"><a href="${p.link}" class="block w-full btn-dark-action">${f==='packs'?'Comprar Ahora':'Ver Detalles'}</a></div></div>`;productsContainer.appendChild(c)});setTimeout(()=>{productsContainer.querySelectorAll('.reveal').forEach(c=>c.classList.add('visible'))},50)}
-        function switchTab(a,i,c){a.classList.add('bg-brand','text-white','shadow-lg');a.classList.remove('text-gray-400','hover:text-white','hover:bg-white/5');i.classList.remove('bg-brand','text-white','shadow-lg');i.classList.add('text-gray-400','hover:text-white','hover:bg-white/5');renderProducts(c)}
-        tabVisual.addEventListener('click',()=>switchTab(tabVisual,tabPacks,'visual'));tabPacks.addEventListener('click',()=>switchTab(tabPacks,tabVisual,'packs'));
-        window.addEventListener('load',()=>{const l=document.getElementById('loader');setTimeout(()=>{document.querySelectorAll('#home .reveal').forEach(el=>el.classList.add('visible'))},800);setTimeout(()=>{l.style.opacity='0';l.style.visibility='hidden';document.body.classList.remove('loading');renderProducts('visual')},1200)});
-        const nav=document.getElementById('navbar');window.addEventListener('scroll',()=>{if(window.scrollY>10)nav.classList.add('scrolled');else nav.classList.remove('scrolled')});
-        const obs=new IntersectionObserver((e)=>{e.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');if(entry.target.querySelector('.progress-bar-fill')){entry.target.querySelectorAll('.progress-bar-fill').forEach(b=>{b.style.width=b.getAttribute('data-width')})}obs.unobserve(entry.target)}})},{threshold:0.05,rootMargin:"0px 0px -50px 0px"});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-        const mm=document.getElementById('mobile-menu');const tm=()=>mm.classList.toggle('translate-x-full');document.getElementById('mobile-menu-btn').addEventListener('click',tm);document.getElementById('close-menu-btn').addEventListener('click',tm);document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',tm));
-        const vm=document.getElementById('video-modal');const vc=document.getElementById('modal-video-container');const mc=document.getElementById('video-modal-content');document.querySelectorAll('.video-open-btn').forEach(b=>{b.addEventListener('click',()=>{const v=b.getAttribute('href').match(/(?:v=|\/)([\w-]{11})/)?.[1];if(v){vc.innerHTML=`<iframe class="w-full h-full" src="https://www.youtube.com/embed/${v}?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;vm.classList.remove('hidden');setTimeout(()=>{vm.classList.remove('opacity-0');mc.classList.remove('scale-95');mc.classList.add('scale-100')},10)}})});const cm=()=>{vm.classList.add('opacity-0');mc.classList.remove('scale-100');mc.classList.add('scale-95');setTimeout(()=>{vm.classList.add('hidden');vc.innerHTML=''},300)};document.getElementById('modal-close-btn').addEventListener('click',cm);vm.addEventListener('click',(e)=>{if(e.target===vm)cm()})
+        // UI Animations & Interactions
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        const products = [
+            {
+                id: 'logo-design', category: 'visual', title: 'Logo Design', price: '$15 - $100',
+                desc: 'Identidad visual única para tu marca personal o empresa.',
+                icon: 'color-palette-outline', features: ['Vectorizado (AI/EPS)', 'Alta Resolución', 'Versión PNG/JPG', 'Revisiones Incluidas'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'social-media', category: 'visual', title: 'Social Media', price: '$10 - $35',
+                desc: 'Banners y headers optimizados para todas las redes.',
+                icon: 'share-social-outline', features: ['YouTube / Twitch / Twitter', 'Diseño Responsivo', 'Entrega Rápida (48h)', 'PSD Incluido (Opcional)'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'motion', category: 'visual', title: 'Motion Graphics', price: '$20 - $60',
+                desc: 'Intros, alertas y pantallas de espera animadas.',
+                icon: 'videocam-outline', features: ['Animación Fluida (60 FPS)', 'Formato WebM/MOV', 'Sonido FX Incluido', 'Loop Perfecto'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'stream-pack', category: 'visual', title: 'Stream Packs', price: '$30 - $80',
+                desc: 'Paquete completo para renovar tu canal.',
+                icon: 'desktop-outline', features: ['Overlay + Webcam', 'Alertas + Paneles', 'Pantallas (Start/End/BRB)', 'Configuración OBS'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'flyers', category: 'visual', title: 'Flyers Design', price: '$5 - $40',
+                desc: 'Promociona tus eventos o torneos con estilo.',
+                icon: 'newspaper-outline', features: ['Alta Calidad de Impresión', 'Formato Redes Sociales', 'Estilo Llamativo', 'Entrega Express'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'thumbnails', category: 'visual', title: 'Thumbnails', price: '$5 - $15',
+                desc: 'Miniaturas que aumentan tu CTR en YouTube.',
+                icon: 'image-outline', features: ['Estilo Clickbait / Clean', 'Retoque Fotográfico', 'Alta Resolución', 'Pack de 3 Descuento'],
+                link: '#', fromPrice: true
+            },
+            {
+                id: 'gfx-pack', category: 'packs', title: 'Ultimate GFX Pack', price: '$20.00',
+                desc: 'La caja de herramientas definitiva para diseñadores.',
+                icon: 'folder-open-outline', features: ['+500 Backgrounds', '+1000 Texturas', 'Iconos 3D Renderizados', 'Tutoriales Exclusivos'],
+                link: '#', fromPrice: false
+            },
+            {
+                id: 'edit-pack', category: 'packs', title: 'Editor Bundle', price: '$20.00',
+                desc: 'Recursos esenciales para edición de video.',
+                icon: 'cut-outline', features: ['+500 Presets Premiere', '+1000 SFX', 'Transiciones', 'Plantillas Edit By'],
+                link: '#', fromPrice: false
+            }
+        ];
+
+        const productsContainer = document.getElementById('products-container');
+        const tabVisual = document.getElementById('tab-visual');
+        const tabPacks = document.getElementById('tab-packs');
+
+        function renderProducts(filter = 'visual') {
+            productsContainer.innerHTML = '';
+            const filteredData = products.filter(p => p.category === filter);
+            filteredData.forEach((product, index) => {
+                const featuresHtml = product.features.map(f => `<li><ion-icon name="checkmark-circle"></ion-icon> <span>${f}</span></li>`).join('');
+                const priceLabel = product.fromPrice ? `<span class="block text-xs text-gray-500 mb-0.5">Desde</span>` : `<span class="block text-xs text-gray-500 mb-0.5">Precio</span>`;
+                const card = document.createElement('div');
+                card.className = 'reveal';
+                card.style.transitionDelay = `${index * 100}ms`;
+                card.innerHTML = `
+                    <div class="service-card group">
+                        <div class="flex justify-between items-start mb-6 relative z-10">
+                            <div class="card-icon-box"><ion-icon name="${product.icon}"></ion-icon></div>
+                            <div class="text-right">${priceLabel}<span class="text-xl lg:text-2xl font-bold text-white tracking-tight">${product.price}</span></div>
+                        </div>
+                        <h3 class="text-xl lg:text-2xl font-bold text-white mb-3 relative z-10">${product.title}</h3>
+                        <p class="text-gray-400 text-sm mb-8 leading-relaxed min-h-[40px] relative z-10">${product.desc}</p>
+                        <div class="w-full h-px bg-white/5 mb-6"></div>
+                        <ul class="check-list mb-8 flex-grow relative z-10">${featuresHtml}</ul>
+                        <div class="mt-auto relative z-10"><a href="${product.link}" class="block w-full btn-dark-action">${filter === 'packs' ? 'Comprar Ahora' : 'Ver Detalles / Cotizar'}</a></div>
+                    </div>`;
+                productsContainer.appendChild(card);
+            });
+            setTimeout(() => {
+                const newCards = productsContainer.querySelectorAll('.reveal');
+                newCards.forEach(c => c.classList.add('visible'));
+            }, 50);
+        }
+
+        function switchTab(activeBtn, inactiveBtn, category) {
+            activeBtn.classList.add('bg-brand', 'text-white', 'shadow-lg');
+            activeBtn.classList.remove('text-gray-400', 'hover:text-white', 'hover:bg-white/5');
+            inactiveBtn.classList.remove('bg-brand', 'text-white', 'shadow-lg');
+            inactiveBtn.classList.add('text-gray-400', 'hover:text-white', 'hover:bg-white/5');
+            renderProducts(category);
+        }
+
+        tabVisual.addEventListener('click', () => switchTab(tabVisual, tabPacks, 'visual'));
+        tabPacks.addEventListener('click', () => switchTab(tabPacks, tabVisual, 'packs'));
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => { document.querySelectorAll('#home .reveal').forEach(el => el.classList.add('visible')); }, 1000);
+            setTimeout(() => { loader.style.opacity = '0'; loader.style.visibility = 'hidden'; document.body.classList.remove('loading'); renderProducts('visual'); }, 1500);
+        });
+
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => { if (window.scrollY > 20) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if(entry.target.querySelector('.progress-bar-fill')) {
+                         const bars = entry.target.querySelectorAll('.progress-bar-fill');
+                         bars.forEach(bar => { bar.style.width = bar.getAttribute('data-width'); });
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const toggleMenu = () => mobileMenu.classList.toggle('translate-x-full');
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', toggleMenu));
+
+        const videoModal = document.getElementById('video-modal');
+        const videoContainer = document.getElementById('modal-video-container');
+        const closeModalBtn = document.getElementById('modal-close-btn');
+        const modalContent = document.getElementById('video-modal-content');
+
+        document.querySelectorAll('.video-open-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const url = btn.getAttribute('href');
+                const videoId = url.match(/(?:v=|\/)([\w-]{11})/)?.[1];
+                if (videoId) {
+                    videoContainer.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" allow="autoplay" allowfullscreen></iframe>`;
+                    videoModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        videoModal.classList.remove('opacity-0');
+                        modalContent.classList.remove('scale-95');
+                        modalContent.classList.add('scale-100');
+                    }, 10);
+                }
+            });
+        });
+
+        const closeModal = () => {
+            videoModal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-100');
+            setTimeout(() => { videoModal.classList.add('hidden'); videoContainer.innerHTML = ''; }, 300);
+        };
+        closeModalBtn.addEventListener('click', closeModal);
+        videoModal.addEventListener('click', (e) => { if(e.target === videoModal) closeModal(); });
     </script>
 </body>
 </html>
