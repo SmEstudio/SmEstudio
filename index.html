@@ -121,32 +121,47 @@
         }
         @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
 
-        /* --- NAVBAR FLOTANTE --- */
+        /* --- NAVBAR FLOTANTE MEJORADO --- */
         #navbar {
             position: fixed;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
-            padding: 1.5rem 0;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: 0;
+            padding: 1rem 0; /* Padding base */
+            background: rgba(10, 10, 10, 0.5); /* Fondo sutil siempre en móvil */
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 50;
         }
+        @media (min-width: 768px) {
+            #navbar {
+                background: transparent; /* Transparente en escritorio al inicio */
+                border-bottom: none;
+                backdrop-filter: none;
+                padding: 1.5rem 0;
+            }
+        }
         #navbar.scrolled {
-            top: 1.5rem;
+            top: 0.5rem;
             width: 95%;
             max-width: 1280px;
-            padding: 0.75rem 2rem;
-            background-color: rgba(10, 10, 10, 0.75);
+            padding: 0.75rem 1.5rem;
+            background-color: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 100px;
             box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
         }
+        @media (min-width: 768px) {
+            #navbar.scrolled {
+                top: 1.5rem;
+                padding: 0.75rem 2rem;
+            }
+        }
+        
         .nav-link {
             position: relative; color: #a1a1aa; transition: color 0.3s; font-weight: 500; font-size: 0.95rem; white-space: nowrap;
         }
@@ -394,6 +409,20 @@
             margin-left: 8px;
             box-shadow: 0 2px 5px rgba(249, 115, 22, 0.3);
         }
+
+        /* Calculator Styles */
+        .calc-option {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px; padding: 12px; cursor: pointer;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: space-between;
+        }
+        .calc-option:hover { background: rgba(255,255,255,0.05); }
+        .calc-option.selected {
+            background: rgba(249, 115, 22, 0.1);
+            border-color: #f97316;
+        }
+        .calc-option.selected ion-icon { color: #f97316; }
     </style>
 </head>
 
@@ -416,12 +445,13 @@
         <div class="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-blue-600/5 rounded-full blur-[150px]"></div>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation (Mobile Optimized) -->
     <nav id="navbar">
         <div class="w-full h-full px-6 lg:px-8 flex justify-between items-center mx-auto max-w-7xl">
             <!-- Logo -->
-            <a href="#home" class="text-xl lg:text-2xl font-display font-bold text-white tracking-tight z-50 relative hover:scale-105 transition-transform flex-shrink-0">
-                SM<span class="text-brand">Estudio</span>
+            <a href="#home" class="text-lg lg:text-2xl font-display font-bold text-white tracking-tight z-50 relative hover:scale-105 transition-transform flex-shrink-0 flex items-center gap-2">
+                <img src="https://i.imgur.com/eyMr4Ki.png" class="w-6 h-6 lg:hidden" alt="logo sm">
+                <span>SM<span class="text-brand">Estudio</span></span>
             </a>
             
             <!-- Links Desktop -->
@@ -435,53 +465,61 @@
             </div>
 
             <!-- User / Login Area -->
-            <div class="flex items-center gap-4 z-50 relative flex-shrink-0">
+            <div class="flex items-center gap-2 lg:gap-4 z-50 relative flex-shrink-0">
                 
+                <!-- Botón Cotizador (Nuevo Feature) -->
+                <button id="calc-trigger-btn" class="hidden md:flex items-center justify-center w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-brand border border-white/10 transition-colors" title="Calculadora de Presupuesto">
+                    <ion-icon name="calculator-outline"></ion-icon>
+                </button>
+
                 <!-- Botón LOGIN (Visible si NO hay usuario) -->
-                <button id="login-trigger-btn" class="hidden items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white px-5 py-2.5 rounded-full text-sm transition-all hover:border-brand/50 group">
+                <button id="login-trigger-btn" class="hidden items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 text-white px-4 py-2 lg:px-5 lg:py-2.5 rounded-full text-xs lg:text-sm transition-all hover:border-brand/50 group">
                     <ion-icon name="log-in-outline" class="text-lg group-hover:text-brand"></ion-icon>
-                    <span>Acceso Cliente</span>
+                    <span class="hidden sm:inline">Acceso</span>
                 </button>
 
                 <!-- Menú USUARIO (Visible si SI hay usuario) -->
-                <div id="user-menu" class="hidden items-center gap-4">
+                <div id="user-menu" class="hidden items-center gap-2 lg:gap-4">
                     
-                    <!-- Botón "Mis Packs" DESTACADO (Nuevo) -->
-                    <button id="open-dashboard-btn" class="flex items-center gap-2 bg-gradient-to-r from-brand to-orange-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all transform hover:scale-105 mr-2">
-                        <ion-icon name="library"></ion-icon> <span class="hidden sm:inline">Mis Packs</span>
+                    <!-- Botón "Mis Packs" -->
+                    <button id="open-dashboard-btn" class="flex items-center gap-2 bg-gradient-to-r from-brand to-orange-500 text-white px-3 py-1.5 lg:px-4 lg:py-2 rounded-lg font-bold text-xs lg:text-sm hover:shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all transform hover:scale-105">
+                        <ion-icon name="library"></ion-icon> <span class="hidden lg:inline">Mis Packs</span>
                     </button>
 
-                    <!-- Botón Admin (Oculto por defecto) -->
+                    <!-- Botón Admin -->
                     <button id="admin-panel-btn" class="hidden items-center gap-2 bg-red-900/20 border border-red-500/30 text-red-400 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-900/40 hover:text-red-300 transition-all">
                         <ion-icon name="shield-checkmark"></ion-icon> ADMIN
                     </button>
 
                     <!-- Avatar Usuario -->
-                    <div class="flex items-center gap-3 bg-white/5 border border-white/10 pr-4 pl-2 py-1.5 rounded-full">
-                        <div id="user-avatar" class="w-8 h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-sm border border-white/20 overflow-hidden">
+                    <div class="flex items-center gap-2 bg-white/5 border border-white/10 pr-3 pl-1.5 py-1 rounded-full">
+                        <div id="user-avatar" class="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-gradient-to-br from-brand to-purple-600 text-white flex items-center justify-center font-bold text-xs border border-white/20 overflow-hidden">
                             U
                         </div>
-                        <span id="user-name" class="text-sm font-medium text-white truncate max-w-[80px]">User</span>
+                        <span id="user-name" class="text-xs lg:text-sm font-medium text-white truncate max-w-[60px] lg:max-w-[80px]">User</span>
                     </div>
                     
                     <button id="logout-btn" class="text-gray-400 hover:text-red-500 transition-colors" title="Cerrar Sesión">
-                        <ion-icon name="log-out-outline" class="text-xl"></ion-icon>
+                        <ion-icon name="log-out-outline" class="text-lg lg:text-xl"></ion-icon>
                     </button>
                 </div>
 
-                <button id="mobile-menu-btn" class="md:hidden text-white text-3xl hover:text-brand transition-colors ml-2">
+                <button id="mobile-menu-btn" class="md:hidden text-white text-3xl hover:text-brand transition-colors ml-1">
                     <ion-icon name="menu-outline"></ion-icon>
                 </button>
             </div>
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-dark-950/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8">
-            <a href="#about" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Nosotros</a>
-            <a href="#proceso" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Proceso</a>
-            <a href="#tienda" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Servicios</a>
-            <a href="#portfolio" class="text-3xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Portafolio</a>
-            <button id="mobile-login-btn" class="text-2xl text-brand font-bold border border-brand/50 px-6 py-2 rounded-xl">
+        <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-6">
+            <button id="calc-trigger-mobile" class="absolute top-8 left-8 text-brand text-2xl p-2 bg-white/5 rounded-full">
+                <ion-icon name="calculator-outline"></ion-icon>
+            </button>
+            <a href="#about" class="text-2xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Nosotros</a>
+            <a href="#proceso" class="text-2xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Proceso</a>
+            <a href="#tienda" class="text-2xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Servicios</a>
+            <a href="#portfolio" class="text-2xl text-white font-display font-bold mobile-link hover:text-brand transition-colors">Portafolio</a>
+            <button id="mobile-login-btn" class="text-xl text-brand font-bold border border-brand/50 px-6 py-2 rounded-xl mt-4">
                 <ion-icon name="log-in-outline" class="mr-2"></ion-icon> Login / Registro
             </button>
             <button id="close-menu-btn" class="absolute top-8 right-8 text-white text-4xl hover:text-brand transition-colors">
@@ -863,6 +901,69 @@
 
     </main>
 
+    <!-- CALCULATOR MODAL (NEW FEATURE) -->
+    <div id="calc-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 modal-backdrop" id="calc-backdrop"></div>
+        <div class="relative bg-[#0f0f0f] border border-brand/20 rounded-2xl w-full max-w-lg shadow-2xl transform scale-95 opacity-0 transition-all duration-300 overflow-hidden" id="calc-content">
+            
+            <div class="p-6 bg-gradient-to-br from-[#1a0f0f] to-[#0a0a0a]">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center text-brand text-xl border border-brand/20">
+                            <ion-icon name="calculator"></ion-icon>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white text-lg">Cotizador Rápido</h3>
+                            <p class="text-xs text-gray-400">Estima el costo de tu proyecto</p>
+                        </div>
+                    </div>
+                    <button id="close-calc" class="text-gray-400 hover:text-white"><ion-icon name="close" class="text-2xl"></ion-icon></button>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                    <div class="text-xs font-bold text-gray-500 uppercase">Selecciona Servicios</div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="calc-option" data-price="50" onclick="toggleCalcOption(this)">
+                            <span class="text-sm font-medium text-gray-300">Logotipo</span>
+                            <ion-icon name="add-circle-outline" class="text-gray-500"></ion-icon>
+                        </div>
+                        <div class="calc-option" data-price="35" onclick="toggleCalcOption(this)">
+                            <span class="text-sm font-medium text-gray-300">Banner</span>
+                            <ion-icon name="add-circle-outline" class="text-gray-500"></ion-icon>
+                        </div>
+                        <div class="calc-option" data-price="60" onclick="toggleCalcOption(this)">
+                            <span class="text-sm font-medium text-gray-300">Intro/Outro</span>
+                            <ion-icon name="add-circle-outline" class="text-gray-500"></ion-icon>
+                        </div>
+                        <div class="calc-option" data-price="80" onclick="toggleCalcOption(this)">
+                            <span class="text-sm font-medium text-gray-300">Stream Pack</span>
+                            <ion-icon name="add-circle-outline" class="text-gray-500"></ion-icon>
+                        </div>
+                        <div class="calc-option" data-price="15" onclick="toggleCalcOption(this)">
+                            <span class="text-sm font-medium text-gray-300">Miniatura</span>
+                            <ion-icon name="add-circle-outline" class="text-gray-500"></ion-icon>
+                        </div>
+                        <div class="calc-option" data-price="40" onclick="toggleCalcOption(this)">
+                            <span class="text-sm font-medium text-gray-300">Flyer</span>
+                            <ion-icon name="add-circle-outline" class="text-gray-500"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-black/30 p-4 rounded-xl border border-white/5 flex justify-between items-center">
+                    <div>
+                        <div class="text-xs text-gray-500">Estimado Total</div>
+                        <div class="text-2xl font-bold text-white">$<span id="calc-total">0</span></div>
+                    </div>
+                    <a href="#contacto" onclick="closeCalc()" class="bg-brand hover:bg-orange-600 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors">
+                        Solicitar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- LOGIN MODAL -->
     <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
         <div class="absolute inset-0 modal-backdrop" id="login-backdrop"></div>
@@ -1230,11 +1331,12 @@
             }, 400);
         }
 
-        // Play Video Function
+        // Play Video Function (UPDATED SECURITY PARAMS)
         function playVideo(url) {
             const videoId = url.match(/(?:v=|\/)([\w-]{11})/)?.[1];
             if (videoId) {
-                mainPlayerContainer.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allow="autoplay" allowfullscreen></iframe>`;
+                // Parámetros: rel=0 (no relacionados externos), modestbranding=1 (menos logos), showinfo=0 (ocultar titulo), iv_load_policy=3 (sin anotaciones)
+                mainPlayerContainer.innerHTML = `<iframe class="w-full h-full rounded-xl" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
             } else {
                 mainPlayerContainer.innerHTML = `
                 <div class="text-center p-8">
@@ -1647,6 +1749,42 @@
         };
         closeModalBtn.addEventListener('click', closeModal);
         videoModal.addEventListener('click', (e) => { if(e.target === videoModal) closeModal(); });
+
+        // --- CALCULATOR LOGIC ---
+        const calcModal = document.getElementById('calc-modal');
+        const calcContent = document.getElementById('calc-content');
+        const calcBackdrop = document.getElementById('calc-backdrop');
+        const calcTriggerBtn = document.getElementById('calc-trigger-btn');
+        const calcTriggerMobile = document.getElementById('calc-trigger-mobile');
+        const closeCalcBtn = document.getElementById('close-calc');
+        const calcTotalEl = document.getElementById('calc-total');
+        
+        let currentTotal = 0;
+
+        function toggleCalc(show) {
+            toggleModal(calcModal, calcContent, show);
+        }
+
+        calcTriggerBtn.addEventListener('click', () => toggleCalc(true));
+        calcTriggerMobile.addEventListener('click', () => { toggleMenu(); toggleCalc(true); });
+        closeCalcBtn.addEventListener('click', () => toggleCalc(false));
+        calcBackdrop.addEventListener('click', () => toggleCalc(false));
+
+        // Global function for onclick in HTML
+        window.toggleCalcOption = function(el) {
+            el.classList.toggle('selected');
+            const price = parseInt(el.getAttribute('data-price'));
+            if(el.classList.contains('selected')) {
+                currentTotal += price;
+            } else {
+                currentTotal -= price;
+            }
+            calcTotalEl.innerText = currentTotal;
+        };
+
+        window.closeCalc = function() {
+            toggleCalc(false);
+        }
     </script>
 </body>
 </html>
